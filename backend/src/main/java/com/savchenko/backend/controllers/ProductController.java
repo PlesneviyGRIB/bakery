@@ -16,6 +16,6 @@ public class ProductController {
 
     @PostMapping("/products")
     public PageResponseDto<Product> products(@RequestBody ProductFilterDto filterDto) {
-        return null;
+        return productService.products(filterDto);
     }
 }
