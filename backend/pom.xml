@@ -13,6 +13,18 @@
     <version>${app.version}</version>
     <packaging>war</packaging>
 
+    <build>
+        <resources>
+            <resource>
+                <directory>resources</directory>
+                <targetPath>${project.build.outputDirectory}</targetPath>
+                <includes>
+                    <include>application.properties</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
     <dependencies>
 
         <dependency>

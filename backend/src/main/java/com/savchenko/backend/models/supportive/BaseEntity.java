@@ -1,4 +1,4 @@
-package com.savchenko.backend.models;
+package com.savchenko.backend.models.supportive;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

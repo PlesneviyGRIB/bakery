@@ -1,6 +1,8 @@
 package com.savchenko.backend.models;
 
-public class UserDetails extends  BaseEntity<UserDetails> {
+import com.savchenko.backend.models.supportive.BaseEntity;
+
+public class UserDetails extends BaseEntity<UserDetails> {
     private String email;
     private String phone;
     private String nickName;
