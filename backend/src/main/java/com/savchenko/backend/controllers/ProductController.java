@@ -1,5 +1,6 @@
 package com.savchenko.backend.controllers;
 
+import com.savchenko.backend.dtos.PageRequestDto;
 import com.savchenko.backend.dtos.PageResponseDto;
 import com.savchenko.backend.dtos.ProductDto;
 import com.savchenko.backend.dtos.ProductFilterDto;
@@ -15,7 +16,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/products")
-    public PageResponseDto<ProductDto> products(@RequestBody ProductFilterDto filterDto) {
-        return productService.products(filterDto);
+    public PageResponseDto<ProductDto> products(@RequestBody PageRequestDto<ProductFilterDto> pageRequestDto) {
+        return productService.products(pageRequestDto);
     }
 }

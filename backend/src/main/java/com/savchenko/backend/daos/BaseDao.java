@@ -6,17 +6,19 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.savchenko.backend.dtos.PageFilterDto;
+import com.savchenko.backend.dtos.FilterDto;
+import com.savchenko.backend.dtos.PageRequestDto;
 import com.savchenko.backend.dtos.PageResponseDto;
 import com.savchenko.backend.dtos.ProductFilterDto;
-import com.savchenko.backend.dtos.FilterDto;
+import jakarta.annotation.PostConstruct;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import java.util.Optional;
 
 @PersistenceUnit
-public class BaseDao {
+public abstract class BaseDao {
     static protected class FilterBuilder {
         static Predicate build(ProductFilterDto filter) {
             var predicate = build(filter);
@@ -37,23 +39,15 @@ public class BaseDao {
             this.query = jpaQuery;
         }
 
-        public QueryBuilder<T> withFilter(FilterDto filter) {
-            query.where(FilterBuilder.build(filter));
-            if(filter instanceof PageFilterDto) {
-                withPagination((PageFilterDto) filter);
-            }
+        public QueryBuilder<T> withFilter(Optional<? extends FilterDto> filterOpt) {
+            filterOpt.ifPresent(filter -> query.where(FilterBuilder.build(filter)));
             return this;
         }
 
-        public QueryBuilder<T> withPagination(PageFilterDto filter) {
-            Optional
-                    .ofNullable(filter.count)
-                    .ifPresent(count -> {
-                        query.limit(count);
-                        Optional
-                                .ofNullable(filter.page)
-                                .ifPresent(page -> query.offset(page * count));
-                    });
+        public <R extends FilterDto> QueryBuilder<T> withPagination(PageRequestDto<R> pageRequestDto) {
+            query
+                    .limit(pageRequestDto.count)
+                    .offset(pageRequestDto.page * pageRequestDto.count);
             return this;
         }
 
@@ -78,9 +72,12 @@ public class BaseDao {
         }
     }
 
-    protected final JPAQueryFactory queryFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
+    protected JPAQueryFactory queryFactory;
 
-    public BaseDao(EntityManager entityManager) {
+    @PostConstruct
+    private void postConstruct(){
         this.queryFactory = new JPAQueryFactory(JPQLTemplates.DEFAULT, entityManager);
     }
 }

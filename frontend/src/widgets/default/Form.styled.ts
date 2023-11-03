@@ -20,6 +20,7 @@ const inputBase = css`
 
 const Checkbox = styled.div<{ $checked: boolean; $indeterminate: boolean }>`
   ${inputBase};
+  box-sizing: unset;
   width: 12px;
   aspect-ratio: 1/1;
   border-color: ${({$checked}) => $checked && "var(--color-dark-gray)"};
@@ -63,8 +64,8 @@ const Toggle = styled.div<{ $checked: boolean, $size: number}>`
   
   &:before {
     content: '';
-    margin: max(2%, 1px);
-    width: calc(50% - max(2%, 1px));
+    aspect-ratio: 1/1 !important;
+    margin: 3%;
     background-color: var(--color-deep-dark-gray);
     border-radius: 1px;
   }
@@ -75,7 +76,7 @@ const input = css`
   border-radius: 5px;
   font-size: 14px;
   padding: 10px;
-  width: clamp(200px, 100%, 600px);
+  width: clamp(100px, 100%, 600px);
 `
 
 const Input = styled.input<{$limit?: number}>`
@@ -117,27 +118,33 @@ const Select = styled.div<{$opened: boolean}>`
   }
 `
 
-const SelectOptions = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 10px;
+const DropdownOptions = styled.ul`
+  width: fit-content;
+  min-width: 100px;
+  z-index: 1; 
+  border-radius: 5px;
+  border: 2px solid var(--color-dark-gray);
+  overflow: hidden;
+  padding: 0;
+  
+  li:last-child{
+    border: none;
+  }
 `
 
-const SelectOption = styled.div<{$selected?:boolean}>`
+const SelectOptions = styled(DropdownOptions)`
+  width: 100%;
+`
+
+const DropdownOption = styled.li<{$selected?:boolean}>`
   padding: 10px 20px;
   font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid;
-  border-color: var(--color-dark-gray);
+  border-bottom: 1px solid var(--color-dark-gray);
+  background-color: ${({$selected}) => $selected ? "var(--color-light-blue)" : "var(--color-white)"};
   ${TextOverflowEllipsis};
-
-  background-color: ${({$selected}) => $selected ? "var(--color-light-orange)" : "var(--color-white)"};
   
   &:hover{
-    background-color: var(--color-light-orange);
-    border-color: var(--color-deep-dark-gray);
+    background-color: var(--color-light-blue);
   }
 `
 
@@ -148,10 +155,11 @@ const Textarea = styled.textarea<{$limit?: number}>`
   resize: none;
 `
 
-const Wrapper = styled.div`
-  padding: 2px;
-  max-height: fit-content;
-  max-width: fit-content;
+const Tooltip = styled.div`
+  padding: 8px 16px;
+  border-radius: 10px;
+  background-color: var(--color-deep-dark-gray);
+  color: var(--color-white);
 `
 
 export const Styled = {
@@ -160,7 +168,8 @@ export const Styled = {
     Input,
     Select,
     SelectOptions,
-    SelectOption,
+    DropdownOptions,
+    DropdownOption,
     Textarea,
-    Wrapper,
+    Tooltip,
 }

@@ -15,3 +15,5 @@ export type Option = {
     id: number,
     title: string
 }
+
+export type Interaction = "hover" | "click"

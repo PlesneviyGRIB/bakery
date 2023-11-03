@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {FlexColumn, FlexRow} from "../default/Flex.styled";
 
 const Wrapper = styled(FlexColumn)`
-  max-width: 500px;
+  width: clamp(400px, 100%, 600px);
   gap: 5px;
 `
 const Label = styled.div`
@@ -15,6 +15,10 @@ const Measure = styled.div`
   font-size: 22px;
   align-self: center;
   width: 80px;
+`
+
+const InputWrapper = styled.div`
+    width: 100px;
 `
 
 const Row = styled(FlexRow)`
@@ -31,6 +35,7 @@ export const Styled = {
     Wrapper,
     Label,
     Measure,
+    InputWrapper,
     Row,
     Column,
 }

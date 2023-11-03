@@ -7,6 +7,7 @@ const Header = styled.div`
   background-color: var(--color-light-blue);
   box-shadow: 0 0 5px 1px var(--color-gray-violet);
   position: relative;
+  z-index: 1;
   
   &:before {
     content: url("${decoration.toString()}");
@@ -30,8 +31,7 @@ const Pretzel = styled.div`
   position: absolute;
   transform: translateX(-50%);
   left: 50%;
-  top: -25%;
-  scale: 0.3;
+  width: 30px;
   overflow: visible;
 `
 
