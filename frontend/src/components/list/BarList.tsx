@@ -22,9 +22,7 @@ export const BarList = <T extends ProductDto>({
                         : {accumulator: p.accumulator, current: p.current.concat(c)}
                 ,{ accumulator:[], current: []})
         return [...matrix.accumulator, matrix.current]
-    }, [])
-
-    console.log(matrix)
+    }, [list, perRow])
 
     return (
         <S.List>
