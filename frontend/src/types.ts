@@ -1,4 +1,4 @@
-import {ProductDto} from "./api/rest-client";
+import {NewProductDto, ProductDto} from "./api/rest-client";
 
 export type MatrixReducer <T> = {
     accumulator: T[][]
@@ -17,3 +17,6 @@ export type Option = {
 }
 
 export type Interaction = "hover" | "click"
+
+export type PartialNewProduct = Omit<NewProductDto, 'discriminator'>
+export type GeneralProduct = PartialNewProduct | NewProductDto

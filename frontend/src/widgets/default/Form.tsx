@@ -1,4 +1,12 @@
-import React, {FC, InputHTMLAttributes, PropsWithChildren, useCallback, useRef, useState} from "react";
+import React, {
+    FC,
+    InputHTMLAttributes,
+    LabelHTMLAttributes,
+    PropsWithChildren,
+    useCallback,
+    useRef,
+    useState
+} from "react";
 import {Styled as S, TextOverflowEllipsisDiv} from "./Form.styled"
 import {Interaction, Option} from "../../types";
 import {
@@ -16,6 +24,8 @@ import {
     useInteractions,
     useRole
 } from "@floating-ui/react";
+import {CSSProperties} from "styled-components";
+import {Property} from "csstype";
 
 interface CheckboxProps {
     checked: boolean;
@@ -52,9 +62,9 @@ export const Input: FC<InputHTMLAttributes<HTMLInputElement> & { limit?: number}
     )
 }
 
-export const Textarea: FC<InputHTMLAttributes<HTMLTextAreaElement> & { limit?: number }> = (props) => {
+export const Textarea: FC<InputHTMLAttributes<HTMLTextAreaElement> & { limit?: number, $height?: Property.Height }> = (props) => {
     return (
-        <S.Textarea $limit={props.limit} {...props} />
+        <S.Textarea $limit={props.limit} {...props} style={{height: props.$height}}/>
     )
 }
 
@@ -136,10 +146,9 @@ export const DropdownMenu: FC<PropsWithChildren<DropdownMenuProps>> = ({target, 
 
 interface TooltipProps {
     text: string
-    children: JSX.Element
 }
 
-export const Tooltip: FC<TooltipProps> = (({text, children}) => {
+export const Tooltip: FC<PropsWithChildren<TooltipProps>> = (({text, children}) => {
     const [opened, setOpened] = useState<boolean>(false)
 
     const arrowRef = useRef(null);
@@ -171,7 +180,7 @@ export const Tooltip: FC<TooltipProps> = (({text, children}) => {
 
     return (
         <>
-            {React.cloneElement(children, {...getReferenceProps({ref: setReference})})}
+            {React.cloneElement(<>{children}</>, {...getReferenceProps({ref: setReference})})}
             {
                 opened &&
                 <S.Tooltip {...getFloatingProps({ref: setFloating, style: floatingStyles})}>
@@ -196,3 +205,6 @@ export const Tooltip: FC<TooltipProps> = (({text, children}) => {
         </>
     )
 })
+
+export const FormGroup: React.FC<PropsWithChildren> = ({ children }) => <S.FormGroup>{children}</S.FormGroup>;
+export const FormLabel: React.FC<PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement>>> = (props) => <S.FormLabel {...props} />;

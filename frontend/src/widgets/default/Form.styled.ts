@@ -2,6 +2,7 @@ import styled, {css} from "styled-components";
 import checkMark from "../../ui/pictures/checked.svg"
 import tilde from "../../ui/pictures/tilde.svg"
 import arrow from "../../ui/pictures/dropdown_arrow.svg"
+import {Property} from "csstype";
 
 const inputBase = css`
   border: 2px solid var(--color-dark-gray);
@@ -21,8 +22,10 @@ const inputBase = css`
 const Checkbox = styled.div<{ $checked: boolean; $indeterminate: boolean }>`
   ${inputBase};
   box-sizing: unset;
-  width: 12px;
-  aspect-ratio: 1/1;
+  max-height: 12px;
+  max-width: 12px;
+  min-width: 12px;
+  min-height: 12px;
   border-color: ${({$checked}) => $checked && "var(--color-dark-gray)"};
   position: relative;
   background-color: ${({$checked, $indeterminate}) => ($checked || $indeterminate) && "var(--color-white)"};
@@ -151,7 +154,7 @@ const DropdownOption = styled.li<{$selected?:boolean}>`
 const Textarea = styled.textarea<{$limit?: number}>`
   ${inputBase};
   ${input};
-  height: 100px;
+  height: 160px;
   resize: none;
 `
 
@@ -160,6 +163,16 @@ const Tooltip = styled.div`
   border-radius: 10px;
   background-color: var(--color-deep-dark-gray);
   color: var(--color-white);
+`
+
+const FormLabel = styled.label`
+  font-size: 16px;
+  width: fit-content;
+  ${TextOverflowEllipsis}
+`
+
+const FormGroup = styled.div`
+  padding: 10px;
 `
 
 export const Styled = {
@@ -172,4 +185,6 @@ export const Styled = {
     DropdownOption,
     Textarea,
     Tooltip,
+    FormLabel,
+    FormGroup,
 }

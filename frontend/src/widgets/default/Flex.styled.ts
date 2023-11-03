@@ -11,6 +11,7 @@ export const FlexRow = styled.div<{ $gap?: Property.Gap; $justifyContent?: Prope
     display: flex;
     gap: ${({ $gap }) => $gap || '1em'};
     justify-content: ${({ $justifyContent }) => $justifyContent};
+  align-items: center;
 `;
 
 export const FlexGrow = styled.div`

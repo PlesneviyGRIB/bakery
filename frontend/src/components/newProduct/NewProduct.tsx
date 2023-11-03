@@ -2,24 +2,29 @@ import React, {FC, useState} from "react";
 import {Tabs} from "../../widgets/tabs/Tabs";
 import {Tab} from "../../widgets/tabs/Tab";
 import {ProductForm} from "./ProductForm";
-import {ProductDto} from "../../api/rest-client";
+import {GeneralProduct, PartialNewProduct} from "../../types";
 
 interface NewProductProps {
 
 }
 
-const newProduct : ProductDto = {
-    price: 0
-
+const newProduct: PartialNewProduct = {
+    price: 0,
+    count: 1,
+    productionTime: 0,
+    title: '',
+    description: '',
+    weight: 0,
+    orderAvailable: true,
 }
 
-export const NewProduct : FC<NewProductProps> = ({}) => {
-    const [product, setProduct] = useState<ProductDto>()
+export const NewProduct: FC<NewProductProps> = ({}) => {
+    const [product, setProduct] = useState<GeneralProduct>(() => newProduct)
 
-    return(
+    return (
         <Tabs>
             <Tab title={"Основные параметры"}>
-                <ProductForm onSave={() => {}}/>
+                <ProductForm product={product} onSave={setProduct}/>
             </Tab>
             <Tab title={"Категории"}>second</Tab>
             <Tab title={"Теги"}></Tab>

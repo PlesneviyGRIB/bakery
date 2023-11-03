@@ -1,19 +1,14 @@
 import styled from "styled-components";
 import {FlexColumn, FlexRow} from "../../widgets/default/Flex.styled";
+import {FormLabel} from "../../widgets/default/Form";
 
 const Wrapper = styled(FlexColumn)`
   width: clamp(400px, 100%, 600px);
   gap: 5px;
 `
-const Label = styled.div`
-  font-size: 16px;
-  width: fit-content;
-  padding: 10px;
-`
 
-const Measure = styled.div`
-  font-size: 22px;
-  align-self: center;
+const Measure = styled(FormLabel)`
+  font-size: 18px;
   width: 80px;
 `
 
@@ -31,11 +26,15 @@ const Column = styled(FlexColumn)`
   gap: 0
 `
 
+const Block = styled.div`
+    padding: 10px;
+`
+
 export const Styled = {
     Wrapper,
-    Label,
     Measure,
     InputWrapper,
     Row,
     Column,
+    Block,
 }
