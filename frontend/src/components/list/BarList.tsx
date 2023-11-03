@@ -1,26 +1,27 @@
-import {ProductDto} from "../../api/rest-client";
-import {Bar} from "./Bar";
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
 import {MatrixReducer} from "../../types";
 import {Styled as S} from "./barlist.styled"
+import {BaseDto} from "../../api/rest-client";
 
-interface BarListProps<T extends ProductDto> {
+interface BarListProps<T> {
     list: T[]
-    onSelectItem(id: number): void
+    onSelectItem: (id: number) => void
+    renderItem: (data: T) => JSX.Element
     perRow: number
 }
 
-export const BarList = <T extends ProductDto>({
-                                                  list,
-                                                  onSelectItem,
-                                                  perRow
-                                              }: BarListProps<T>): JSX.Element => {
-    const matrix : T[][] = useMemo(() => {
-        const matrix = list.reduce((p : MatrixReducer<T>, c) =>
-                    p.current.length === perRow ?
-                        {accumulator: [...p.accumulator, p.current], current: []}
-                        : {accumulator: p.accumulator, current: p.current.concat(c)}
-                ,{ accumulator:[], current: []})
+export const BarList = <T extends BaseDto>({
+                                               list,
+                                               renderItem,
+                                               onSelectItem,
+                                               perRow
+                                           }: BarListProps<T>): JSX.Element => {
+    const matrix: T[][] = useMemo(() => {
+        const matrix = list.reduce((p: MatrixReducer<T>, c) =>
+                p.current.length === perRow ?
+                    {accumulator: [...p.accumulator, p.current], current: [c]}
+                    : {accumulator: p.accumulator, current: p.current.concat(c)}
+            , {accumulator: [], current: []})
         return [...matrix.accumulator, matrix.current]
     }, [list, perRow])
 
@@ -28,7 +29,7 @@ export const BarList = <T extends ProductDto>({
         <S.List>
             {matrix.map((row, index) =>
                 <S.ListRow key={index}>
-                    {row.map(item => <Bar key={item.id} item={item} onSelect={onSelectItem}/>)}
+                    {row.map(item => <S.Bar key={item.id} onClick={() => onSelectItem(item.id)}>{renderItem(item)}</S.Bar>)}
                 </S.ListRow>
             )}
         </S.List>

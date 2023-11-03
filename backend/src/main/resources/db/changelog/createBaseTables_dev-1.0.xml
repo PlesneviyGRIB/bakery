@@ -7,9 +7,6 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="draft" type="boolean">
-                <constraints nullable="false"/>
-            </column>
             <column name="price" type="bigint"/>
             <column name="count" type="int"/>
             <column name="instant" type="timestamp with time zone">

@@ -6,20 +6,18 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.savchenko.backend.dto.filter.FilterDto;
 import com.savchenko.backend.dto.PageRequestDto;
 import com.savchenko.backend.dto.PageResponseDto;
+import com.savchenko.backend.dto.filter.FilterDto;
 import com.savchenko.backend.dto.filter.ProductFilterDto;
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import java.util.Optional;
 
-@PersistenceUnit
 public abstract class BaseDao<R extends JpaRepository<E, Long>, E> {
 
     @Autowired
@@ -63,7 +61,7 @@ public abstract class BaseDao<R extends JpaRepository<E, Long>, E> {
     }
 
     static class PageRequest {
-        static public <T> PageResponseDto<T> execute(JPAQuery<T> query){
+        public <T> PageResponseDto<T> execute(JPAQuery<T> query) {
             QueryResults<T> result = query.fetchResults();
             var data = result.getResults();
             var total = result.getTotal();

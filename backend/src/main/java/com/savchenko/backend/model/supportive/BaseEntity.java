@@ -10,4 +10,8 @@ public abstract class BaseEntity <T> implements Comparable<T> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    public Long getId() {
+        return id;
+    }
 }

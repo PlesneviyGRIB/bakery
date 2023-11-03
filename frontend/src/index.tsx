@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {MainPage} from "./pages/MainPage";
+import {ProductListPage} from "./pages/ProductListPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(
@@ -8,5 +8,5 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <MainPage/>
+    <ProductListPage/>
 );

@@ -52,6 +52,7 @@ public class BakeryConverter {
     }
 
     private static void modelToDtoBaseConverter(Product product, ProductDto dto) {
+        dto.id = product.getId();
         dto.count = product.getCount();
         dto.description = product.getDescription();
         dto.productionTime = product.getProductionTime();

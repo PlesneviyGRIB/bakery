@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Cookie extends Product {
-    private ProductSize size;
-
     @Override
     public <R> R accept(ProductVisitor<R> visitor) {
         return visitor.visit(this);
