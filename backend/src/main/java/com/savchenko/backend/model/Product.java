@@ -1,7 +1,10 @@
 package com.savchenko.backend.model;
 
 import com.savchenko.backend.interfaces.Tagged;
+import com.savchenko.backend.model.supportive.BaseEntity;
 import com.savchenko.backend.model.supportive.Draft;
+import com.savchenko.backend.utils.visitor.NewProductVisitor;
+import com.savchenko.backend.utils.visitor.ProductVisitor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -10,7 +13,7 @@ import java.time.Instant;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Product extends Draft<Product> implements Tagged {
+public abstract class Product extends BaseEntity<Product> implements Tagged {
     private Long price;
     private Integer count;
     private Instant instant;
@@ -42,8 +45,34 @@ public abstract class Product extends Draft<Product> implements Tagged {
         return description;
     }
 
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public void setInstant(Instant instant) {
+        this.instant = instant;
+    }
+
+    public void setProductionTime(Integer productionTime) {
+        this.productionTime = productionTime;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public int compareTo(Product product) {
         return 0;
     }
+
+    public abstract <R> R accept(ProductVisitor<R> visitor);
 }
