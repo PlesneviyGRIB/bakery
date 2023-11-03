@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {FlexColumn, FlexRow} from "../default/Flex.styled";
+import {FlexColumn, FlexRow} from "../../widgets/default/Flex.styled";
 
 const Wrapper = styled(FlexColumn)`
   width: clamp(400px, 100%, 600px);

@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {Styled as S} from "./pages.styled";
-import {NewProduct} from "../components/NewProduct";
+import {NewProduct} from "../components/newProduct/NewProduct";
 
 export const MainPage: FC = () => {
     return (

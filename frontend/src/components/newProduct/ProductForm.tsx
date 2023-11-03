@@ -1,7 +1,7 @@
 import {ProductDto} from "../../api/rest-client";
 import {FC} from "react";
 import {Styled as S} from "./ProductForm.styled";
-import {Input, Textarea} from "../default/Form";
+import {Input, Textarea} from "../../widgets/default/Form";
 import {useTranslation} from "react-i18next";
 
 interface ProductFormProps {
