@@ -1,8 +1,8 @@
 package com.savchenko.backend.controllers;
 
 import com.savchenko.backend.dtos.PageResponseDto;
+import com.savchenko.backend.dtos.ProductDto;
 import com.savchenko.backend.dtos.ProductFilterDto;
-import com.savchenko.backend.models.Product;
 import com.savchenko.backend.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/products")
-    public PageResponseDto<Product> products(@RequestBody ProductFilterDto filterDto) {
+    public PageResponseDto<ProductDto> products(@RequestBody ProductFilterDto filterDto) {
         return productService.products(filterDto);
     }
 }

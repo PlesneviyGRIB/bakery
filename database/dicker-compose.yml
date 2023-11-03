@@ -1,0 +1,11 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres:14.8-alpine3.18
+    environment:
+      POSTGRES_DB: "bakery"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "1234"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    ports:
+      - "5434:5432"

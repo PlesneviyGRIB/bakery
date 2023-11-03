@@ -1,22 +1,25 @@
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog">
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet id="DEV-1.0" author="e.savchenko">
         <createTable tableName="product">
-            <column name="id" type="bigint" autoIncrement="true" >
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="draft" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="price" type="bigint" />
-            <column name="count" type="int" />
+            <column name="price" type="bigint"/>
+            <column name="count" type="int"/>
             <column name="instant" type="timestamp with time zone">
                 <constraints nullable="true"/>
             </column>
-            <column name="production_time" type="int" />
-            <column name="title" type="varchar(128)" />
-            <column name="description" type="varchar(2048)" />
+            <column name="production_time" type="int"/>
+            <column name="title" type="varchar(128)"/>
+            <column name="description" type="varchar(2048)"/>
         </createTable>
     </changeSet>
-    
+
 </databaseChangeLog>
 
