@@ -18,12 +18,7 @@ export const useSessionState = <S>(key: string, defaultValue: S | (() => S)): [S
     })
 
     const setState: Dispatch<SetStateAction<S>> = useCallback((s : SetStateAction<S>) => {
-        let val;
-        if(s instanceof Function){
-            val = s(state)
-        } else {
-            val = s
-        }
+        const val = s instanceof Function ? s(state) : s
         sessionStorage.setItem(key, JSON.stringify(val))
         setPureState(val)
     }, [key, state])
