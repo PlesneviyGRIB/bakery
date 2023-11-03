@@ -13,7 +13,7 @@ const ListRow = styled.div`
   display: flex;
   justify-content: space-evenly;
   padding: 10px;
-  gap: 1em;
+  gap: 2%;
 `
 
 const List = styled.div`

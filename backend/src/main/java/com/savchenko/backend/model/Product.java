@@ -21,6 +21,8 @@ public abstract class Product extends BaseEntity<Product> implements Tagged {
     private String title;
     private String description;
 
+    private Float weight;
+
     public Long getPrice() {
         return price;
     }
@@ -43,6 +45,10 @@ public abstract class Product extends BaseEntity<Product> implements Tagged {
 
     public String getDescription() {
         return description;
+    }
+
+    public Float getWeight() {
+        return weight;
     }
 
     public void setPrice(Long price) {
@@ -69,9 +75,13 @@ public abstract class Product extends BaseEntity<Product> implements Tagged {
         this.description = description;
     }
 
+    public void setWeight(Float weight) {
+        this.weight = weight;
+    }
+
     @Override
     public int compareTo(Product product) {
-        return 0;
+        return this.getId().compareTo(product.getId());
     }
 
     public abstract <R> R accept(ProductVisitor<R> visitor);

@@ -13,6 +13,7 @@ public class ProductDto extends BaseDto {
     public Integer productionTime;
     public String title;
     public String description;
+    public Float weight;
 
     protected ProductDto(ProductCategory discriminator) {
         this.discriminator = discriminator;

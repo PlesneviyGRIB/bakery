@@ -7,7 +7,7 @@ import com.savchenko.backend.utils.visitor.NewProductVisitor;
 
 import java.util.Optional;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "discriminator", visible = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "discriminator", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = NewCookieDto.class, name = "COOKIE"),
         @JsonSubTypes.Type(value = NewMarshmallowDto.class, name = "MARSHMALLOW"),
@@ -17,11 +17,19 @@ public abstract class NewProductDto {
     public final ProductCategory discriminator;
     public Long price;
     public Integer count;
-    public Optional<Integer> productionTime;
+    private Integer productionTime;
     public String title;
     public String description;
-    public Optional<Float> weight;
+    private Float weight;
     public Boolean orderAvailable;
+
+    public Optional<Integer> getProductionTime() {
+        return Optional.ofNullable(productionTime);
+    }
+
+    public Optional<Float> getWeight() {
+        return Optional.ofNullable(weight);
+    }
 
     public NewProductDto(ProductCategory discriminator){
         this.discriminator = discriminator;
