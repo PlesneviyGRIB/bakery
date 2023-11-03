@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.savchenko.backend.service.supportive.BakeryMapper.NewProductDtoToProductMapper;
+import java.time.Instant;
+
+import static com.savchenko.backend.service.supportive.BakeryMapper.NewProductDtoToModelMapper;
 import static com.savchenko.backend.service.supportive.BakeryMapper.ProductToDtoMapper;
 
 @Service
@@ -25,6 +27,8 @@ public class ProductService {
 
     @Transactional
     public ProductDto createProduct(NewProductDto newProductDto) {
-        return ProductToDtoMapper.apply(productDao.save(NewProductDtoToProductMapper.apply(newProductDto)));
+        var product = NewProductDtoToModelMapper.apply(newProductDto);
+        product.setInstant(Instant.now());
+        return ProductToDtoMapper.apply(productDao.save(product));
     }
 }
