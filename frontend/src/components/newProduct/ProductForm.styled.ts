@@ -10,6 +10,7 @@ const Wrapper = styled(FlexColumn)`
 const Measure = styled(FormLabel)`
   font-size: 18px;
   width: 80px;
+  min-width: 80px;
 `
 
 const InputWrapper = styled.div`

@@ -40,7 +40,6 @@ body {
 
         background-color: var(--color-dark-gray);
         border-radius: 5px;
-        box-shadow: 0 0 100px 16px var(--color-white);
     }
 
     scrollbar-gutter: stable;

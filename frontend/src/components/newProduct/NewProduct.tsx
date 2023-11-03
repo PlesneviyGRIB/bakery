@@ -5,9 +5,11 @@ import {ProductForm} from "./ProductForm";
 import {GeneralProduct} from "../../types";
 import {ProductCategorySelection} from "./ProductCategorySelection";
 import {useSessionState} from "../../hooks/useSessionState";
+import {Modal} from "../../widgets/modal/Modal";
+import {Btn} from "../../widgets/default/Btn";
 
 interface NewProductProps {
-
+    onClose(): void
 }
 
 const newProduct: GeneralProduct = {
@@ -21,20 +23,24 @@ const newProduct: GeneralProduct = {
     orderAvailable: true,
 }
 
-export const NewProduct: FC<NewProductProps> = ({}) => {
+export const NewProduct: FC<NewProductProps> = ({onClose}) => {
     const [product, setProduct] = useSessionState<GeneralProduct>("NewProduct", () => newProduct)
 
     return (
-        <Tabs>
-            <Tab title={"Основные параметры"}>
-                <ProductForm product={product} onChangeProduct={setProduct}/>
-            </Tab>
-            <Tab title={"Категории"}>
-                <ProductCategorySelection product={product} onChangeProduct={setProduct}/>
-            </Tab>
-            <Tab title={"Теги"}></Tab>
-            <Tab title={"Фотографии"}>third</Tab>
-            <Tab title={"Предпросмотр"}>434q</Tab>
-        </Tabs>
+        <Modal height={"800px"} width={"1000px"} onClose={onClose} hideCross>
+            <Tabs>
+                <Tab title={"Основные параметры"}>
+                    <ProductForm product={product} onChangeProduct={setProduct}/>
+                </Tab>
+                <Tab title={"Категории"}>
+                    <ProductCategorySelection product={product} onChangeProduct={setProduct}/>
+                </Tab>
+                <Tab title={"Теги"}></Tab>
+                <Tab title={"Фотографии"}>third</Tab>
+                <Tab title={"Предпросмотр"}>
+                    <Btn primary>Создать</Btn>
+                </Tab>
+            </Tabs>
+        </Modal>
     )
 }

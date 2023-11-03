@@ -2,7 +2,6 @@ import styled, {css} from "styled-components";
 import checkMark from "../../ui/pictures/checked.svg"
 import tilde from "../../ui/pictures/tilde.svg"
 import arrow from "../../ui/pictures/dropdown_arrow.svg"
-import {Property} from "csstype";
 
 const inputBase = css`
   border: 2px solid var(--color-dark-gray);
@@ -68,7 +67,7 @@ const Toggle = styled.div<{ $checked: boolean, $size: number}>`
   &:before {
     content: '';
     aspect-ratio: 1/1 !important;
-    margin: 3%;
+    margin: 1px;
     background-color: var(--color-deep-dark-gray);
     border-radius: 1px;
   }

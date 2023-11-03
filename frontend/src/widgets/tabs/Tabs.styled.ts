@@ -13,8 +13,7 @@ const Tabs = styled.div`
 const Tab = styled.div`
   height: calc(100% - 60px);
   margin: 20px 0 0 0;
-  padding-left: 20px;
-  padding-right: 10px;
+  padding: 5px 10px 5px 20px;
   overflow: scroll;
 `
 
