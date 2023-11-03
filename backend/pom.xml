@@ -34,8 +34,8 @@
                         <configuration>
                             <jsonLibrary>jackson2</jsonLibrary>
                             <classPatterns>
-                                <classPattern>com.savchenko.backend.controllers.*Controller</classPattern>
-                                <classPattern>com.savchenko.backend.dtos.*</classPattern>
+                                <classPattern>com.savchenko.backend.controller.*Controller</classPattern>
+                                <classPattern>com.savchenko.backend.dto.*</classPattern>
                                 <classPattern>com.savchenko.backend.enums.*</classPattern>
                             </classPatterns>
                             <generateSpringApplicationClient>true</generateSpringApplicationClient>
