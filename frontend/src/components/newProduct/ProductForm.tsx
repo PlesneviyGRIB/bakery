@@ -1,50 +1,49 @@
 import React, {ChangeEvent, FC, useCallback} from "react";
 import {Styled as S} from "./ProductForm.styled";
 import {Checkbox, FormGroup, FormLabel, Input, Textarea, Tooltip} from "../../widgets/default/Form";
-import {GeneralProduct, PartialNewProduct} from "../../types";
+import {GeneralProduct} from "../../types";
 import {FlexRow} from "../../widgets/default/Flex.styled";
 import {CollapsableBlock} from "../../widgets/supportive/CollapsableBlock";
 
 interface ProductFormProps {
-    product: PartialNewProduct
-
-    onSave(product: GeneralProduct): void
+    product: GeneralProduct
+    onChangeProduct(product: GeneralProduct): void
 }
 
-export const ProductForm: FC<ProductFormProps> = ({product, onSave}) => {
+export const ProductForm: FC<ProductFormProps> = ({product, onChangeProduct}) => {
 
-    const handleChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => onSave({
+    const handleChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => onChangeProduct({
         ...product,
         title: e.target.value
-    }), [product, onSave])
-    const handleChangeDescription = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => onSave({
+    }), [product, onChangeProduct])
+    const handleChangeDescription = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => onChangeProduct({
         ...product,
         description: e.target.value
-    }), [product, onSave])
-    const handleChangeProductionTime = useCallback((e: ChangeEvent<HTMLInputElement>) => onSave({
+    }), [product, onChangeProduct])
+    const handleChangeProductionTime = useCallback((e: ChangeEvent<HTMLInputElement>) => onChangeProduct({
         ...product,
         productionTime: Number.parseInt(e.target.value)
-    }), [product, onSave])
-    const handleChangeProductionWeight = useCallback((e: ChangeEvent<HTMLInputElement>) => onSave({
+    }), [product, onChangeProduct])
+    const handleChangeProductionWeight = useCallback((e: ChangeEvent<HTMLInputElement>) => onChangeProduct({
         ...product,
         weight: Number.parseInt(e.target.value)
-    }), [product, onSave])
-    const handleChangeCount = useCallback((e: ChangeEvent<HTMLInputElement>) => onSave({
+    }), [product, onChangeProduct])
+    const handleChangeCount = useCallback((e: ChangeEvent<HTMLInputElement>) => onChangeProduct({
         ...product,
         count: Number.parseInt(e.target.value)
-    }), [product, onSave])
-    const handleChangeOrderAvailable = useCallback((state: boolean) => onSave({
+    }), [product, onChangeProduct])
+    const handleChangeOrderAvailable = useCallback((state: boolean) => onChangeProduct({
         ...product,
         orderAvailable: state
-    }), [product, onSave])
-    const handleChangeCollapseProductionTime = useCallback(() => onSave({
+    }), [product, onChangeProduct])
+    const handleChangeCollapseProductionTime = useCallback(() => onChangeProduct({
         ...product,
         productionTime: product.productionTime === undefined ? 0 : undefined
-    }), [product, onSave])
-    const handleChangeCollapseWeight = useCallback(() => onSave({
+    }), [product, onChangeProduct])
+    const handleChangeCollapseWeight = useCallback(() => onChangeProduct({
         ...product,
         weight: product.weight === undefined ? 0 : undefined
-    }), [product, onSave])
+    }), [product, onChangeProduct])
 
     return (
         <S.Wrapper>

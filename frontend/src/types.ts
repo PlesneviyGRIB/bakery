@@ -18,5 +18,4 @@ export type Option = {
 
 export type Interaction = "hover" | "click"
 
-export type PartialNewProduct = Omit<NewProductDto, 'discriminator'>
-export type GeneralProduct = PartialNewProduct | NewProductDto
+export type GeneralProduct = NewProductDto

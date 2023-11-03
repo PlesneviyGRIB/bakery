@@ -13,7 +13,7 @@ const Measure = styled(FormLabel)`
 `
 
 const InputWrapper = styled.div`
-    width: 100px;
+  width: 100px;
 `
 
 const Row = styled(FlexRow)`
@@ -27,7 +27,33 @@ const Column = styled(FlexColumn)`
 `
 
 const Block = styled.div`
-    padding: 10px;
+  padding: 10px;
+`
+
+const Category = styled.div<{$selected?: boolean}>`
+  width: 160px;
+  aspect-ratio: 1/1;
+  border-radius: 20%;
+  cursor: pointer;
+  box-shadow: ${({$selected}) => $selected ? "0 0 10px 1px var(--color-deep-dark-gray)" : "0 0 5px 1px  var(--color-light-gray)"};
+  transition: 0.1s;
+  
+  &:hover{
+    box-shadow: 0 0 10px 1px var(--color-deep-dark-gray);
+  }
+`
+
+const FlexContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  width: fit-content;
+`
+
+const Header = styled.h1`
+  font-weight: normal;
+  width: fit-content;
 `
 
 export const Styled = {
@@ -37,4 +63,7 @@ export const Styled = {
     Row,
     Column,
     Block,
+    Category,
+    FlexContainer,
+    Header,
 }

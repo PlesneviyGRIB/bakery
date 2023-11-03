@@ -4,6 +4,7 @@ import React, {
     LabelHTMLAttributes,
     PropsWithChildren,
     useCallback,
+    useMemo,
     useRef,
     useState
 } from "react";
@@ -16,7 +17,6 @@ import {
     FloatingArrow,
     offset,
     Placement,
-    shift,
     useClick,
     useDismiss,
     useFloating,
@@ -24,7 +24,6 @@ import {
     useInteractions,
     useRole
 } from "@floating-ui/react";
-import {CSSProperties} from "styled-components";
 import {Property} from "csstype";
 
 interface CheckboxProps {
@@ -56,13 +55,16 @@ export const Toggle: FC<ToggleProps> = ({checked, size = 'normal', onChange}) =>
     )
 }
 
-export const Input: FC<InputHTMLAttributes<HTMLInputElement> & { limit?: number}> = (props) => {
+export const Input: FC<InputHTMLAttributes<HTMLInputElement> & { limit?: number }> = (props) => {
     return (
         <S.Input $limit={props.limit} {...props} />
     )
 }
 
-export const Textarea: FC<InputHTMLAttributes<HTMLTextAreaElement> & { limit?: number, $height?: Property.Height }> = (props) => {
+export const Textarea: FC<InputHTMLAttributes<HTMLTextAreaElement> & {
+    limit?: number,
+    $height?: Property.Height
+}> = (props) => {
     return (
         <S.Textarea $limit={props.limit} {...props} style={{height: props.$height}}/>
     )
@@ -117,7 +119,12 @@ interface DropdownMenuProps {
     placement?: Placement
 }
 
-export const DropdownMenu: FC<PropsWithChildren<DropdownMenuProps>> = ({target, interaction = "click", placement = "bottom-start", children}) => {
+export const DropdownMenu: FC<PropsWithChildren<DropdownMenuProps>> = ({
+                                                                           target,
+                                                                           interaction = "click",
+                                                                           placement = "bottom-start",
+                                                                           children
+                                                                       }) => {
     const [opened, setOpened] = useState<boolean>(false)
 
     const {refs: {setReference, setFloating}, floatingStyles, context} = useFloating({
@@ -133,7 +140,12 @@ export const DropdownMenu: FC<PropsWithChildren<DropdownMenuProps>> = ({target, 
 
     return (
         <>
-            {React.cloneElement(targetElem, {...getReferenceProps({ref: setReference, style: {...targetElem.props.style, cursor: 'pointer'}})})}
+            {React.cloneElement(targetElem, {
+                ...getReferenceProps({
+                    ref: setReference,
+                    style: {...targetElem.props.style, cursor: 'pointer'}
+                })
+            })}
             {
                 opened &&
                 <S.DropdownOptions {...getFloatingProps({ref: setFloating, style: floatingStyles})}>
@@ -159,7 +171,6 @@ export const Tooltip: FC<PropsWithChildren<TooltipProps>> = (({text, children}) 
         middleware: [
             arrow({element: arrowRef}),
             flip(),
-            shift({}),
             offset(10),
         ],
         whileElementsMounted: autoUpdate,
@@ -178,9 +189,15 @@ export const Tooltip: FC<PropsWithChildren<TooltipProps>> = (({text, children}) 
 
     const a = middlewareData.arrow;
 
+    const child = useMemo(() =>
+            <div style={{width: "fit-content", height: "fit-content"}}>
+                {children}
+            </div>
+        , [children])
+
     return (
         <>
-            {React.cloneElement(<>{children}</>, {...getReferenceProps({ref: setReference})})}
+            {React.cloneElement(child, {...getReferenceProps({ref: setReference})})}
             {
                 opened &&
                 <S.Tooltip {...getFloatingProps({ref: setFloating, style: floatingStyles})}>
@@ -206,5 +223,6 @@ export const Tooltip: FC<PropsWithChildren<TooltipProps>> = (({text, children}) 
     )
 })
 
-export const FormGroup: React.FC<PropsWithChildren> = ({ children }) => <S.FormGroup>{children}</S.FormGroup>;
-export const FormLabel: React.FC<PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement>>> = (props) => <S.FormLabel {...props} />;
+export const FormGroup: React.FC<PropsWithChildren> = ({children}) => <S.FormGroup>{children}</S.FormGroup>;
+export const FormLabel: React.FC<PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement>>> = (props) =>
+    <S.FormLabel {...props} />;
