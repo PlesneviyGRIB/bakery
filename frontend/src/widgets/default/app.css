@@ -1,0 +1,18 @@
+:root{
+    --header-height: 140px;
+
+    --color-light-turquoise: #85a6b1;
+    --color-light-blue: #caedde;
+
+    --color-deep-dark-gray: #3c4245;
+    --color-dark-gray: #757a79;
+    --color-light-gray: #9ba6a5;
+    --color-whitish: #f0ece2;
+    --color-beige: #dfd3c3;
+    --color-sandy: #c7b198;
+    --color-gray-violet : #8f8787;
+    --color-dark-blue: #596e79;
+    --color-turquoise: #7fa99b;
+    --color-light-orange: #fdc57b;
+    --color-yellow: #ffc93c;
+}
