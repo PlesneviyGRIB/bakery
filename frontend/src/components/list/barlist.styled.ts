@@ -2,14 +2,11 @@ import styled from "styled-components";
 
 const Bar = styled.div`
   border: 1px solid black;
-  border-radius: 20px;
-  min-width: 200px;
-  max-width: 400px;
-  min-height: 200px;
-  max-height: 200px;
-  
-  width: 100%;
-  height: 100%;
+  border-radius: 5%;
+  min-width: 160px;
+  width: min(100%, 360px);
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
 `
 
 const ListRow = styled.div`
@@ -19,7 +16,12 @@ const ListRow = styled.div`
   gap: 1em;
 `
 
+const List = styled.div`
+    padding: 5px 0;
+`
+
 export const Styled = {
     Bar,
-    ListRow
+    ListRow,
+    List
 }

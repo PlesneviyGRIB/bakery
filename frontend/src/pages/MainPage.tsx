@@ -9,7 +9,7 @@ export const MainPage : FC = () => {
         <>
             <S.Header></S.Header>
             <S.Body>
-                <BarList<ProductDto> list={products} perRow={3} onSelectItem={(id) => {}}/>
+                <BarList<ProductDto> list={products} perRow={4} onSelectItem={(id) => {}}/>
             </S.Body>
         </>
     )

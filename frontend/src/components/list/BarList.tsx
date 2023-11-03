@@ -27,12 +27,12 @@ export const BarList = <T extends ProductDto>({
     console.log(matrix)
 
     return (
-        <>
+        <S.List>
             {matrix.map((row, index) =>
                 <S.ListRow key={index}>
                     {row.map(item => <Bar key={item.id} item={item} onSelect={onSelectItem}/>)}
                 </S.ListRow>
             )}
-        </>
+        </S.List>
     )
 }

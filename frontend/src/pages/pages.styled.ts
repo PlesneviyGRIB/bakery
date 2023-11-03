@@ -12,7 +12,7 @@ const Body = styled.div`
   height: calc(100% - var(--header-height));
   width: 100%;
   background-color: var(--color-whitish);
-  overflow: scroll;
+  overflow: scroll scroll;
 `
 
 export const Styled = {
