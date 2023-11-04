@@ -1,46 +1,57 @@
 package com.savchenko.backend.service.supportive;
 
+import com.savchenko.backend.dao.base.PageData;
+import com.savchenko.backend.dto.PageResponseDto;
 import com.savchenko.backend.dto.product.*;
 import com.savchenko.backend.model.Product;
 import com.savchenko.backend.model.business.Cookie;
 import com.savchenko.backend.model.business.Marshmallow;
 import com.savchenko.backend.model.business.Pie;
 
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 public class BakeryConverter {
-    public static Cookie newCookieDtoToModel(NewCookieDto dto){
+    public static Cookie newCookieDtoToModel(NewCookieDto dto) {
         var product = new Cookie();
         newDtoToModelBaseConverter(dto, product);
         return product;
     }
 
-    public static Pie newPieDtoToModel(NewPieDto dto){
+    public static Pie newPieDtoToModel(NewPieDto dto) {
         var product = new Pie();
         newDtoToModelBaseConverter(dto, product);
         return product;
     }
 
-    public static Marshmallow newMarshmallowDtoToModel(NewMarshmallowDto dto){
+    public static Marshmallow newMarshmallowDtoToModel(NewMarshmallowDto dto) {
         var product = new Marshmallow();
         newDtoToModelBaseConverter(dto, product);
         return product;
     }
 
-    public static CookieDto cookieModelToDto(Cookie model){
+    public static CookieDto cookieModelToDto(Cookie model) {
         var dto = new CookieDto();
         modelToDtoBaseConverter(model, dto);
         return dto;
     }
 
-    public static PieDto pieModelToDto(Pie model){
+    public static PieDto pieModelToDto(Pie model) {
         var dto = new PieDto();
         modelToDtoBaseConverter(model, dto);
         return dto;
     }
 
-    public static MarshmallowDto marshmallowModelToDto(Marshmallow model){
+    public static MarshmallowDto marshmallowModelToDto(Marshmallow model) {
         var dto = new MarshmallowDto();
         modelToDtoBaseConverter(model, dto);
         return dto;
+    }
+
+    public static <M, D> PageResponseDto<D> pageDataToPageResponse(PageData<M> data, Function<M, D> mapper) {
+        return new PageResponseDto<>(
+                data.data().stream().map(mapper).collect(Collectors.toList()),
+                data.pageNumber(), data.pageSize(), data.totalPages(), data.totalCount());
     }
 
     private static void newDtoToModelBaseConverter(NewProductDto dto, Product model) {
