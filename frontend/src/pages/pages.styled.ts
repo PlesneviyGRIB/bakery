@@ -43,10 +43,31 @@ const Body = styled.div`
   position: relative;
   box-sizing: border-box;
   padding: 20px 8px 20px 20px;
+  
+`
+
+const Block = styled.div`
+  background-color: var(--color-white);
+  padding: 30px;
+  border-radius: 20px;
+  min-width: fit-content;
+`
+
+const Link = styled.div`
+  cursor: pointer;
+  color: var(--color-light-gray);
+  width: fit-content;
+
+  &:hover {
+    text-decoration: underline;
+    color: var(--color-blue);
+  }
 `
 
 export const Styled = {
     Header,
     Body,
     Pretzel,
+    Block,
+    Link
 }

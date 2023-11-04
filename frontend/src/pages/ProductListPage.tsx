@@ -6,8 +6,11 @@ import {Btn} from "../widgets/default/Btn";
 import {InfiniteList} from "../components/list/InfiniteList";
 import {ProductDto, ProductFilterDto} from "../api/rest-client";
 import {restClient} from "../api/axios.conf";
+import {useNavigate} from "react-router-dom";
 
 export const ProductListPage: FC = () => {
+    const navigate = useNavigate()
+
     const [productFilter, setProductFilter] = useState<ProductFilterDto>({category: "COOKIE"})
     const [state, onOpen, onClose] = useDialog()
     const [refresh, setRefresh] = useState<boolean>()
@@ -17,8 +20,8 @@ export const ProductListPage: FC = () => {
         onClose()
     }, [onClose])
 
-    const fetchProducts = useCallback((params : any) => restClient.products(params), [refresh])
-    const handleSelectProduct = useCallback(() => {}, [])
+    const fetchProducts = useCallback((params: any) => restClient.products(params), [refresh])
+    const handleSelectProduct = useCallback((id: number) => navigate(`${id}`, {relative: "path"}), [navigate])
     const renderProduct = useCallback((product: ProductDto) =>
         <>
             <div>{product.id}</div>
@@ -36,12 +39,13 @@ export const ProductListPage: FC = () => {
                 <Btn onClick={onOpen}>Новый продукт</Btn>
                 {state && <NewProduct onClose={onClose} onCreate={handleCreate}/>}
 
-                <InfiniteList<ProductDto, ProductFilterDto>
-                    fetchData={fetchProducts}
-                    onSelectItem={handleSelectProduct}
-                    filter={productFilter}
-                    renderItem={renderProduct}/>
-
+                <S.Block>
+                    <InfiniteList<ProductDto, ProductFilterDto>
+                        fetchData={fetchProducts}
+                        onSelectItem={handleSelectProduct}
+                        filter={productFilter}
+                        renderItem={renderProduct}/>
+                </S.Block>
             </S.Body>
         </>
     )
