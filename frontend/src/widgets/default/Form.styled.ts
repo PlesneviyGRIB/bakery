@@ -158,10 +158,11 @@ const Textarea = styled.textarea<{$limit?: number}>`
 `
 
 const Tooltip = styled.div`
-  padding: 8px 16px;
+  padding: 5px 12px;
   border-radius: 10px;
   background-color: var(--color-deep-dark-gray);
   color: var(--color-white);
+  z-index: 2000;
 `
 
 const FormLabel = styled.label`

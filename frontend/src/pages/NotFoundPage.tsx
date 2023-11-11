@@ -1,6 +1,7 @@
 import React, {FC, useCallback} from "react";
 import {Styled as S} from "./pages.styled";
 import {useNavigate} from "react-router-dom";
+import {Header} from "../components/Header";
 
 export const NotFoundPage: FC = () => {
     const navigate = useNavigate()
@@ -8,9 +9,7 @@ export const NotFoundPage: FC = () => {
 
     return (
         <>
-            <S.Header>
-                <S.Pretzel/>
-            </S.Header>
+            <Header/>
             <S.Body>
                 <S.Block>
                     <h3>Страница не найдена</h3>

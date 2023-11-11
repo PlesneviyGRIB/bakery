@@ -1,6 +1,7 @@
 import React, {FC, useEffect} from "react";
 import {Styled as S} from "./pages.styled";
 import {useNavigate, useParams} from "react-router-dom";
+import {Header} from "../components/Header";
 
 export const ProductPage: FC = () => {
     const navigate = useNavigate()
@@ -14,9 +15,7 @@ export const ProductPage: FC = () => {
 
     return(
         <>
-            <S.Header>
-                <S.Pretzel/>
-            </S.Header>
+            <Header />
             <S.Body>
             </S.Body>
         </>

@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import {PerRow} from "../components/list/PerRow";
 import {useSessionState} from "../hooks/useSessionState";
 import {FlexColumn, FlexRow} from "../widgets/default/Flex.styled";
+import {Header} from "../components/Header";
 
 const page = {
     perRowOptions: [3, 4, 5, 6]
@@ -28,14 +29,9 @@ export const ProductListPage: FC = () => {
         perRow: 5
     })
     const [state, onOpen, onClose] = useDialog()
-    const [refresh, setRefresh] = useState<boolean>()
 
-    const handleCreate = useCallback(() => {
-        setRefresh(prevState => !prevState)
-        onClose()
-    }, [onClose])
-
-    const fetchProducts = useCallback((params: any) => restClient.products(params), [refresh])
+    const handleCreate = useCallback(() => onClose(), [onClose])
+    const fetchProducts = useCallback((params: any) => restClient.products(params), [])
     const handleSelectProduct = useCallback((id: number) => navigate(`${id}`, {relative: "path"}), [navigate])
     const handleChangePerRow = useCallback((perRow: number) => setPageState(prevState => ({
         ...prevState,
@@ -51,10 +47,9 @@ export const ProductListPage: FC = () => {
 
     return (
         <>
-            <S.Header>
-                <S.Pretzel/>
+            <Header>
                 <Btn onClick={onOpen}>Новый продукт</Btn>
-            </S.Header>
+            </Header>
             <S.Body>
                 <FlexColumn>
                     <FlexRow $justifyContent={"flex-end"}>
