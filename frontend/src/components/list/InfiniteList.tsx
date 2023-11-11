@@ -1,33 +1,60 @@
-import {useEffect, useState} from "react";
+import {createRef, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {BaseDto, PageRequestDto, PageResponseDto} from "../../api/rest-client";
 import {BarList} from "./BarList";
+import {Styled as S} from "./barlist.styled";
+import {isInViewport} from "../../Utils";
+const debounce = require('lodash.debounce');
+
 
 interface InfiniteListProps<D, F> {
     filter: F
     fetchData: (pageRequest: PageRequestDto<F>) => Promise<PageResponseDto<D>>
     renderItem: (data: D) => JSX.Element
-    onSelectItem: (id: number) => void
+    onSelectItem: (id: number) => void,
+    perRow?: number
+    pageSize?: number
 }
 
 export const InfiniteList = <D extends BaseDto, F>({
                                                        filter,
                                                        fetchData,
                                                        renderItem,
-                                                       onSelectItem
+                                                       onSelectItem,
+                                                       perRow = 5,
+                                                       pageSize = 30,
                                                    }: InfiniteListProps<D, F>) => {
-    const [currentPage, setCurrentPage] = useState<PageResponseDto<D>>({
-        list: [],
-        pageNumber: 0,
-        pageSize: 0,
-        totalPages: 0,
-        totalCount: 0,
-    })
+    const [pages, setPages] = useState<PageResponseDto<D>[]>([])
+    const ref = createRef<HTMLDivElement>()
+    const list = useMemo(() => pages.flatMap(p => p.list), [pages])
+
+    const fetch = useCallback(() => {
+        const lastPage = pages.slice(-1)[0] || {pageNumber: -1, totalPages: 1}
+        const pageNumber = lastPage.totalPages > lastPage.pageNumber + 1 ? lastPage.pageNumber + 1 : -1
+        if(pageNumber != -1) {
+            fetchData({pageSize, pageNumber, filter})
+                .then(page => setPages(prevState => ([...prevState, page])))
+        }
+    }, [filter, pages, pageSize])
+
+    const handleScroll = useCallback(debounce(() => {
+        const element = ref.current?.querySelector("#scroll_bound")
+        if(element && isInViewport(element)){
+            fetch()
+        }
+    }, 50), [ref])
 
     useEffect(() => {
-        fetchData({pageSize: 50, pageNumber: 0, filter}).then(setCurrentPage)
-    }, [fetchData, filter])
+        setPages([])
+    }, [filter]);
+
+    useEffect(() => {
+        fetch()
+    }, [])
 
     return (
-        <BarList<D> list={currentPage.list} onSelectItem={onSelectItem} renderItem={renderItem} perRow={5}/>
+        <S.Scrollable ref={ref} onScroll={handleScroll}>
+            <BarList<D> list={list} onSelectItem={onSelectItem} renderItem={renderItem} perRow={perRow}/>
+            <div id={"scroll_bound"}/>
+        </S.Scrollable>
     )
 }

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import decoration from "../ui/pictures/decoration.svg"
 import pretzel from "../ui/pictures/pretzel.svg"
+import {Property} from "csstype";
 
 const Header = styled.div`
   height: var(--header-height);
@@ -42,13 +43,12 @@ const Body = styled.div`
   overflow: scroll scroll;  
   position: relative;
   box-sizing: border-box;
-  padding: 20px 8px 20px 20px;
-  
+  padding: 20px 8px 8px 20px;
 `
 
-const Block = styled.div`
+const Block = styled.div<{$padding?: Property.Padding}>`
   background-color: var(--color-white);
-  padding: 30px;
+  padding: ${({$padding}) => $padding || "20px"};
   border-radius: 20px;
   min-width: fit-content;
 `
@@ -69,5 +69,5 @@ export const Styled = {
     Body,
     Pretzel,
     Block,
-    Link
+    Link,
 }

@@ -26,12 +26,12 @@ export const BarList = <T extends BaseDto>({
     }, [list, perRow])
 
     return (
-        <S.List>
+        <>
             {matrix.map((row, index) =>
                 <S.ListRow key={index}>
                     {row.map(item => <S.Bar key={item.id} onClick={() => onSelectItem(item.id)}>{renderItem(item)}</S.Bar>)}
                 </S.ListRow>
             )}
-        </S.List>
+        </>
     )
 }
