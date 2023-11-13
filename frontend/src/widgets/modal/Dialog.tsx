@@ -31,7 +31,7 @@ export const Dialog: FC<PropsWithChildren<DialogProps>> = ({
             <ModalBody>{children}</ModalBody>
             <S.Hr/>
             <ModalButtons>
-                <Btn secondary onClick={onDecline ? onDecline : onClose}>Назад</Btn>
+                {onDecline && <Btn secondary onClick={onDecline}>Назад</Btn>}
                 <Btn primary onClick={onAccept} style={{width: "100px"}} disabled={disabled}>Ок</Btn>
             </ModalButtons>
         </Modal>

@@ -36,10 +36,14 @@ const Category = styled.div<{$selected?: boolean}>`
   aspect-ratio: 1/1;
   border-radius: 20%;
   cursor: pointer;
-  box-shadow: ${({$selected}) => $selected ? "0 0 10px 1px var(--color-deep-dark-gray)" : "0 0 5px 1px  var(--color-light-gray)"};
+  box-shadow: ${({$selected}) => $selected ? "0 0 10px 1px goldenrod" : "0 0 5px 1px  var(--color-light-gray)"};
+  background-color: ${({$selected}) => $selected && "rgba(247, 255, 0, 0.64)"};
   transition: 0.1s;
-  
-  &:hover{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
     box-shadow: 0 0 10px 1px var(--color-deep-dark-gray);
   }
 `
@@ -55,6 +59,7 @@ const FlexContainer = styled.div`
 const Header = styled.h1`
   font-weight: normal;
   width: fit-content;
+  margin: 40px 0 20px 0;
 `
 
 export const Styled = {

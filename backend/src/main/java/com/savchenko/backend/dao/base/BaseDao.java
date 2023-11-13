@@ -39,8 +39,8 @@ public abstract class BaseDao<R extends JpaRepository<E, Long>, E> {
         repository.deleteById(id);
     }
 
-    public void existsById(Long id) {
-        repository.existsById(id);
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
     }
 
     public void flush() {

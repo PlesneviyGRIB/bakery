@@ -43,3 +43,18 @@ body {
         border-radius: 5px;
     }
 }
+
+.loader-enter {
+    opacity: 0;
+}
+.loader-enter-active {
+    opacity: 1;
+    transition: opacity 200ms;
+}
+.loader-exit {
+    opacity: 1;
+}
+.loader-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+}

@@ -5,27 +5,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {NotFoundPage} from "./pages/NotFoundPage";
 import {ProductPage} from "./pages/ProductPage";
+import {PagePath} from "./types";
+import {Interceptor} from "./components/Interceptor";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <NotFoundPage />,
-        errorElement: <NotFoundPage />,
+        path: PagePath.NOT_FOUND,
+        element: <NotFoundPage/>,
+        errorElement: <NotFoundPage/>,
     },
     {
-        path: "/products",
-        element: <ProductListPage />,
+        path: PagePath.PRODUCTS,
+        element: <ProductListPage/>,
     },
     {
         path: "/products/:productId",
-        element: <ProductPage />,
+        element: <ProductPage/>,
     },
 ]);
 
 root.render(
-    <RouterProvider router={router} />
+    <>
+        <Interceptor />
+        <RouterProvider router={router}/>
+    </>
 );

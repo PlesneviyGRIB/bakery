@@ -1,9 +1,12 @@
-import React, {CSSProperties, FC, useCallback, useMemo, useState} from "react";
+import React, {CSSProperties, FC, useMemo, useState} from "react";
 import {ReactComponent as Decoration} from '../ui/pictures/decoration.svg';
+import {ReactComponent as Cookie} from '../ui/pictures/cookie.svg';
+import {ReactComponent as Pie} from '../ui/pictures/cake.svg';
+import {ReactComponent as Marshmallow} from '../ui/pictures/marshmallow.svg';
 import {Property} from "csstype";
 import {Tooltip} from "./default/Form";
 
-type Img = 'decoration'
+type Img = 'decoration' | 'cookie' | 'pie' | 'marshmallow'
 
 interface IconProps {
     img: Img,
@@ -21,6 +24,8 @@ export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, onClick}
         const style: CSSProperties = {
             minWidth: size,
             maxWidth: size,
+            minHeight: size,
+            maxHeight: size,
             aspectRatio: "1/1",
             transform,
             cursor: onClick && "pointer",
@@ -31,6 +36,12 @@ export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, onClick}
         switch (img) {
             case "decoration":
                 return <Decoration style={style} />
+            case "cookie":
+                return <Cookie style={style} />
+            case "pie":
+                return <Pie style={style} />
+            case "marshmallow":
+                return <Marshmallow style={style} />
             default:
                 return <></>
         }

@@ -6,10 +6,7 @@ import com.savchenko.backend.dto.product.NewProductDto;
 import com.savchenko.backend.dto.product.ProductDto;
 import com.savchenko.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
@@ -25,5 +22,15 @@ public class ProductController {
     @PostMapping("/list")
     public PageResponseDto<ProductDto> products(@RequestBody PageRequestDto<ProductFilterDto> pageRequestDto) {
         return productService.products(pageRequestDto);
+    }
+
+    @GetMapping("/{id}")
+    public ProductDto get(@PathVariable Long id) {
+        return productService.get(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        productService.delete(id);
     }
 }

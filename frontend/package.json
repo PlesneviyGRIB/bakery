@@ -23,9 +23,11 @@
     "react-bootstrap": "^0.32.4",
     "react-dom": "^18.2.0",
     "react-i18next": "^13.2.2",
+    "react-loader-spinner": "^5.4.5",
     "react-merge-refs": "^2.1.1",
     "react-router-dom": "^6.18.0",
     "react-scripts": "5.0.1",
+    "react-transition-group": "^4.4.5",
     "sort-by": "^1.2.0",
     "styled-components": "^6.0.8",
     "typescript": "^4.9.5",
@@ -56,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-transition-group": "^4.4.9",
     "file-loader": "^6.2.0"
   }
 }

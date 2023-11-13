@@ -19,3 +19,13 @@ export type Option = {
 export type Interaction = "hover" | "click"
 
 export type GeneralProduct = NewProductDto
+
+export enum PagePath {
+    PRODUCTS = '/products',
+    NOT_FOUND = '/'
+}
+
+export enum APP_EVENT {
+    INTERCEPTOR_ERROR = 'interceptor_error',
+    INTERCEPTOR_PENDING_STATUS = 'interceptor_pending_status'
+}

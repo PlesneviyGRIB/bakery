@@ -29,8 +29,7 @@ const Bookmarks = styled(FlexRow)`
 const Bookmark = styled.div<{$selected?: boolean, $title: string}>`
   min-width: 80px;
   border-bottom: 30px solid  ${({$selected}) => !$selected ? "var(--color-dark-blue)" : "var(--color-white)"} ;
-  border-right: 40px solid transparent;
-  border-radius: 10px 0 0 0;
+  border-radius: 10px 10px 0 0;
   cursor: pointer;
   flex-grow: ${({$selected}) => $selected ? 3 : 1};
   transition: 0.2s;
@@ -50,11 +49,11 @@ const Bookmark = styled.div<{$selected?: boolean, $title: string}>`
   &:before {
     content: "${({$title}) => $title}";
     position: absolute;
-    translate: 0 6px;
+    translate: 0 4px;
     display: block;
-    padding: 0 20px;
+    padding: 0 15px;
     font-size: 18px;
-    width: 95%;
+    width: 100%;
     color: ${({$selected}) => !$selected && "var(--color-white)"};
     ${TextOverflowEllipsis}
   }
