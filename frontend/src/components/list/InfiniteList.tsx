@@ -3,8 +3,7 @@ import {BaseDto, PageRequestDto, PageResponseDto} from "../../api/rest-client";
 import {BarList} from "./BarList";
 import {Styled as S} from "./barlist.styled";
 import {isInViewport} from "../../Utils";
-const debounce = require('lodash.debounce');
-
+import {debounce} from "../../App";
 
 interface InfiniteListProps<D, F> {
     filter: F

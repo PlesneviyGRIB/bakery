@@ -8,6 +8,8 @@ import {ProductPage} from "./pages/ProductPage";
 import {PagePath} from "./types";
 import {Interceptor} from "./components/Interceptor";
 
+export const debounce = require('lodash.debounce');
+
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );

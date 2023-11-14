@@ -1,7 +1,8 @@
-import React, {CSSProperties, FC, useDeferredValue, useMemo} from "react";
+import React, {CSSProperties, FC, useCallback, useEffect, useState} from "react";
 import {Triangle} from "react-loader-spinner";
 import {CSSTransition} from "react-transition-group"
 import {Style} from "react-loader-spinner/dist/type";
+import {debounce} from "../App";
 
 interface LoaderProps {
     show: boolean
@@ -10,7 +11,13 @@ interface LoaderProps {
 }
 
 export const Loader: FC<LoaderProps> = ({show, style = {}, size = 40}) => {
-    const visible = useDeferredValue<boolean>(show)
+    const [visible, setVisible] = useState(false)
+
+    const setDebounced = useCallback(debounce((value: boolean) => setVisible(value), 100), [setVisible])
+
+    useEffect(() => {
+        setDebounced(show)
+    }, [show, setDebounced]);
 
     return (
         <CSSTransition in={visible} timeout={300} classNames="loader" unmountOnExit>
