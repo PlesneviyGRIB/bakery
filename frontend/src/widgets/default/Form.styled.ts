@@ -102,7 +102,6 @@ const Select = styled.div<{$opened: boolean}>`
   ${input};
   height: 40px;
   position: relative;
-  font-size: 16px;
   background-color: var(--color-white);
   cursor: pointer;
   padding-right: 30px;
@@ -140,7 +139,6 @@ const SelectOptions = styled(DropdownOptions)`
 
 const DropdownOption = styled.li<{$selected?:boolean}>`
   padding: 10px 20px;
-  font-size: 16px;
   border-bottom: 1px solid var(--color-dark-gray);
   background-color: ${({$selected}) => $selected ? "var(--color-light-blue)" : "var(--color-white)"};
   ${TextOverflowEllipsis};
@@ -166,7 +164,6 @@ const Tooltip = styled.div`
 `
 
 const FormLabel = styled.label`
-  font-size: 16px;
   width: fit-content;
   ${TextOverflowEllipsis}
 `

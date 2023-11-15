@@ -32,6 +32,7 @@ const Body = styled.div`
   position: relative;
   box-sizing: border-box;
   padding: 20px 8px 8px 20px;
+  font-size: 14px;
 `
 
 const Block = styled.div<{$padding?: Property.Padding}>`

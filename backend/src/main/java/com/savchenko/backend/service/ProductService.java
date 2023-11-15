@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static com.savchenko.backend.service.supportive.BakeryConverter.pageDataToPageResponse;
@@ -26,13 +27,18 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public PageResponseDto<ProductDto> products(PageRequestDto<ProductFilterDto> request) {
-        var pageData = productDao.products(request.pageNumber, request.pageSize, new ProductFilterQ(request.filter).buildPredicate());
+        var filter = new ProductFilterQ(request.filter);
+        var pageData = productDao.products(
+                request.pageNumber,
+                request.pageSize,
+                List.of(filter.buildPredicate()),
+                filter.buildOrders());
         return pageDataToPageResponse(pageData, ProductToDtoMapper);
     }
 
     @Transactional(readOnly = true)
     public ProductDto get(Long id) {
-        var product = productDao.findById(id).get();
+        var product = productDao.findById(id).orElseThrow(() -> new NoSuchElementException(Message.format("NoSuchElement.product", id)));
         return ProductToDtoMapper.apply(product);
     }
 

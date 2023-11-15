@@ -20,6 +20,11 @@ export type Interaction = "hover" | "click"
 
 export type GeneralProduct = NewProductDto
 
+export type Named<T> = {
+    name: string
+    value: T
+}
+
 export enum PagePath {
     PRODUCTS = '/products',
     NOT_FOUND = '/'

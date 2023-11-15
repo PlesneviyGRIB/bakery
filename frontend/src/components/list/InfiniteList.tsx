@@ -26,29 +26,26 @@ export const InfiniteList = <D extends BaseDto, F>({
     const ref = createRef<HTMLDivElement>()
     const list = useMemo(() => pages.flatMap(p => p.list), [pages])
 
-    const fetch = useCallback(() => {
+    const fetch = useCallback((filter: F, pages: PageResponseDto<D>[]) => {
         const lastPage = pages.slice(-1)[0] || {pageNumber: -1, totalPages: 1}
         const pageNumber = lastPage.totalPages > lastPage.pageNumber + 1 ? lastPage.pageNumber + 1 : -1
         if(pageNumber != -1) {
             fetchData({pageSize, pageNumber, filter})
                 .then(page => setPages(prevState => ([...prevState, page])))
         }
-    }, [filter, pages, pageSize])
+    }, [pageSize])
 
     const handleScroll = useCallback(debounce(() => {
         const element = ref.current?.querySelector("#scroll_bound")
         if(element && isInViewport(element)){
-            fetch()
+            fetch(filter, pages)
         }
-    }, 50), [ref])
+    }, 50), [ref, filter, pages])
 
     useEffect(() => {
+        fetch(filter, [])
         setPages([])
     }, [filter]);
-
-    useEffect(() => {
-        fetch()
-    }, [])
 
     return (
         <S.Scrollable ref={ref} onScroll={handleScroll}>

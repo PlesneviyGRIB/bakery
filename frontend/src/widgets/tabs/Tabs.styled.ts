@@ -15,6 +15,7 @@ const Tab = styled.div`
   margin: 20px 0 0 0;
   padding: 5px 10px 5px 20px;
   overflow: scroll;
+  font-size: 14px;
 `
 
 const Bookmarks = styled(FlexRow)`
