@@ -3,7 +3,7 @@ import {ModalBody, ModalButtons, ModalHeader, Styled as S} from "./Modal.styled"
 import {Btn} from "../default/Btn";
 import {Modal, ModalProps} from "./Modal";
 
-interface DialogProps extends ModalProps {
+interface DialogProps extends Omit<ModalProps, "hideCross"> {
     title?: string;
     disabled?: boolean
     unmissable?: boolean

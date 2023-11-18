@@ -1,4 +1,5 @@
 import React, {ButtonHTMLAttributes, CSSProperties, PropsWithChildren, useMemo} from 'react';
+import styled from "styled-components";
 
 interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     primary?: boolean;
@@ -11,6 +12,13 @@ interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     sm?: boolean;
     style?: CSSProperties
 }
+
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+`
 
 export const Btn = React.forwardRef<HTMLButtonElement, PropsWithChildren<BtnProps>>(({ primary, info, secondary, success, danger, outline, round, sm, style, children, ...other }, ref) => {
     const classNames = useMemo(
@@ -30,8 +38,8 @@ export const Btn = React.forwardRef<HTMLButtonElement, PropsWithChildren<BtnProp
     );
 
     return (
-        <button ref={ref} className={classNames} style={style} {...other}>
+        <Button ref={ref} className={classNames} style={style} {...other}>
             {children}
-        </button>
+        </Button>
     );
 });

@@ -25,6 +25,12 @@ export type Named<T> = {
     value: T
 }
 
+export type Photo = {
+    src: string
+    title: string
+    description: string
+}
+
 export enum PagePath {
     PRODUCTS = '/products',
     NOT_FOUND = '/'

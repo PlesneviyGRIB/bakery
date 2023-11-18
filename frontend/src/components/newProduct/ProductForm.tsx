@@ -7,6 +7,7 @@ import {CollapsableBlock} from "../../widgets/supportive/CollapsableBlock";
 
 interface ProductFormProps {
     product: GeneralProduct
+
     onChangeProduct(product: GeneralProduct): void
 }
 
@@ -72,14 +73,14 @@ export const ProductForm: FC<ProductFormProps> = ({product, onChangeProduct}) =>
                     </S.InputWrapper>
                     <S.Measure>шт</S.Measure>
                 </FlexRow>
+                <FlexRow $justifyContent={"flex-end"}>
+                    <FormLabel>Возможен заказ</FormLabel>
+                    <S.InputWrapper>
+                        <Checkbox checked={product.orderAvailable} onChange={handleChangeOrderAvailable}/>
+                    </S.InputWrapper>
+                    <S.Measure/>
+                </FlexRow>
             </S.Block>
-            <FlexRow>
-                <FormLabel>
-                    Возможен заказ
-                </FormLabel>
-                <Checkbox checked={product.orderAvailable} onChange={handleChangeOrderAvailable}/>
-            </FlexRow>
-
             <CollapsableBlock collapsed={product.productionTime === undefined}
                               onChange={handleChangeCollapseProductionTime}>
                 <FlexRow $justifyContent={"flex-end"}>

@@ -78,7 +78,9 @@ const input = css`
   border-radius: 5px;
   font-size: 14px;
   padding: 10px;
-  width: clamp(100px, 100%, 600px);
+  min-width: 100px;
+  width: 100%;
+  max-width: 600px;
 `
 
 const Input = styled.input<{$limit?: number}>`
@@ -151,7 +153,6 @@ const DropdownOption = styled.li<{$selected?:boolean}>`
 const Textarea = styled.textarea<{$limit?: number}>`
   ${inputBase};
   ${input};
-  height: 160px;
   resize: none;
 `
 

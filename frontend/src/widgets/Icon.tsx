@@ -4,10 +4,12 @@ import {ReactComponent as Cookie} from '../ui/pictures/cookie.svg';
 import {ReactComponent as Pie} from '../ui/pictures/cake.svg';
 import {ReactComponent as Marshmallow} from '../ui/pictures/marshmallow.svg';
 import {ReactComponent as DropdownArrow} from '../ui/pictures/dropdown_arrow.svg';
+import {ReactComponent as Clip} from '../ui/pictures/clip.svg';
+import {ReactComponent as Cross} from '../ui/pictures/cross.svg';
 import {Property} from "csstype";
 import {Tooltip} from "./default/Form";
 
-type Img = 'decoration' | 'cookie' | 'pie' | 'marshmallow' | 'empty' | "dropdown_arrow"
+type Img = 'decoration' | 'cookie' | 'pie' | 'marshmallow' | 'empty' | "dropdown_arrow" | "clip" | "cross"
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
     img: Img,
@@ -21,7 +23,7 @@ export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, onClick,
     const [hovered, setHovered] = useState<boolean>(false);
 
     const element = useMemo(() => {
-        const transform = flip && (flip == 'vertical' ? "scaleY(-1)" : flip == 'horizontal' ? "scaleX(-1)" : "scaleX(-1) scaleY(-1)")
+        const transform = flip && (flip === 'vertical' ? "scaleY(-1)" : flip === 'horizontal' ? "scaleX(-1)" : "scaleX(-1) scaleY(-1)")
         const style: CSSProperties = {
             minWidth: size,
             maxWidth: size,
@@ -30,7 +32,7 @@ export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, onClick,
             aspectRatio: "1/1",
             transform,
             cursor: onClick && "pointer",
-            opacity: onClick && !hovered && '0.7' || '1',
+            opacity: (onClick && !hovered && '0.7') || '1',
             transition: "0.2s",
         }
 
@@ -45,6 +47,10 @@ export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, onClick,
                 return <Marshmallow style={style} />
             case "dropdown_arrow":
                 return <DropdownArrow style={style} />
+            case "clip":
+                return <Clip style={style} />
+            case "cross":
+                return <Cross style={style} />
             default:
                 return <span style={style}/>
         }

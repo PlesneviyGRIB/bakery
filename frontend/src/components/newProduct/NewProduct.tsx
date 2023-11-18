@@ -2,12 +2,14 @@ import React, {FC, useCallback} from "react";
 import {Tabs} from "../../widgets/tabs/Tabs";
 import {Tab} from "../../widgets/tabs/Tab";
 import {ProductForm} from "./ProductForm";
-import {GeneralProduct} from "../../types";
+import {GeneralProduct, Photo} from "../../types";
 import {ProductCategorySelection} from "./ProductCategorySelection";
 import {useSessionState} from "../../hooks/useSessionState";
 import {Modal} from "../../widgets/modal/Modal";
 import {Btn} from "../../widgets/default/Btn";
 import {restClient} from "../../api/axios.conf";
+import {NewPhoto} from "../photo/NewPhoto";
+import {useMemoryState} from "../../hooks/useMemoryState";
 
 interface NewProductProps {
     onClose(): void
@@ -27,6 +29,7 @@ const newProduct: GeneralProduct = {
 
 export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
     const [product, setProduct] = useSessionState<GeneralProduct>("NewProduct", () => newProduct)
+    const [photos, setPhotos] = useMemoryState<Photo[]>("NewProduct", () => [])
 
     const createNewProduct = useCallback(() => restClient.newProduct(product).then(onCreate), [product, onCreate])
 
@@ -40,7 +43,9 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
                     <ProductCategorySelection product={product} onChangeProduct={setProduct}/>
                 </Tab>
                 <Tab title={"Теги"}></Tab>
-                <Tab title={"Фотографии"}>third</Tab>
+                <Tab title={"Фотографии"}>
+                    <NewPhoto photos={photos} onChange={setPhotos} limit={4} />
+                </Tab>
                 <Tab title={"Предпросмотр"}>
                     <Btn primary onClick={createNewProduct}>Создать</Btn>
                 </Tab>

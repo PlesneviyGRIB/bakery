@@ -1,6 +1,7 @@
 import React, {FC, PropsWithChildren, useCallback} from "react";
 import {Styled as S} from "./Modal.styled";
 import {Property} from "csstype";
+import {Icon} from "../Icon";
 
 export interface ModalProps {
     onClose?: () => void
@@ -15,7 +16,7 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({onClose, hideCross, ch
     return (
         <S.ModalBackground onClick={onClose}>
             <S.Modal onClick={handlePropagation} $height={height} $width={width}>
-                {onClose && !hideCross && <S.Cross onClick={onClose}>X</S.Cross>}
+                {onClose && !hideCross && <Icon img={"cross"}/>}
                 {children}
             </S.Modal>
         </S.ModalBackground>
