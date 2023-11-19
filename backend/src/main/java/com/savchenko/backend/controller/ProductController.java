@@ -6,7 +6,9 @@ import com.savchenko.backend.dto.product.NewProductDto;
 import com.savchenko.backend.dto.product.ProductDto;
 import com.savchenko.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/products")
@@ -27,6 +29,15 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductDto get(@PathVariable Long id) {
         return productService.get(id);
+    }
+
+    @PostMapping("/{id}/photo")
+    public void addPhoto(@PathVariable("id") Long id,
+                         @RequestParam("title") String title,
+                         @RequestParam("description") String description,
+                         @RequestParam("primary") Boolean primary,
+                         @RequestParam MultipartFile file) {
+        productService.addPhoto(id, title, description, primary, file);
     }
 
     @DeleteMapping("/{id}")

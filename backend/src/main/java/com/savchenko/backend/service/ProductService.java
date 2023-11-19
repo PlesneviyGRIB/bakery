@@ -7,10 +7,17 @@ import com.savchenko.backend.dto.PageResponseDto;
 import com.savchenko.backend.dto.filter.ProductFilterDto;
 import com.savchenko.backend.dto.product.NewProductDto;
 import com.savchenko.backend.dto.product.ProductDto;
+import com.savchenko.backend.exception.BakeryException;
+import com.savchenko.backend.model.Photo;
 import com.savchenko.backend.utils.Message;
+import com.savchenko.backend.utils.ServiceUtils;
+import com.savchenko.backend.utils.Validator;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 import java.util.List;
@@ -22,8 +29,15 @@ import static com.savchenko.backend.service.supportive.BakeryMapper.ProductToDto
 
 @Service
 public class ProductService {
+
+    @Value("${image.product.max.count}")
+    private Long productPhotoCountLimit;
+
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private Validator validator;
 
     @Transactional(readOnly = true)
     public PageResponseDto<ProductDto> products(PageRequestDto<ProductFilterDto> request) {
@@ -38,7 +52,7 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductDto get(Long id) {
-        var product = productDao.findById(id).orElseThrow(() -> new NoSuchElementException(Message.format("NoSuchElement.product", id)));
+        var product = productDao.getById(id);
         return ProductToDtoMapper.apply(product);
     }
 
@@ -57,5 +71,20 @@ public class ProductService {
         var product = productDao.save(p);
 
         return ProductToDtoMapper.apply(product);
+    }
+
+    @Transactional
+    public void addPhoto(Long id, String title, String description, Boolean primary, MultipartFile file) {
+        validator.validateProductImage(file);
+
+        var product = productDao.getById(id);
+        var photos = product.getPhotos();
+
+        if(photos.size() >= productPhotoCountLimit) {
+            throw new BakeryException("Photos.countLimitExceeded", productPhotoCountLimit);
+        }
+
+        var photo = new Photo(ServiceUtils.toBase64(file), title, description, Instant.now(), primary);
+        product.addPhoto(photo);
     }
 }

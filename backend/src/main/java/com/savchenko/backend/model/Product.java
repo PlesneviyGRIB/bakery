@@ -2,14 +2,11 @@ package com.savchenko.backend.model;
 
 import com.savchenko.backend.interfaces.Tagged;
 import com.savchenko.backend.model.supportive.BaseEntity;
-import com.savchenko.backend.model.supportive.Draft;
-import com.savchenko.backend.utils.visitor.NewProductVisitor;
 import com.savchenko.backend.utils.visitor.ProductVisitor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -20,8 +17,10 @@ public abstract class Product extends BaseEntity<Product> implements Tagged {
     private Integer productionTime;
     private String title;
     private String description;
-
     private Float weight;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "entityId")
+    private List<Photo> photos;
 
     public Long getPrice() {
         return price;
@@ -79,9 +78,16 @@ public abstract class Product extends BaseEntity<Product> implements Tagged {
         this.weight = weight;
     }
 
-    @Override
-    public int compareTo(Product product) {
-        return this.getId().compareTo(product.getId());
+    public List<Photo> getPhotos() {
+        return photos.stream().sorted().toList();
+    }
+
+    public void addPhoto(Photo photo){
+        photos.add(photo);
+    }
+
+    public void removePhoto(Photo photo){
+        photos = photos.stream().filter(p -> !p.getId().equals(photo.getId())).toList();
     }
 
     public abstract <R> R accept(ProductVisitor<R> visitor);

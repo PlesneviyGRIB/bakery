@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="DEV-1.2" author="e.savchenko">
+        <createTable tableName="photo">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="entity_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="src" type="text"/>
+
+            <column name="title" type="varchar(128)"/>
+
+            <column name="description" type="varchar(1024)"/>
+
+            <column name="instant" type="timestamp with time zone">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="primary" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
