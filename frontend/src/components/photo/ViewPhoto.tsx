@@ -11,7 +11,7 @@ interface ViewPhotoProps {
 
 export const ViewPhoto: FC<ViewPhotoProps> = ({photo, onClose}) => {
     return (
-        <Modal height={"800px"} width={"1200px"} onClose={onClose} hideCross>
+        <Modal height={"80%"} width={"80%"} onClose={onClose} hideCross>
             {photo.title && <S.ViewPhotoTitle>{photo.title}</S.ViewPhotoTitle>}
             <S.ViewPhoto src={photo.src} alt={".."}/>
             {photo.description && <S.ViewPhotoDescription>{photo.description}</S.ViewPhotoDescription>}

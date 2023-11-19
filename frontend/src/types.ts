@@ -27,6 +27,7 @@ export type Named<T> = {
 
 export type Photo = {
     src: string
+    file: File
     title: string
     description: string
 }

@@ -1,5 +1,6 @@
 import React, {FC, useCallback, useMemo} from "react";
 import {Styled as S} from "./pages.styled";
+import {Styled as S1} from "./Product.styled";
 import {NewProduct} from "../components/newProduct/NewProduct";
 import {useDialog} from "../hooks/useDialogState";
 import {Btn} from "../widgets/default/Btn";
@@ -13,6 +14,7 @@ import {Header} from "../components/Header";
 import {Order} from "../components/Order";
 import {Named} from "../types";
 import {useSessionState} from "../hooks/useSessionState";
+import {Icon} from "../widgets/Icon";
 
 const page = {
     perRowOptions: [3, 4, 5, 6]
@@ -39,17 +41,29 @@ export const ProductListPage: FC = () => {
         ...prevState,
         perRow
     })), [setPageState])
-    const handleChangeFilter = useCallback((filter: ProductFilterDto) => setPageState(prevState => ({...prevState, filter})), [setPageState])
-    const handleChangeOrder = useCallback((order: OrderDto<ProductOrder>[]) => handleChangeFilter({...pageState.filter, order}),[pageState.filter])
+    const handleChangeFilter = useCallback((filter: ProductFilterDto) => setPageState(prevState => ({
+        ...prevState,
+        filter
+    })), [setPageState])
+    const handleChangeOrder = useCallback((order: OrderDto<ProductOrder>[]) => handleChangeFilter({
+        ...pageState.filter,
+        order
+    }), [pageState.filter])
 
-    const renderProduct = useCallback((product: ProductDto) =>
+    const renderProduct = useCallback((product: ProductDto) => {
+        return (
             <>
-                <div>{product.id}</div>
-                <div>{product.discriminator}</div>
+            {product.photos.length > 0 && <S1.BarImage src={product.photos[0].src} alt={".."} />}
+                <S1.BarProduct>
+                    <S1.BarIcon><Icon img={product.discriminator.toString().toLowerCase() as any} size={"100%"}/></S1.BarIcon>
+                    <div>{product.id}</div>
+                    <div>{product.discriminator}</div>
+                </S1.BarProduct>
             </>
-        , [])
+        )
+    }, [])
 
-    const orders : Named<ProductOrder>[] = useMemo(() => [
+    const orders: Named<ProductOrder>[] = useMemo(() => [
         {name: "По названию", value: "TITLE"},
         {name: "По цене", value: "PRICE"},
         {name: "По количеству", value: "COUNT"},
@@ -66,7 +80,8 @@ export const ProductListPage: FC = () => {
             <S.Body>
                 <FlexColumn>
                     <FlexRow $justifyContent={"space-between"}>
-                        <Order<ProductOrder> orders={orders} selected={pageState.filter.order} onChange={handleChangeOrder}/>
+                        <Order<ProductOrder> orders={orders} selected={pageState.filter.order}
+                                             onChange={handleChangeOrder}/>
                         <PerRow options={page.perRowOptions} onChange={handleChangePerRow} value={pageState.perRow}/>
                     </FlexRow>
                     <S.Block $padding={"0"} style={{height: "700px", overflow: "hidden"}}>

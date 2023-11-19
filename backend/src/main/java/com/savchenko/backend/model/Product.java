@@ -6,6 +6,7 @@ import com.savchenko.backend.utils.visitor.ProductVisitor;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public abstract class Product extends BaseEntity<Product> implements Tagged {
     private Float weight;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "entityId")
-    private List<Photo> photos;
+    private List<Photo> photos = new ArrayList<>();
 
     public Long getPrice() {
         return price;
@@ -83,6 +84,7 @@ public abstract class Product extends BaseEntity<Product> implements Tagged {
     }
 
     public void addPhoto(Photo photo){
+        photo.setEntityId(getId());
         photos.add(photo);
     }
 

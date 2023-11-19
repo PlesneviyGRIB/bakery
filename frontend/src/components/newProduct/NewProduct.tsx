@@ -13,6 +13,7 @@ import {useMemoryState} from "../../hooks/useMemoryState";
 
 interface NewProductProps {
     onClose(): void
+
     onCreate(): void
 }
 
@@ -31,7 +32,21 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
     const [product, setProduct] = useSessionState<GeneralProduct>("NewProduct", () => newProduct)
     const [photos, setPhotos] = useMemoryState<Photo[]>("NewProduct", () => [])
 
-    const createNewProduct = useCallback(() => restClient.newProduct(product).then(onCreate), [product, onCreate])
+    const createNewProduct = useCallback(() => {
+        restClient
+            .newProduct(product)
+            .then(product => photos.reduce((p, c) => p.then(() => {
+                    const {title, description, file} = c
+                    const formData = new FormData();
+                    formData.append("file", file)
+                    return restClient.addPhoto(product.id, formData as any, {
+                        title,
+                        description,
+                        isPreview: false
+                    })
+                }), Promise.resolve()).then(onClose)
+            )
+    }    , [product, onCreate, photos])
 
     return (
         <Modal height={"800px"} width={"1000px"} onClose={onClose} hideCross>
@@ -44,7 +59,7 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
                 </Tab>
                 <Tab title={"Теги"}></Tab>
                 <Tab title={"Фотографии"}>
-                    <NewPhoto photos={photos} onChange={setPhotos} limit={4} />
+                    <NewPhoto photos={photos} onChange={setPhotos} limit={4}/>
                 </Tab>
                 <Tab title={"Предпросмотр"}>
                     <Btn primary onClick={createNewProduct}>Создать</Btn>

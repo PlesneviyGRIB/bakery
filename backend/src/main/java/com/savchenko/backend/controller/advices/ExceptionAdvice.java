@@ -15,7 +15,8 @@ import java.util.NoSuchElementException;
 public class ExceptionAdvice {
 
     @ExceptionHandler(BakeryException.class)
-    public ExceptionResultDto general(BakeryException exception){
+    public ExceptionResultDto general(BakeryException exception) {
+        exception.printStackTrace();
         return new ExceptionResultDto(
                 exception.getClass().getSimpleName(),
                 exception.getMessage()
@@ -23,7 +24,8 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ExceptionResultDto noElement(NoSuchElementException exception){
+    public ExceptionResultDto noElement(NoSuchElementException exception) {
+        exception.printStackTrace();
         return new ExceptionResultDto(
                 Message.format("NoSuchElement"),
                 exception.getMessage()
@@ -31,7 +33,8 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ExceptionResultDto runtime(RuntimeException exception){
+    public ExceptionResultDto runtime(RuntimeException exception) {
+        exception.printStackTrace();
         return new ExceptionResultDto(
                 exception.getClass().getSimpleName(),
                 exception.getMessage()

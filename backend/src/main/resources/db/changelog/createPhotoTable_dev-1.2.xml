@@ -14,17 +14,19 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="src" type="text"/>
+            <column name="src" type="bytea">
+                <constraints nullable="false"/>
+            </column>
 
             <column name="title" type="varchar(128)"/>
 
             <column name="description" type="varchar(1024)"/>
 
             <column name="instant" type="timestamp with time zone">
-                <constraints nullable="true"/>
+                <constraints nullable="false"/>
             </column>
 
-            <column name="primary" type="boolean">
+            <column name="is_preview" type="boolean">
                 <constraints nullable="false"/>
             </column>
         </createTable>

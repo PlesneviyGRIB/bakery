@@ -6,11 +6,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public class ServiceUtils {
-    public static String toBase64(MultipartFile file){
+    public static String imageToBase64(MultipartFile file){
         try {
-            return "PREFIX" + Base64.encodeBase64String(file.getBytes());
+            return imageToBase64(file.getBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String imageToBase64(byte[] src){
+        return "data:image;base64, " + Base64.encodeBase64String(src);
     }
 }

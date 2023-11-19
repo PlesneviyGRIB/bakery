@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
 const Bar = styled.div`
-  border: 1px solid black;
   border-radius: 5%;
   min-width: 130px;
   width: min(100%, 360px);
   aspect-ratio: 1 / 1;
   cursor: pointer;
+  position: relative;
+  box-shadow: 0 0 2px 2px rgba(0,0,0,.1);
 `
 
 const ListRow = styled.div`
   display: flex;
   justify-content: space-evenly;
   padding: 10px;
-  overflow: hidden;
   gap: 2%;
 `
 

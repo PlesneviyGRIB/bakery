@@ -33,11 +33,11 @@ public class ProductController {
 
     @PostMapping("/{id}/photo")
     public void addPhoto(@PathVariable("id") Long id,
-                         @RequestParam("title") String title,
-                         @RequestParam("description") String description,
-                         @RequestParam("primary") Boolean primary,
-                         @RequestParam MultipartFile file) {
-        productService.addPhoto(id, title, description, primary, file);
+                         @RequestParam(value = "title") String title,
+                         @RequestParam(value = "description") String description,
+                         @RequestParam(value = "isPreview") Boolean isPreview,
+                         @RequestBody MultipartFile file) {
+        productService.addPhoto(id, title, description, isPreview, file);
     }
 
     @DeleteMapping("/{id}")

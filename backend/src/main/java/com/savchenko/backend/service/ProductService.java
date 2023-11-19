@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -74,7 +75,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void addPhoto(Long id, String title, String description, Boolean primary, MultipartFile file) {
+    public void addPhoto(Long id, String title, String description, Boolean isPreview, MultipartFile file) {
         validator.validateProductImage(file);
 
         var product = productDao.getById(id);
@@ -84,7 +85,11 @@ public class ProductService {
             throw new BakeryException("Photos.countLimitExceeded", productPhotoCountLimit);
         }
 
-        var photo = new Photo(ServiceUtils.toBase64(file), title, description, Instant.now(), primary);
-        product.addPhoto(photo);
+        try {
+            var photo = new Photo(file.getBytes(), title, description, Instant.now(), isPreview);
+            product.addPhoto(photo);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

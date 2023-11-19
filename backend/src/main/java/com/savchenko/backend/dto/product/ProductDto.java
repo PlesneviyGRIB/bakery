@@ -1,9 +1,11 @@
 package com.savchenko.backend.dto.product;
 
+import com.savchenko.backend.dto.PhotoDto;
 import com.savchenko.backend.dto.base.BaseDto;
 import com.savchenko.backend.enums.ProductCategory;
 
 import java.time.Instant;
+import java.util.List;
 
 public class ProductDto extends BaseDto {
     public ProductCategory discriminator;
@@ -14,6 +16,7 @@ public class ProductDto extends BaseDto {
     public String title;
     public String description;
     public Float weight;
+    public List<PhotoDto> photos;
 
     protected ProductDto(ProductCategory discriminator) {
         this.discriminator = discriminator;

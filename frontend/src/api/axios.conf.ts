@@ -2,14 +2,16 @@ import {ExceptionResultDto, RestApplicationClient} from "./rest-client";
 import axios from "axios";
 import {APP_EVENT} from "../types";
 
-const httpClient = axios
-httpClient.defaults.baseURL = "http://localhost:3000"
-
+export const httpClient = axios.create({baseURL: "http://localhost:3000"})
 export const restClient = new RestApplicationClient(httpClient)
+
 
 httpClient.interceptors.request.use(
     request => {
         document.dispatchEvent(new CustomEvent<boolean>(APP_EVENT.INTERCEPTOR_PENDING_STATUS, {detail: true}))
+        // TODO cz.habarta.typescript-generator needs to be well configured
+        // @ts-ignore
+        request.params = request.queryParams
         return request
     }
 )

@@ -24,7 +24,7 @@ export const NewPhoto: FC<NewPhotoProps> = ({photos, onChange, limit}) => {
         if (!file) {
             return
         }
-        onChange([...photos, {src: URL.createObjectURL(file), title: "", description: ""}])
+        onChange([...photos, {src: URL.createObjectURL(file), file, title: "", description: ""}])
     }, [ref, photos, onChange])
 
     const handleChangeTitle = useCallback((e: React.ChangeEvent<HTMLInputElement>, index: number) => {
