@@ -6,6 +6,7 @@ import com.savchenko.backend.enums.ProductOrder;
 import java.util.List;
 
 public class ProductFilterDto extends FilterDto {
+    public String keyword;
     public ProductCategory category;
     public List<OrderDto<ProductOrder>> order;
 }

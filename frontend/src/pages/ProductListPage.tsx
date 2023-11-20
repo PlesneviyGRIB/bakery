@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useMemo} from "react";
+import React, {ChangeEvent, FC, useCallback, useMemo} from "react";
 import {Styled as S} from "./pages.styled";
 import {Styled as S1} from "./Product.styled";
 import {NewProduct} from "../components/newProduct/NewProduct";
@@ -15,6 +15,7 @@ import {Order} from "../components/Order";
 import {Named} from "../types";
 import {useSessionState} from "../hooks/useSessionState";
 import {Icon} from "../widgets/Icon";
+import {useDebouncedValue} from "../hooks/useDebouncedValue";
 
 const page = {
     perRowOptions: [3, 4, 5, 6]
@@ -29,7 +30,7 @@ export const ProductListPage: FC = () => {
     const navigate = useNavigate()
 
     const [pageState, setPageState] = useSessionState<ProductListPageState>("ProductListPage", {
-        filter: {category: "COOKIE", order: []},
+        filter: {keyword: '', order: []} as any,
         perRow: 5
     })
     const [state, onOpen, onClose] = useDialog()
@@ -53,15 +54,26 @@ export const ProductListPage: FC = () => {
     const renderProduct = useCallback((product: ProductDto) => {
         return (
             <>
-            {product.photos.length > 0 && <S1.BarImage src={product.photos[0].src} alt={".."} />}
+                {product.photos.length > 0 && <S1.BarImage src={product.photos[0].src} alt={".."}/>}
                 <S1.BarProduct>
-                    <S1.BarIcon><Icon img={product.discriminator.toString().toLowerCase() as any} size={"100%"}/></S1.BarIcon>
+                    <S1.BarIcon><Icon img={product.discriminator.toString().toLowerCase() as any}
+                                      size={"100%"}/></S1.BarIcon>
                     <div>{product.id}</div>
                     <div>{product.discriminator}</div>
                 </S1.BarProduct>
             </>
         )
     }, [])
+
+    const setKeyword = useCallback((keyword: string) => setPageState(prevState => ({
+        ...prevState,
+        filter: {...prevState.filter, keyword}
+    })), [setPageState])
+
+    const [searchValue, setSearchValue] = useDebouncedValue<string>(pageState.filter.keyword, setKeyword, 800)
+
+    const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value), [setSearchValue])
+
 
     const orders: Named<ProductOrder>[] = useMemo(() => [
         {name: "По названию", value: "TITLE"},
@@ -75,13 +87,23 @@ export const ProductListPage: FC = () => {
     return (
         <>
             <Header>
-                <Btn onClick={onOpen}>Новый продукт</Btn>
+                <S.HeaderLine>
+                    <Btn onClick={onOpen}>Новый продукт</Btn>
+                </S.HeaderLine>
+                <S.HeaderLine>
+                    <FlexRow $justifyContent={"center"}>
+                        <S.Search placeholder={"Поиск по товарам"} value={searchValue} onChange={handleSearch}/>
+                    </FlexRow>
+                </S.HeaderLine>
             </Header>
             <S.Body>
                 <FlexColumn>
                     <FlexRow $justifyContent={"space-between"}>
-                        <Order<ProductOrder> orders={orders} selected={pageState.filter.order}
-                                             onChange={handleChangeOrder}/>
+                        <Order<ProductOrder>
+                            orders={orders}
+                            selected={pageState.filter.order}
+                            onChange={handleChangeOrder}
+                        />
                         <PerRow options={page.perRowOptions} onChange={handleChangePerRow} value={pageState.perRow}/>
                     </FlexRow>
                     <S.Block $padding={"0"} style={{height: "700px", overflow: "hidden"}}>

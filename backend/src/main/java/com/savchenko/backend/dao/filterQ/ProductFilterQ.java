@@ -1,6 +1,5 @@
 package com.savchenko.backend.dao.filterQ;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -29,6 +28,12 @@ public class ProductFilterQ {
 
     public Predicate buildPredicate() {
         var predicate = new BooleanBuilder();
+
+        if (filter.keyword != null && !filter.keyword.isEmpty()) {
+            predicate
+                    .and(product.title.contains(filter.keyword))
+                    .or(product.description.contains(filter.keyword));
+        }
 
         Optional
                 .ofNullable(filter.category)

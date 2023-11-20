@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import pretzel from "../ui/pictures/pretzel.svg"
 import {Property} from "csstype";
+import {Input} from "../widgets/default/Form";
 
 const Header = styled.div`
   height: var(--header-height);
   background-color: var(--color-light-blue);
-  box-shadow: 0 0 5px 1px var(--color-gray-violet);
+  box-shadow: 0 0 2px 1px var(--color-gray-violet);
+  position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
@@ -53,6 +55,16 @@ const Link = styled.div`
   }
 `
 
+const Search = styled(Input)`
+  max-width: 500px;
+  transform: translateY(-6px);
+  text-align: center;
+`
+
+const HeaderLine = styled.div`
+    height: 50%;
+`
+
 export const Styled = {
     Header,
     HeaderArea,
@@ -60,4 +72,6 @@ export const Styled = {
     Pretzel,
     Block,
     Link,
+    HeaderLine,
+    Search,
 }
