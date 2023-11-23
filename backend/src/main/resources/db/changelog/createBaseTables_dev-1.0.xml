@@ -21,7 +21,7 @@
             <column name="title" type="varchar(128)">
                 <constraints nullable="true"/>
             </column>
-            <column name="description" type="varchar(2048)">
+            <column name="description" type="varchar(8192)">
                 <constraints nullable="true"/>
             </column>
         </createTable>

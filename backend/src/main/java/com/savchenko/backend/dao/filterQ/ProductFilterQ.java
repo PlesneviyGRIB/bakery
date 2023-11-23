@@ -31,8 +31,8 @@ public class ProductFilterQ {
 
         if (filter.keyword != null && !filter.keyword.isEmpty()) {
             predicate
-                    .and(product.title.contains(filter.keyword))
-                    .or(product.description.contains(filter.keyword));
+                    .and(product.title.containsIgnoreCase(filter.keyword))
+                    .or(product.description.containsIgnoreCase(filter.keyword));
         }
 
         Optional

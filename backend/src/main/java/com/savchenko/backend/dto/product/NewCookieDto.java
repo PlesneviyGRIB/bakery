@@ -12,4 +12,9 @@ public class NewCookieDto extends NewProductDto {
     public <R> R accept(NewProductVisitor<R> visitor) {
         return visitor.visit(this);
     }
+
+    @Override
+    public void validate() {
+        super.validate();
+    }
 }

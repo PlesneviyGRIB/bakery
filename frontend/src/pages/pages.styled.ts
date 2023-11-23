@@ -6,7 +6,7 @@ import {Input} from "../widgets/default/Form";
 const Header = styled.div`
   height: var(--header-height);
   background-color: var(--color-light-blue);
-  box-shadow: 0 0 2px 1px var(--color-gray-violet);
+  box-shadow: 0 0 5px 1px rgba(0,0,0,.2);
   position: relative;
   z-index: 1;
   display: flex;

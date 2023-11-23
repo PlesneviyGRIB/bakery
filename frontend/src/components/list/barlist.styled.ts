@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 
 const Bar = styled.div`
   border-radius: 5%;
@@ -7,7 +7,16 @@ const Bar = styled.div`
   aspect-ratio: 1 / 1;
   cursor: pointer;
   position: relative;
-  box-shadow: 0 0 2px 2px rgba(0,0,0,.1);
+  box-shadow: 0 0 10px 1px rgba(0,0,0,.1);
+  
+  transition: 0.5s;
+  
+  &:hover {
+    box-shadow: 0 0 10px 2px rgba(0,0,0,.4);
+    div[aria-label] {
+      scale: 1.08;
+    }
+  }
 `
 
 const ListRow = styled.div`

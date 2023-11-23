@@ -54,12 +54,15 @@ export const ProductListPage: FC = () => {
     const renderProduct = useCallback((product: ProductDto) => {
         return (
             <>
-                {product.photos.length > 0 && <S1.BarImage src={product.photos[0].src} alt={".."}/>}
+                <S1.BarImage src={product.photos.length ? product.photos[0].src : "/default.png"} alt={".."}/>
                 <S1.BarProduct>
-                    <S1.BarIcon><Icon img={product.discriminator.toString().toLowerCase() as any}
-                                      size={"100%"}/></S1.BarIcon>
-                    <div>{product.id}</div>
-                    <div>{product.discriminator}</div>
+                    <S1.BarIcon aria-label={""} >
+                        <Icon img={product.discriminator.toString().toLowerCase() as any} size={"100%"}/>
+                    </S1.BarIcon>
+                    <S1.BarText>
+                        <S1.BarTitle>{product.title}</S1.BarTitle>
+                        <S1.BarDescription>{product.description}</S1.BarDescription>
+                    </S1.BarText>
                 </S1.BarProduct>
             </>
         )

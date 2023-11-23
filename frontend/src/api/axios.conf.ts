@@ -29,6 +29,6 @@ httpClient.interceptors.response.use(
             document.dispatchEvent(new CustomEvent<ExceptionResultDto>(APP_EVENT.INTERCEPTOR_ERROR, {detail: data}))
         }
 
-        return error
+        return Promise.reject(error)
     }
 )

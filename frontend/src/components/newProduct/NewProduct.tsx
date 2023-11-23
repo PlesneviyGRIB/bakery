@@ -44,8 +44,8 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
                         description,
                         isPreview: false
                     })
-                }), Promise.resolve()).then(onClose)
-            )
+                }), Promise.resolve()).then(onCreate)
+            ).catch(e => {})
     }    , [product, onCreate, photos])
 
     return (

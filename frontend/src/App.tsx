@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 
 root.render(
     <>
-        <Interceptor />
         <RouterProvider router={router}/>
+        <Interceptor />
     </>
 );

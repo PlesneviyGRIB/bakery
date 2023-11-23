@@ -1,6 +1,5 @@
 package com.savchenko.backend.model.business;
 
-import com.savchenko.backend.enums.ProductSize;
 import com.savchenko.backend.model.Product;
 import com.savchenko.backend.utils.visitor.ProductVisitor;
 import jakarta.persistence.Entity;

@@ -5,8 +5,8 @@ import com.savchenko.backend.dto.filter.ProductFilterDto;
 import com.savchenko.backend.dto.product.NewProductDto;
 import com.savchenko.backend.dto.product.ProductDto;
 import com.savchenko.backend.service.ProductService;
+import com.savchenko.backend.utils.annotation.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +17,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ProductDto newProduct(@RequestBody NewProductDto newProductDto) {
+    public ProductDto newProduct(@RequestBody @Validate NewProductDto newProductDto) {
         return productService.createProduct(newProductDto);
     }
 

@@ -54,7 +54,7 @@ export const ProductForm: FC<ProductFormProps> = ({product, onChangeProduct}) =>
             </FormGroup>
             <FormGroup>
                 <FormLabel>О товаре</FormLabel>
-                <Textarea placeholder={"не более 2048 символов"} value={product.description} $height={'200px'}
+                <Textarea placeholder={"не более 8192 символов"} value={product.description} $height={'200px'}
                           onChange={handleChangeDescription}/>
             </FormGroup>
             <S.Block>
@@ -68,7 +68,7 @@ export const ProductForm: FC<ProductFormProps> = ({product, onChangeProduct}) =>
                 <FlexRow $justifyContent={"flex-end"}>
                     <FormLabel>Количество единиц <b>в наличии</b></FormLabel>
                     <S.InputWrapper>
-                        <Input type={"number"} max={100} min={0} placeholder={`0-100`} value={product.count}
+                        <Input type={"number"} max={100} min={0} placeholder={`0-1000`} value={product.count}
                                onChange={handleChangeCount}/>
                     </S.InputWrapper>
                     <S.Measure>шт</S.Measure>
