@@ -16,6 +16,8 @@ export type Option = {
     title: string
 }
 
+export type Placeholder = "All" | "None"
+
 export type Interaction = "hover" | "click"
 
 export type GeneralProduct = NewProductDto

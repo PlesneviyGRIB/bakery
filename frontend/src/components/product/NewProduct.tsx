@@ -10,6 +10,8 @@ import {Btn} from "../../widgets/default/Btn";
 import {restClient} from "../../api/axios.conf";
 import {NewPhoto} from "../photo/NewPhoto";
 import {useMemoryState} from "../../hooks/useMemoryState";
+import {Styled as S} from "./ProductForm.styled"
+import {Icon} from "../../widgets/Icon";
 
 interface NewProductProps {
     onClose(): void
@@ -45,11 +47,12 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
                         isPreview: false
                     })
                 }), Promise.resolve()).then(onCreate)
-            ).catch(e => {})
-    }    , [product, onCreate, photos])
+            ).catch(e => {
+        })
+    }, [product, onCreate, photos])
 
     return (
-        <Modal height={"800px"} width={"1000px"} onClose={onClose} hideCross>
+        <Modal height={"800px"} width={"min(1000px, 100%)"} hideCross>
             <Tabs>
                 <Tab title={"Основные параметры"}>
                     <ProductForm product={product} onChangeProduct={setProduct}/>
@@ -65,6 +68,12 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
                     <Btn primary onClick={createNewProduct}>Создать</Btn>
                 </Tab>
             </Tabs>
+            <S.FinishBtn>
+                <Btn style={{width: "240px", height: "45px", paddingRight: "30px"}} secondary onClick={onClose}>
+                    <Icon img={"bookmark"} stroke={"white"}/>
+                    Завершить позже
+                </Btn>
+            </S.FinishBtn>
         </Modal>
     )
 }

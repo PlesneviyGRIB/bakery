@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC, useCallback, useMemo} from "react";
 import {Styled as S} from "./pages.styled";
 import {Styled as S1} from "./Product.styled";
-import {NewProduct} from "../components/newProduct/NewProduct";
+import {NewProduct} from "../components/product/NewProduct";
 import {useDialog} from "../hooks/useDialogState";
 import {Btn} from "../widgets/default/Btn";
 import {InfiniteList} from "../components/list/InfiniteList";
@@ -16,6 +16,8 @@ import {Named} from "../types";
 import {useSessionState} from "../hooks/useSessionState";
 import {Icon} from "../widgets/Icon";
 import {useDebouncedValue} from "../hooks/useDebouncedValue";
+import {ProductFilter} from "../components/product/ProductFilter";
+import {Tooltip} from "../widgets/default/Form";
 
 const page = {
     perRowOptions: [3, 4, 5, 6]
@@ -26,12 +28,23 @@ type ProductListPageState = {
     perRow: number
 }
 
+const defaultFilter: ProductFilterDto = {keyword: '', order: []} as any
+
+const orders: Named<ProductOrder>[] = [
+    {name: "По названию", value: "TITLE"},
+    {name: "По цене", value: "PRICE"},
+    {name: "По количеству", value: "COUNT"},
+    {name: "По времени производства", value: "PRODUCTION_TIME"},
+    {name: "По весу", value: "WEIGHT"},
+    {name: "По дате загрузки", value: "CREATION_TIME"},
+]
+
 export const ProductListPage: FC = () => {
     const navigate = useNavigate()
 
     const [pageState, setPageState] = useSessionState<ProductListPageState>("ProductListPage", {
-        filter: {keyword: '', order: []} as any,
-        perRow: 5
+        filter: defaultFilter,
+        perRow: 5,
     })
     const [state, onOpen, onClose] = useDialog()
 
@@ -49,14 +62,17 @@ export const ProductListPage: FC = () => {
     const handleChangeOrder = useCallback((order: OrderDto<ProductOrder>[]) => handleChangeFilter({
         ...pageState.filter,
         order
-    }), [pageState.filter])
+    }), [pageState.filter, handleChangeFilter])
+    const dropFilters = useCallback(() => handleChangeFilter({...defaultFilter, order: []}), [handleChangeFilter])
+
+    const filtersActive = useMemo(() => JSON.stringify(pageState.filter) !== JSON.stringify(defaultFilter), [pageState.filter])
 
     const renderProduct = useCallback((product: ProductDto) => {
         return (
             <>
                 <S1.BarImage src={product.photos.length ? product.photos[0].src : "/default.png"} alt={".."}/>
                 <S1.BarProduct>
-                    <S1.BarIcon aria-label={""} >
+                    <S1.BarIcon aria-label={""}>
                         <Icon img={product.discriminator.toString().toLowerCase() as any} size={"100%"}/>
                     </S1.BarIcon>
                     <S1.BarText>
@@ -77,16 +93,6 @@ export const ProductListPage: FC = () => {
 
     const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value), [setSearchValue])
 
-
-    const orders: Named<ProductOrder>[] = useMemo(() => [
-        {name: "По названию", value: "TITLE"},
-        {name: "По цене", value: "PRICE"},
-        {name: "По количеству", value: "COUNT"},
-        {name: "По времени производства", value: "PRODUCTION_TIME"},
-        {name: "По весу", value: "WEIGHT"},
-        {name: "По дате загрузки", value: "CREATION_TIME"},
-    ], [])
-
     return (
         <>
             <Header>
@@ -94,22 +100,32 @@ export const ProductListPage: FC = () => {
                     <Btn onClick={onOpen}>Новый продукт</Btn>
                 </S.HeaderLine>
                 <S.HeaderLine>
-                    <FlexRow $justifyContent={"center"}>
+                    <FlexRow $justifyContent={"center"} style={{gap: 0}}>
                         <S.Search placeholder={"Поиск по товарам"} value={searchValue} onChange={handleSearch}/>
+                        <S.DropFilters $visible={filtersActive}>
+                            <Tooltip text={"Сбросить фильтры"}>
+                                <Icon img={"cross"} onClick={dropFilters}/>
+                            </Tooltip>
+                        </S.DropFilters>
                     </FlexRow>
                 </S.HeaderLine>
             </Header>
             <S.Body>
-                <FlexColumn>
-                    <FlexRow $justifyContent={"space-between"}>
+                <FlexColumn style={{height: "100%"}}>
+                    <FlexRow $justifyContent={"space-between"} style={{zIndex: 10}}>
                         <Order<ProductOrder>
                             orders={orders}
                             selected={pageState.filter.order}
                             onChange={handleChangeOrder}
                         />
-                        <PerRow options={page.perRowOptions} onChange={handleChangePerRow} value={pageState.perRow}/>
+                        <FlexRow>
+                            <ProductFilter filter={pageState.filter} onChange={handleChangeFilter}/>
+                            <PerRow options={page.perRowOptions}
+                                    onChange={handleChangePerRow}
+                                    value={pageState.perRow}/>
+                        </FlexRow>
                     </FlexRow>
-                    <S.Block $padding={"0"} style={{height: "700px", overflow: "hidden"}}>
+                    <S.Block $padding={"0"} style={{overflow: "hidden"}}>
                         <InfiniteList<ProductDto, ProductFilterDto>
                             fetchData={fetchProducts}
                             onSelectItem={handleSelectProduct}

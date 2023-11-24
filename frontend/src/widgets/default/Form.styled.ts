@@ -114,7 +114,7 @@ const Select = styled.div<{$opened: boolean}>`
     rotate: ${({$opened}) => !$opened && '90deg'};
     display: block;
     position: absolute;
-    scale: 0.2;
+    scale: 0.16;
     right: -30px;
     top: -34px;
     transform-origin: center;
@@ -161,6 +161,7 @@ const Tooltip = styled.div`
   border-radius: 10px;
   background-color: var(--color-deep-dark-gray);
   color: var(--color-white);
+  font-size: 14px;
   z-index: 2000;
 `
 

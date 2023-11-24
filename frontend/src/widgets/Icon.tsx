@@ -6,10 +6,12 @@ import {ReactComponent as Marshmallow} from '../ui/pictures/marshmallow.svg';
 import {ReactComponent as DropdownArrow} from '../ui/pictures/dropdown_arrow.svg';
 import {ReactComponent as Clip} from '../ui/pictures/clip.svg';
 import {ReactComponent as Cross} from '../ui/pictures/cross.svg';
+import {ReactComponent as Filter} from '../ui/pictures/filter.svg';
+import {ReactComponent as Bookmark} from '../ui/pictures/bookmark.svg';
 import {Property} from "csstype";
 import {Tooltip} from "./default/Form";
 
-type Img = 'decoration' | 'cookie' | 'pie' | 'marshmallow' | 'empty' | "dropdown_arrow" | "clip" | "cross"
+type Img = 'decoration' | 'cookie' | 'pie' | 'marshmallow' | 'empty' | "dropdown_arrow" | "clip" | "cross" | "filter" | "bookmark"
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
     img: Img,
@@ -51,6 +53,10 @@ export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, onClick,
                 return <Clip style={style} />
             case "cross":
                 return <Cross style={style} />
+            case "filter":
+                return <Filter style={style} />
+            case "bookmark":
+                return <Bookmark style={style} />
             default:
                 return <span style={style}/>
         }

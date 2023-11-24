@@ -56,13 +56,20 @@ const Link = styled.div`
 `
 
 const Search = styled(Input)`
-  max-width: 500px;
-  transform: translateY(-6px);
+  max-width: 500px;  
+  width: max(50%, 300px);
   text-align: center;
 `
 
 const HeaderLine = styled.div`
     height: 50%;
+`
+
+const DropFilters = styled.div<{$visible: boolean}>`
+  transform: translateX(10px);
+  width: 0;
+  transition: 0.2s;
+  opacity: ${({$visible}) => $visible ? 1 : 0};
 `
 
 export const Styled = {
@@ -74,4 +81,5 @@ export const Styled = {
     Link,
     HeaderLine,
     Search,
+    DropFilters,
 }

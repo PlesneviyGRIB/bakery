@@ -27,7 +27,13 @@ const OrderTab  = styled.div`
   color: white;
 `
 
+const Popover = styled.div`
+  background-color: white;
+  padding: 10px;
+`
+
 export const Styled = {
     Order,
     OrderTab,
+    Popover,
 }

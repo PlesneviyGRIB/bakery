@@ -8,7 +8,7 @@ const ModalBackground = styled.div`
   height: 100vh;
   width: 100vw;
   z-index: 1000;
-  background-color: rgba(0,0,0,.1);
+  background-color: rgba(0,0,0,.2);
 `
 
 const Modal = styled.div<{$height?: Property.Height, $width?: Property.Width}>`

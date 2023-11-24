@@ -9,7 +9,7 @@ import React, {
     useState
 } from "react";
 import {Styled as S, TextOverflowEllipsisDiv} from "./Form.styled"
-import {Interaction, Option} from "../../types";
+import {Option, Placeholder} from "../../types";
 import {
     arrow,
     autoUpdate,
@@ -70,14 +70,15 @@ export const Textarea: FC<InputHTMLAttributes<HTMLTextAreaElement> & {
     )
 }
 
-interface SelectProps<T extends Option> {
-    options: T[]
-    selected?: T
+interface SelectProps {
+    options: Option[]
+    selectedId?: number
+    placeholder?: Placeholder
 
-    onSelect(option: T): void
+    onSelect(id: number | undefined): void
 }
 
-export const Select = <T extends Option>({options, selected, onSelect}: SelectProps<T>): JSX.Element => {
+export const Select: FC<SelectProps> = ({options, selectedId, placeholder, onSelect}): JSX.Element => {
     const [opened, setOpened] = useState<boolean>(false)
 
     const {refs: {setReference, setFloating}, floatingStyles, context} = useFloating({
@@ -89,15 +90,26 @@ export const Select = <T extends Option>({options, selected, onSelect}: SelectPr
     const dismiss = useDismiss(context);
     const {getReferenceProps, getFloatingProps} = useInteractions([click, dismiss]);
 
+    const selected = selectedId !== undefined && options.find(o => o.id === selectedId)
+
     return (
         <S.Select $opened={opened} {...getReferenceProps({ref: setReference})}>
-            {selected && <TextOverflowEllipsisDiv>{selected.title}</TextOverflowEllipsisDiv>}
+            {(selected || placeholder) &&
+                <TextOverflowEllipsisDiv>{selected ? selected.title : placeholder}</TextOverflowEllipsisDiv>}
             {
                 opened &&
                 <S.SelectOptions {...getFloatingProps({ref: setFloating, style: floatingStyles})}>
+                    {placeholder &&
+                        <S.DropdownOption $selected={selectedId === undefined} onClick={() => onSelect(undefined)}>
+                            {placeholder}
+                        </S.DropdownOption>
+                    }
                     {options.map(o =>
-                        <S.DropdownOption key={o.id} $selected={o.id === selected?.id}
-                                          onClick={() => onSelect(o)}>{o.title}</S.DropdownOption>
+                        <S.DropdownOption key={o.id}
+                                          $selected={o.id === selectedId}
+                                          onClick={() => onSelect(o.id)}>
+                            {o.title}
+                        </S.DropdownOption>
                     )}
                 </S.SelectOptions>
             }
@@ -115,13 +127,11 @@ export const DropdownOption: FC<PropsWithChildren> = ({children}) => {
 
 interface DropdownMenuProps {
     target: () => JSX.Element
-    interaction?: Interaction
     placement?: Placement
 }
 
 export const DropdownMenu: FC<PropsWithChildren<DropdownMenuProps>> = ({
                                                                            target,
-                                                                           interaction = "click",
                                                                            placement = "bottom-start",
                                                                            children
                                                                        }) => {

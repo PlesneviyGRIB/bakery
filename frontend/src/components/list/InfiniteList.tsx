@@ -1,9 +1,10 @@
-import {createRef, useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {createRef, useCallback, useEffect, useMemo, useState} from "react";
 import {BaseDto, PageRequestDto, PageResponseDto} from "../../api/rest-client";
 import {BarList} from "./BarList";
 import {Styled as S} from "./barlist.styled";
 import {isInViewport} from "../../Utils";
 import {debounce} from "../../App";
+import {FlexRow, Gray} from "../../widgets/default/Flex.styled";
 
 interface InfiniteListProps<D, F> {
     filter: F
@@ -29,7 +30,7 @@ export const InfiniteList = <D extends BaseDto, F>({
     const fetch = useCallback((filter: F, pages: PageResponseDto<D>[]) => {
         const lastPage = pages.slice(-1)[0] || {pageNumber: -1, totalPages: 1}
         const pageNumber = lastPage.totalPages > lastPage.pageNumber + 1 ? lastPage.pageNumber + 1 : -1
-        if(pageNumber != -1) {
+        if (pageNumber != -1) {
             fetchData({pageSize, pageNumber, filter})
                 .then(page => setPages(prevState => ([...prevState, page])))
         }
@@ -37,7 +38,7 @@ export const InfiniteList = <D extends BaseDto, F>({
 
     const handleScroll = useCallback(debounce(() => {
         const element = ref.current?.querySelector("#scroll_bound")
-        if(element && isInViewport(element)){
+        if (element && isInViewport(element)) {
             fetch(filter, pages)
         }
     }, 50), [ref, filter, pages])
@@ -49,7 +50,10 @@ export const InfiniteList = <D extends BaseDto, F>({
 
     return (
         <S.Scrollable ref={ref} onScroll={handleScroll}>
-            <BarList<D> list={list} onSelectItem={onSelectItem} renderItem={renderItem} perRow={perRow}/>
+            {list.length ?
+                <BarList<D> list={list} onSelectItem={onSelectItem} renderItem={renderItem} perRow={perRow}/>
+                : <FlexRow $justifyContent={"center"}><Gray>No content</Gray></FlexRow>
+            }
             <div id={"scroll_bound"}/>
         </S.Scrollable>
     )

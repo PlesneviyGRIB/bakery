@@ -17,3 +17,7 @@ export const FlexRow = styled.div<{ $gap?: Property.Gap; $justifyContent?: Prope
 export const FlexGrow = styled.div`
     flex-grow: 1;
 `;
+
+export const Gray = styled.div`
+    color: var(--color-dark-gray);
+`

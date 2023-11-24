@@ -31,7 +31,7 @@ const Block = styled.div`
 `
 
 const Category = styled.div<{$selected?: boolean}>`
-  width: 160px;
+  width: 120px;
   aspect-ratio: 1/1;
   border-radius: 20%;
   cursor: pointer;
@@ -61,6 +61,40 @@ const Header = styled.h1`
   margin: 40px 0 20px 0;
 `
 
+const Filter = styled.div<{$active: boolean}>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  transition: 0.2s;
+  background-color: ${({$active}) => $active ? "var(--color-light-blue)" : "white"};
+  border-radius: 5px;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, .2);
+`
+
+const FilterMenu = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+  background-color: white;
+  width: 400px;
+  box-shadow: 0 0 5px 1px rgba(0,0,0,.2);
+  border-radius: 5px;
+`
+
+const Label = styled.div`
+  width: 180px;
+  font-size: 14px;
+`
+
+const FinishBtn = styled.div`
+  position: absolute;
+  bottom: -50px;
+  right: 0;
+`
+
 export const Styled = {
     Wrapper,
     Measure,
@@ -71,4 +105,8 @@ export const Styled = {
     Category,
     FlexContainer,
     Header,
+    Filter,
+    FilterMenu,
+    Label,
+    FinishBtn,
 }
