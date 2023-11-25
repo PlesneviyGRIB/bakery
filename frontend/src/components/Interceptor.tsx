@@ -28,7 +28,7 @@ export const Interceptor: FC = () => {
 
     return (
         <>
-            <Loader show={isPending} size={30} style={{position: "absolute", left: "50%", transform: "translateX(-50%) translateY(-2px)", scale: "1 -1", backgroundColor: "#caedde"}}/>
+            <Loader show={isPending} size={30} style={{position: "absolute", zIndex:500, top:0, left: "50%", transform: "translateX(-50%) translateY(-2px)", scale: "1 -1", backgroundColor: "#caedde"}}/>
             {
                 state &&
                 <Dialog onClose={close} onAccept={close} title={state.title} unmissable>

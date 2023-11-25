@@ -9,14 +9,14 @@ import java.util.Objects;
 
 @Component
 public class Validator {
-    @Value("${image.product.max.size}")
-    private Long productImageSizeLimit;
+    @Value("${image.max.size}")
+    private Long imageMaxSize;
 
-    public void validateProductImage(MultipartFile file) {
+    public void validateImage(MultipartFile file) {
         isImage(file);
 
-        if(file.getSize() > productImageSizeLimit){
-            throw new BakeryException("Photos.sizeLimitExceeded", file.getName(), productImageSizeLimit, file.getSize());
+        if(file.getSize() > imageMaxSize){
+            throw new BakeryException("Photos.sizeLimitExceeded", file.getName(), imageMaxSize, file.getSize());
         }
     }
 

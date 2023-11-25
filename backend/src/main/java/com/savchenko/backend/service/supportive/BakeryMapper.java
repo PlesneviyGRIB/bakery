@@ -8,38 +8,41 @@ import com.savchenko.backend.model.business.Pie;
 import com.savchenko.backend.utils.visitor.NewProductVisitor;
 import com.savchenko.backend.utils.visitor.ProductVisitor;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class BakeryMapper {
-    public static final Function<Product, ProductDto> ProductToDtoMapper = product ->
+    public static final BiFunction<Product, Boolean, ProductDto> ProductToDtoMapper = (product, light) ->
             product.accept(new ProductVisitor<ProductDto>() {
+                private final ProductConverter converter = new ProductConverter(light);
                 @Override
                 public ProductDto visit(Cookie cookie) {
-                    return BakeryConverter.cookieModelToDto(cookie);
+                    return converter.cookieModelToDto(cookie);
                 }
                 @Override
                 public ProductDto visit(Pie pie) {
-                    return BakeryConverter.pieModelToDto(pie);
+                    return converter.pieModelToDto(pie);
                 }
                 @Override
                 public ProductDto visit(Marshmallow marshmallow) {
-                    return BakeryConverter.marshmallowModelToDto(marshmallow);
+                    return converter.marshmallowModelToDto(marshmallow);
                 }
             });
 
     public static final Function<NewProductDto, Product> NewProductDtoToModelMapper = productDto ->
             productDto.accept(new NewProductVisitor<Product>() {
+                private final ProductConverter converter = new ProductConverter();
                 @Override
                 public Product visit(NewCookieDto dto) {
-                    return BakeryConverter.newCookieDtoToModel(dto);
+                    return converter.newCookieDtoToModel(dto);
                 }
                 @Override
                 public Product visit(NewPieDto dto) {
-                    return BakeryConverter.newPieDtoToModel(dto);
+                    return converter.newPieDtoToModel(dto);
                 }
                 @Override
                 public Product visit(NewMarshmallowDto dto) {
-                    return BakeryConverter.newMarshmallowDtoToModel(dto);
+                    return converter.newMarshmallowDtoToModel(dto);
                 }
             });
 }

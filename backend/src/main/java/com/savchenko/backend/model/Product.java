@@ -20,7 +20,7 @@ public abstract class Product extends BaseEntity<Product> implements Tagged {
     private String description;
     private Float weight;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "entityId")
+    @JoinColumn(name = "productId")
     private List<Photo> photos = new ArrayList<>();
 
     public Long getPrice() {
@@ -84,7 +84,6 @@ public abstract class Product extends BaseEntity<Product> implements Tagged {
     }
 
     public void addPhoto(Photo photo){
-        photo.setEntityId(getId());
         photos.add(photo);
     }
 

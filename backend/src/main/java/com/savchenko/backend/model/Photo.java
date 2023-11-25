@@ -7,15 +7,16 @@ import java.time.Instant;
 
 @Entity
 public class Photo extends BaseEntity<Photo> {
-    private Long entityId;
     private byte[] src;
+    private byte[] compressed;
     private String title;
     private String description;
     private Instant instant;
     private boolean isPreview;
 
-    public Photo(byte[] src, String title, String description, Instant instant, Boolean isPreview) {
+    public Photo(byte[] src, byte[] compressed, String title, String description, Instant instant, Boolean isPreview) {
         this.src = src;
+        this.compressed = compressed;
         this.title = title;
         this.description = description;
         this.instant = instant;
@@ -26,12 +27,12 @@ public class Photo extends BaseEntity<Photo> {
 
     }
 
-    public void setEntityId(Long id){
-        entityId = id;
-    }
-
     public byte[] getSrc() {
         return src;
+    }
+
+    public byte[] getCompressed() {
+        return compressed;
     }
 
     public String getTitle() {
