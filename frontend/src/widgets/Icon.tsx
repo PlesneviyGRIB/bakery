@@ -8,20 +8,23 @@ import {ReactComponent as Clip} from '../ui/pictures/clip.svg';
 import {ReactComponent as Cross} from '../ui/pictures/cross.svg';
 import {ReactComponent as Filter} from '../ui/pictures/filter.svg';
 import {ReactComponent as Bookmark} from '../ui/pictures/bookmark.svg';
+import {ReactComponent as Plus} from '../ui/pictures/plus.svg';
+import {ReactComponent as Checked} from '../ui/pictures/checked.svg';
 import {Property} from "csstype";
 import {Tooltip} from "./default/Form";
 
-type Img = 'decoration' | 'cookie' | 'pie' | 'marshmallow' | 'empty' | "dropdown_arrow" | "clip" | "cross" | "filter" | "bookmark"
+type Img = 'decoration' | 'cookie' | 'pie' | 'marshmallow' | 'empty' | "dropdown_arrow" | "clip" | "cross" | "filter" | "bookmark" | "plus" | "checked"
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
     img: Img,
     size?: Property.Width
     flip?: 'horizontal' | 'vertical' | 'both'
     tooltip?: string
+    coloring?: true | 'fill' | 'stroke' | false
     onClick?: () => void
 }
 
-export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, onClick, ...other}) => {
+export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, coloring = 'stroke', onClick, ...other}) => {
     const [hovered, setHovered] = useState<boolean>(false);
 
     const element = useMemo(() => {
@@ -35,7 +38,6 @@ export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, onClick,
             transform,
             cursor: onClick && "pointer",
             opacity: (onClick && !hovered && '0.7') || '1',
-            transition: "0.2s",
         }
 
         switch (img) {
@@ -57,17 +59,22 @@ export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, onClick,
                 return <Filter style={style} />
             case "bookmark":
                 return <Bookmark style={style} />
+            case "plus":
+                return <Plus style={style} />
+            case "checked":
+                return <Checked style={style} />
             default:
                 return <span style={style}/>
         }
     }, [img, size, flip, onClick, hovered])
 
     const icon = useMemo(() => React.cloneElement(element, {
+        'coloring': `${coloring}`,
         onClick,
         onMouseLeave:() => setHovered(false),
         onMouseEnter:() => setHovered(true),
-        ...other
-    }), [element, onClick, other])
+        ...other,
+    }), [element, coloring, onClick, other])
 
     return (
         tooltip ?

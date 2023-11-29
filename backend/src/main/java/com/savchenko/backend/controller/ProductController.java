@@ -27,12 +27,12 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ProductDto get(@PathVariable Long id) {
+    public ProductDto getProduct(@PathVariable Long id) {
         return productService.get(id);
     }
 
     @PostMapping("/{id}/photo")
-    public void addPhoto(@PathVariable("id") Long id,
+    public void addProductPhoto(@PathVariable("id") Long id,
                          @RequestParam(value = "title") String title,
                          @RequestParam(value = "description") String description,
                          @RequestParam(value = "isPreview") Boolean isPreview,
@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteProduct(@PathVariable Long id) {
         productService.delete(id);
     }
 }

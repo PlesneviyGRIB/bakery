@@ -6,6 +6,7 @@ import {Styled as S} from "./ProductForm.styled"
 import {Select} from "../../widgets/default/Form";
 import {FlexRow} from "../../widgets/default/Flex.styled";
 import {Option} from "../../types";
+import {Tags} from "../tag/Tags";
 
 interface ProductFilterProps {
     filter: ProductFilterDto
@@ -23,8 +24,10 @@ export const ProductFilter: FC<ProductFilterProps> = ({filter, onChange}) => {
         category: optionIds[id]
     }), [filter, onChange])
 
+    const handleChangeTags = useCallback((tagIds: number[]) => onChange({...filter, tagIds}), [filter, onChange])
+
     const selectedCategoryId = filter.category && optionIds.findIndex(o => o === filter.category)
-    const active = !!filter.category
+    const active = !!filter.category || !!filter.tagIds.length
 
     return (
         <Popover target={<S.Filter $active={active}><Icon img={"filter"} size={"26px"}/></S.Filter>}>
@@ -34,6 +37,9 @@ export const ProductFilter: FC<ProductFilterProps> = ({filter, onChange}) => {
                     <Select options={options} onSelect={handleChangeCategory} selectedId={selectedCategoryId}
                             placeholder={"All"}/>
                 </FlexRow>
+                <br/>
+                <br/>
+                <Tags selectedIds={filter.tagIds} onChange={handleChangeTags}/>
             </S.FilterMenu>
         </Popover>
     )

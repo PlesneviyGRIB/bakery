@@ -35,7 +35,7 @@ public class ImageComponent {
             return new Photo(file.getBytes(), stream.toByteArray(), title, description, Instant.now(), isPreview);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BakeryException("Error while process image.");
+            throw new BakeryException("image.processingError");
         }
     }
 }

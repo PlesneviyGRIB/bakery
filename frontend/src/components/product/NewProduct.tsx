@@ -2,7 +2,7 @@ import React, {FC, useCallback} from "react";
 import {Tabs} from "../../widgets/tabs/Tabs";
 import {Tab} from "../../widgets/tabs/Tab";
 import {ProductForm} from "./ProductForm";
-import {GeneralProduct, Photo} from "../../types";
+import {Photo} from "../../types";
 import {ProductCategorySelection} from "./ProductCategorySelection";
 import {useSessionState} from "../../hooks/useSessionState";
 import {Modal} from "../../widgets/modal/Modal";
@@ -12,6 +12,9 @@ import {NewPhoto} from "../photo/NewPhoto";
 import {useMemoryState} from "../../hooks/useMemoryState";
 import {Styled as S} from "./ProductForm.styled"
 import {Icon} from "../../widgets/Icon";
+import {Tags} from "../tag/Tags";
+import {NewProductDto} from "../../api/rest-client";
+import {FlexColumn, Gray} from "../../widgets/default/Flex.styled";
 
 interface NewProductProps {
     onClose(): void
@@ -19,7 +22,7 @@ interface NewProductProps {
     onCreate(): void
 }
 
-const newProduct: GeneralProduct = {
+const newProduct: NewProductDto = {
     discriminator: "COOKIE",
     price: 0,
     count: 1,
@@ -28,11 +31,17 @@ const newProduct: GeneralProduct = {
     description: '',
     weight: 0,
     orderAvailable: true,
+    tagIds: []
 }
 
 export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
-    const [product, setProduct] = useSessionState<GeneralProduct>("NewProduct", () => newProduct)
+    const [product, setProduct] = useSessionState<NewProductDto>("NewProduct", () => newProduct)
     const [photos, setPhotos] = useMemoryState<Photo[]>("NewProduct", () => [])
+
+    const handleApplyTag = useCallback((tagIds: number[]) => setProduct(prevState => ({
+        ...prevState,
+        tagIds
+    })), [setProduct])
 
     const createNewProduct = useCallback(() => {
         restClient
@@ -41,7 +50,7 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
                     const {title, description, file} = c
                     const formData = new FormData();
                     formData.append("file", file)
-                    return restClient.addPhoto(product.id, formData as any, {
+                    return restClient.addProductPhoto(product.id, formData as any, {
                         title,
                         description,
                         isPreview: false
@@ -57,10 +66,16 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
                 <Tab title={"Основные параметры"}>
                     <ProductForm product={product} onChangeProduct={setProduct}/>
                 </Tab>
-                <Tab title={"Категории"}>
-                    <ProductCategorySelection product={product} onChangeProduct={setProduct}/>
+                <Tab title={"Категории и теги"}>
+                    <FlexColumn style={{padding: "60px 0 0 0", gap: "1em"}}>
+                        <ProductCategorySelection product={product} onChangeProduct={setProduct}/>
+                        <br/>
+                        <Gray>* От выбранной категории зависят дополнительные параметры товара, а также поиск.</Gray>
+                        <Gray>* По тегам можно удобно находить товары.</Gray>
+                        <br/>
+                        <Tags selectedIds={product.tagIds} onChange={handleApplyTag} mode={'selectImmediate'}/>
+                    </FlexColumn>
                 </Tab>
-                <Tab title={"Теги"}></Tab>
                 <Tab title={"Фотографии"}>
                     <NewPhoto photos={photos} onChange={setPhotos} limit={4}/>
                 </Tab>
@@ -70,7 +85,7 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
             </Tabs>
             <S.FinishBtn>
                 <Btn style={{width: "240px", height: "45px", paddingRight: "30px"}} secondary onClick={onClose}>
-                    <Icon img={"bookmark"} stroke={"white"}/>
+                    <Icon img={"bookmark"}/>
                     Завершить позже
                 </Btn>
             </S.FinishBtn>

@@ -50,15 +50,15 @@ const Category = styled.div<{$selected?: boolean}>`
 const FlexContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 2em;
   justify-content: center;
   width: fit-content;
 `
 
-const Header = styled.h1`
+const Header = styled.span`
+  font-size: 40px;
   font-weight: normal;
   width: fit-content;
-  margin: 40px 0 20px 0;
 `
 
 const Filter = styled.div<{$active: boolean}>`
@@ -84,6 +84,10 @@ const FilterMenu = styled.div`
   border-radius: 5px;
 `
 
+const Tags = styled.div`
+    
+`
+
 const Label = styled.div`
   width: 180px;
   font-size: 14px;
@@ -107,6 +111,7 @@ export const Styled = {
     Header,
     Filter,
     FilterMenu,
+    Tags,
     Label,
     FinishBtn,
 }

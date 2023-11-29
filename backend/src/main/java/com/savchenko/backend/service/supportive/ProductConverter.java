@@ -74,8 +74,8 @@ public class ProductConverter {
         model.setDescription(dto.description);
         model.setPrice(dto.price);
         model.setTitle(dto.title);
-        model.setProductionTime(dto.getProductionTime().orElse(null));
-        model.setWeight(dto.getWeight().orElse(null));
+        model.setProductionTime(dto.productionTime);
+        model.setWeight(dto.weight);
     }
 
     private void modelToDtoBaseConverter(Product product, ProductDto dto) {
@@ -87,6 +87,7 @@ public class ProductConverter {
         dto.instant = product.getInstant();
         dto.price = product.getPrice();
         dto.title = product.getTitle();
+        dto.tags = product.getTags().stream().map(tag -> BakeryConverter.tagModelToDto(tag, null)).toList();
 
         if(light){
             dto.photos = product.getPhotos().stream()

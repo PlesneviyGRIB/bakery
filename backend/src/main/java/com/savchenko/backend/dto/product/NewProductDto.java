@@ -8,6 +8,7 @@ import com.savchenko.backend.interfaces.Validatable;
 import com.savchenko.backend.utils.visitor.NewProductVisitor;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -21,19 +22,12 @@ public abstract class NewProductDto implements Validatable {
     public final ProductCategory discriminator;
     public Long price;
     public Integer count;
-    private Integer productionTime;
+    public Integer productionTime;
     public String title;
     public String description;
-    private Float weight;
+    public Float weight;
     public Boolean orderAvailable;
-
-    public Optional<Integer> getProductionTime() {
-        return Optional.ofNullable(productionTime);
-    }
-
-    public Optional<Float> getWeight() {
-        return Optional.ofNullable(weight);
-    }
+    public List<Long> tagIds;
 
     public NewProductDto(ProductCategory discriminator) {
         this.discriminator = discriminator;
@@ -63,6 +57,9 @@ public abstract class NewProductDto implements Validatable {
         }
         if (Objects.isNull(orderAvailable)) {
             throw new ValidationException("invalid.property.isNull", "order available");
+        }
+        if(tagIds == null) {
+            tagIds = List.of();
         }
     }
 }

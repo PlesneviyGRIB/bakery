@@ -1,14 +1,14 @@
 import React, {ChangeEvent, FC, useCallback} from "react";
 import {Styled as S} from "./ProductForm.styled";
 import {Checkbox, FormGroup, FormLabel, Input, Textarea, Tooltip} from "../../widgets/default/Form";
-import {GeneralProduct} from "../../types";
 import {FlexRow} from "../../widgets/default/Flex.styled";
 import {CollapsableBlock} from "../../widgets/supportive/CollapsableBlock";
+import {NewProductDto} from "../../api/rest-client";
 
 interface ProductFormProps {
-    product: GeneralProduct
+    product: NewProductDto
 
-    onChangeProduct(product: GeneralProduct): void
+    onChangeProduct(product: NewProductDto): void
 }
 
 export const ProductForm: FC<ProductFormProps> = ({product, onChangeProduct}) => {
@@ -39,11 +39,11 @@ export const ProductForm: FC<ProductFormProps> = ({product, onChangeProduct}) =>
     }), [product, onChangeProduct])
     const handleChangeCollapseProductionTime = useCallback(() => onChangeProduct({
         ...product,
-        productionTime: product.productionTime === undefined ? 0 : undefined
+        productionTime: product.productionTime === undefined ? 0 : undefined as any
     }), [product, onChangeProduct])
     const handleChangeCollapseWeight = useCallback(() => onChangeProduct({
         ...product,
-        weight: product.weight === undefined ? 0 : undefined
+        weight: product.weight === undefined ? 0 : undefined as any
     }), [product, onChangeProduct])
 
     return (

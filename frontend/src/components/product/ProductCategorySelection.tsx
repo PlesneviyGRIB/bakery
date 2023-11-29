@@ -1,14 +1,19 @@
 import {FC, useCallback} from "react";
-import {GeneralProduct} from "../../types";
 import {Styled as S} from "./ProductForm.styled";
-import {ProductCategory} from "../../api/rest-client";
+import {NewProductDto, ProductCategory} from "../../api/rest-client";
 import {Icon} from "../../widgets/Icon";
-import {Gray} from "../../widgets/default/Flex.styled";
+import {FlexColumn, Gray} from "../../widgets/default/Flex.styled";
 
 interface ProductCategorySelectionProps {
-    product: GeneralProduct
+    product: NewProductDto
 
-    onChangeProduct(product: GeneralProduct): void
+    onChangeProduct(product: NewProductDto): void
+}
+
+const values : { [K in ProductCategory]: string } = {
+    "COOKIE": "Печенье",
+    "PIE": "Пирог",
+    "MARSHMALLOW": "Зефир"
 }
 
 export const ProductCategorySelection: FC<ProductCategorySelectionProps> = ({product, onChangeProduct}) => {
@@ -19,8 +24,8 @@ export const ProductCategorySelection: FC<ProductCategorySelectionProps> = ({pro
     }), [onChangeProduct, product])
 
     return (
-        <>
-            <S.Header>{product.discriminator}</S.Header>
+        <FlexColumn style={{alignItems: "center"}}>
+            <S.Header>{values[product.discriminator]}</S.Header>
             <S.FlexContainer>
                 <S.Category onClick={() => handleChangeDiscriminator("COOKIE")}
                             $selected={product.discriminator === "COOKIE"}>
@@ -35,8 +40,6 @@ export const ProductCategorySelection: FC<ProductCategorySelectionProps> = ({pro
                     <Icon img={"marshmallow"} size={"80px"}/>
                 </S.Category>
             </S.FlexContainer>
-            <br/>
-            <Gray>* От выбранной категории зависят дополнительные параметры товара, а также поиск.</Gray>
-        </>
+        </FlexColumn>
     )
 }

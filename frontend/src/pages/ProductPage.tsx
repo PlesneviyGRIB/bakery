@@ -20,10 +20,10 @@ export const ProductPage: FC = () => {
             navigate(PagePath.NOT_FOUND)
             return
         }
-        restClient.get(productId).then(setProduct)
+        restClient.getProduct(productId).then(setProduct)
     }, [productId, navigate]);
 
-    const handleDelete = useCallback(() => product && restClient.delete("" + product.id).then(() => navigate(PagePath.PRODUCTS)), [product])
+    const handleDelete = useCallback(() => product && restClient.deleteProduct("" + product.id).then(() => navigate(PagePath.PRODUCTS)), [product])
 
     return(
         <>

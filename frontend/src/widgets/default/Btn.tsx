@@ -5,11 +5,13 @@ interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     primary?: boolean;
     secondary?: boolean;
     danger?: boolean;
-    outline?: boolean;
-    round?: boolean;
-    success?: boolean;
     info?: boolean;
-    sm?: boolean;
+    light?: boolean;
+    dark?: boolean;
+    link?: boolean;
+    outline?: boolean;
+    success?: boolean;
+    warning?: boolean;
     style?: CSSProperties
 }
 
@@ -18,23 +20,62 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   gap: 0.5em;
+
+  svg[coloring = 'true'] {
+    path {
+      fill: currentColor;
+      stroke: currentColor;
+    }
+  }
+
+  svg[coloring = 'fill'] {
+    path {
+      fill: currentColor;
+    }
+  }
+
+  svg[coloring = 'stroke'] {
+    path {
+      stroke: currentColor;
+    }
+  }
 `
 
-export const Btn = React.forwardRef<HTMLButtonElement, PropsWithChildren<BtnProps>>(({ primary, info, secondary, success, danger, outline, round, sm, style, children, ...other }, ref) => {
+export const Btn = React.forwardRef<HTMLButtonElement, PropsWithChildren<BtnProps>>(({
+                                                                                         primary,
+                                                                                         warning,
+                                                                                         secondary,
+                                                                                         success,
+                                                                                         danger,
+                                                                                         info,
+                                                                                         light,
+                                                                                         dark,
+                                                                                         link,
+                                                                                         outline,
+                                                                                         style,
+                                                                                         children,
+                                                                                         ...other
+                                                                                     }, ref) => {
     const classNames = useMemo(
-        () =>
-            ['btn']
-                .concat(primary ? 'btn-primary' : '')
-                .concat(secondary ? 'btn-secondary' : '')
-                .concat(danger ? 'btn-danger' : '')
-                .concat(success ? 'btn-success' : '')
-                .concat(outline ? 'btn-outline' : '')
-                .concat(info ? 'btn-warning' : '')
-                .concat(round ? 'btn-round btn-round_small' : '')
-                .concat(sm ? 'btn_sm' : '')
-                .filter((className) => className)
-                .join(' '),
-        [primary, secondary, danger, success, outline, info, round, sm]
+        () => ['btn']
+            .concat(primary ? 'btn-primary' : '')
+            .concat(secondary ? 'btn-secondary' : '')
+            .concat(danger ? 'btn-danger' : '')
+            .concat(success ? 'btn-success' : '')
+            .concat(warning ? 'btn-warning' : '')
+            .concat(info ? 'btn-info' : '')
+            .concat(light ? 'btn-light' : '')
+            .concat(dark ? 'btn-dark' : '')
+            .concat(link ? 'btn-link' : '')
+            .filter(c => !!c)
+            .map(c => {
+                if (outline && c.includes('-')) {
+                    const arr = c.split('-')
+                    return [arr[0], 'outline', arr[1]].join('-')
+                }
+                return c;
+            }).join(' '),
+        [primary, secondary, danger, success, outline, warning, info, light, dark, link]
     );
 
     return (

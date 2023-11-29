@@ -20,8 +20,6 @@ export type Placeholder = "All" | "None"
 
 export type Interaction = "hover" | "click"
 
-export type GeneralProduct = NewProductDto
-
 export type Named<T> = {
     name: string
     value: T
@@ -36,7 +34,8 @@ export type Photo = {
 
 export enum PagePath {
     PRODUCTS = '/products',
-    NOT_FOUND = '/'
+    NOT_FOUND = '/',
+    ADMIN = '/admin'
 }
 
 export enum APP_EVENT {

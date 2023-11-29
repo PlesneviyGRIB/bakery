@@ -5,41 +5,45 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="DEV-1.2" author="e.savchenko">
-        <createTable tableName="photo">
+        <createTable tableName="tag">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="product_id" type="bigint"/>
+            <column name="title" type="varchar(64)"/>
 
-            <column name="src" type="bytea">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="compressed" type="bytea">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="title" type="varchar(128)"/>
-
-            <column name="description" type="varchar(2048)"/>
-
-            <column name="instant" type="timestamp with time zone">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="is_preview" type="boolean">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
 
+        <createTable tableName="tag_intermediate">
+            <column name="tag_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="product_id" type="bigint"/>
+
+        </createTable>
+
+        <addUniqueConstraint
+                columnNames="tag_id, product_id"
+                constraintName="unique_tag_id_product_id"
+                tableName="tag_intermediate"/>
+
         <addForeignKeyConstraint
-                constraintName="fk_photo_product"
+                constraintName="fk_tag_intermediate_product"
                 baseColumnNames="product_id"
-                baseTableName="photo"
+                baseTableName="tag_intermediate"
                 onDelete="CASCADE"
                 onUpdate="RESTRICT"
                 referencedColumnNames="id"
                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint
+                constraintName="fk_tag_intermediate_tag"
+                baseColumnNames="tag_id"
+                baseTableName="tag_intermediate"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"
+                referencedColumnNames="id"
+                referencedTableName="tag"/>
     </changeSet>
 </databaseChangeLog>

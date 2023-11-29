@@ -28,7 +28,7 @@ type ProductListPageState = {
     perRow: number
 }
 
-const defaultFilter: ProductFilterDto = {keyword: '', order: []} as any
+const defaultFilter: ProductFilterDto = {keyword: '', order: [], tagIds: []} as any
 
 const orders: Named<ProductOrder>[] = [
     {name: "По названию", value: "TITLE"},

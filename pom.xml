@@ -30,6 +30,7 @@
         <spring.tx.version>6.0.11</spring.tx.version>
         <jackson.version>2.16.0-rc1</jackson.version>
         <spring.aop.version>6.1.0</spring.aop.version>
+        <thumbnailator.vertion>0.4.19</thumbnailator.vertion>
 
     </properties>
 

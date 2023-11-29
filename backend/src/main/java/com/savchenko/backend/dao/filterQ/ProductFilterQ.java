@@ -15,6 +15,7 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import static com.savchenko.backend.model.QProduct.product;
+import static com.savchenko.backend.model.QTag.tag;
 import static com.savchenko.backend.model.business.QCookie.cookie;
 import static com.savchenko.backend.model.business.QMarshmallow.marshmallow;
 import static com.savchenko.backend.model.business.QPie.pie;
@@ -49,6 +50,14 @@ public class ProductFilterQ {
                     }
 
                     predicate.and(product.id.in(subQuery));
+                });
+
+        Optional
+                .ofNullable(filter.tagIds)
+                .ifPresent(ids -> {
+                    if(ids.length > 0){
+                        predicate.and(product.tags.any().id.in(ids));
+                    }
                 });
 
         return predicate;

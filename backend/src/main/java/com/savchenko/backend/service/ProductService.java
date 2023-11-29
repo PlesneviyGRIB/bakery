@@ -1,6 +1,7 @@
 package com.savchenko.backend.service;
 
 import com.savchenko.backend.dao.ProductDao;
+import com.savchenko.backend.dao.TagDao;
 import com.savchenko.backend.dao.filterQ.ProductFilterQ;
 import com.savchenko.backend.dto.PageRequestDto;
 import com.savchenko.backend.dto.PageResponseDto;
@@ -35,6 +36,9 @@ public class ProductService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private TagDao tagDao;
 
     @Autowired
     private ImageComponent imageComponent;
@@ -72,8 +76,8 @@ public class ProductService {
     public ProductDto createProduct(NewProductDto newProductDto) {
         var p = NewProductDtoToModelMapper.apply(newProductDto);
         p.setInstant(Instant.now());
+        tagDao.getAllByIds(newProductDto.tagIds).forEach(p::applyTag);
         var product = productDao.save(p);
-
         return ProductToDtoMapper.apply(product, false);
     }
 
@@ -87,6 +91,6 @@ public class ProductService {
         }
 
         var photo = imageComponent.processImage(file, title, description, isPreview);
-        product.addPhoto(photo);
+        product.applyPhoto(photo);
     }
 }
