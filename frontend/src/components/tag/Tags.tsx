@@ -11,11 +11,12 @@ import {Icon} from "../../widgets/Icon";
 interface TagsProps {
     selectedIds: number[]
     mode?: 'select' | 'selectImmediate' | 'edit'
+    limit?: number
 
     onChange(ids: number[]): void
 }
 
-export const Tags: FC<TagsProps> = ({selectedIds, mode = 'select', onChange}) => {
+export const Tags: FC<TagsProps> = ({selectedIds, mode = 'select', limit, onChange}) => {
     const [tags, setTags] = useState<TagDto[]>([])
     const [currentIds, setCurrentIds] = useState<number[]>(selectedIds)
 
@@ -32,7 +33,7 @@ export const Tags: FC<TagsProps> = ({selectedIds, mode = 'select', onChange}) =>
         if (mode === 'edit') {
             return
         }
-        const func = (prevState: number[]) => (prevState.includes(id) ? [...prevState.filter(e => e !== id)] : [...prevState, id])
+        const func = (prevState: number[]) => (prevState.includes(id) ? [...prevState.filter(e => e !== id)] : [...prevState, id]).slice(limit && -limit)
         if (mode === 'selectImmediate') {
             const ids = func(selectedIds)
             onChange(ids)
@@ -40,7 +41,7 @@ export const Tags: FC<TagsProps> = ({selectedIds, mode = 'select', onChange}) =>
         } else {
             setCurrentIds(prevState => func(prevState))
         }
-    }, [mode, onChange, selectedIds])
+    }, [mode, onChange, selectedIds, limit])
 
     const canApply = useMemo(() => {
         const set = new Set(currentIds)

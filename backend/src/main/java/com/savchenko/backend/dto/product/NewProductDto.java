@@ -9,6 +9,7 @@ import com.savchenko.backend.utils.visitor.NewProductVisitor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public abstract class NewProductDto implements Validatable {
     public abstract <R> R accept(NewProductVisitor<R> visitor);
 
     @Override
-    public void validate() {
+    public void validate(Map<String, Object> context) {
         if (Objects.isNull(price) || price < 0) {
             throw new ValidationException("invalid.newProduct.price", price);
         }
@@ -58,8 +59,9 @@ public abstract class NewProductDto implements Validatable {
         if (Objects.isNull(orderAvailable)) {
             throw new ValidationException("invalid.property.isNull", "order available");
         }
-        if(tagIds == null) {
-            tagIds = List.of();
+        var maxTagsCount = (Integer) context.get("tags.max.count");
+        if(tagIds.size() > maxTagsCount) {
+            throw new ValidationException("invalid.tag.count", maxTagsCount);
         }
     }
 }

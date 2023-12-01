@@ -3,6 +3,8 @@ package com.savchenko.backend.dto.product;
 import com.savchenko.backend.enums.ProductCategory;
 import com.savchenko.backend.utils.visitor.NewProductVisitor;
 
+import java.util.Map;
+
 public class NewCookieDto extends NewProductDto {
     public NewCookieDto() {
         super(ProductCategory.COOKIE);
@@ -14,7 +16,7 @@ public class NewCookieDto extends NewProductDto {
     }
 
     @Override
-    public void validate() {
-        super.validate();
+    public void validate(Map<String, Object> context) {
+        super.validate(context);
     }
 }

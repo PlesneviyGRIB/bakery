@@ -15,6 +15,7 @@ import {Icon} from "../../widgets/Icon";
 import {Tags} from "../tag/Tags";
 import {NewProductDto} from "../../api/rest-client";
 import {FlexColumn, Gray} from "../../widgets/default/Flex.styled";
+import {IMAGES_COUNT, TAGS_COUNT} from "../../Constants";
 
 interface NewProductProps {
     onClose(): void
@@ -73,11 +74,11 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
                         <Gray>* От выбранной категории зависят дополнительные параметры товара, а также поиск.</Gray>
                         <Gray>* По тегам можно удобно находить товары.</Gray>
                         <br/>
-                        <Tags selectedIds={product.tagIds} onChange={handleApplyTag} mode={'selectImmediate'}/>
+                        <Tags selectedIds={product.tagIds} onChange={handleApplyTag} mode={'selectImmediate'} limit={TAGS_COUNT}/>
                     </FlexColumn>
                 </Tab>
                 <Tab title={"Фотографии"}>
-                    <NewPhoto photos={photos} onChange={setPhotos} limit={4}/>
+                    <NewPhoto photos={photos} onChange={setPhotos} limit={IMAGES_COUNT}/>
                 </Tab>
                 <Tab title={"Предпросмотр"}>
                     <Btn primary onClick={createNewProduct}>Создать</Btn>
