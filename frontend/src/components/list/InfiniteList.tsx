@@ -3,7 +3,7 @@ import {BaseDto, PageRequestDto, PageResponseDto} from "../../api/rest-client";
 import {BarList} from "./BarList";
 import {Styled as S} from "./barlist.styled";
 import {isInViewport} from "../../Utils";
-import {debounce} from "../../App";
+import {debounce} from "../../app/App";
 import {FlexRow, Gray} from "../../widgets/default/Flex.styled";
 
 interface InfiniteListProps<D, F> {

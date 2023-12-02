@@ -37,9 +37,10 @@ const Body = styled.div`
   font-size: 14px;
 `
 
-const Block = styled.div<{$padding?: Property.Padding}>`
+const Block = styled.div<{$padding?: Property.Padding, $grow?: Property.FlexGrow}>`
   background-color: var(--color-white);
   padding: ${({$padding}) => $padding || "20px"};
+  flex-grow: ${({$grow}) => $grow};
   border-radius: 20px;
   min-width: fit-content;
 `
@@ -61,15 +62,18 @@ const Search = styled(Input)`
   text-align: center;
 `
 
-const HeaderLine = styled.div`
-    height: 50%;
-`
-
 const DropFilters = styled.div<{$visible: boolean}>`
   transform: translateX(10px);
   width: 0;
   transition: 0.2s;
   opacity: ${({$visible}) => $visible ? 1 : 0};
+`
+
+const Tag = styled.div`
+  padding: 3px 10px;
+  border-radius: 3px;
+  background-color: var(--color-light-turquoise);
+  color: white;
 `
 
 export const Styled = {
@@ -79,7 +83,7 @@ export const Styled = {
     Pretzel,
     Block,
     Link,
-    HeaderLine,
     Search,
     DropFilters,
+    Tag,
 }

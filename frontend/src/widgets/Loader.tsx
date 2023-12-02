@@ -2,7 +2,7 @@ import React, {CSSProperties, FC, useCallback, useEffect, useState} from "react"
 import {Triangle} from "react-loader-spinner";
 import {CSSTransition} from "react-transition-group"
 import {Style} from "react-loader-spinner/dist/type";
-import {debounce} from "../App";
+import {debounce} from "../app/App";
 
 interface LoaderProps {
     show: boolean

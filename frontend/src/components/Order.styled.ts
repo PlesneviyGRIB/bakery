@@ -3,13 +3,13 @@ import {TextOverflowEllipsis} from "../widgets/default/Form.styled";
 
 const Order = styled.div<{$selected: boolean}>`
   background-color: ${({$selected}) => $selected ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.4)"};
-  border-radius: 5px;
+  border-radius: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: 0.2s;
-  padding: 4px 10px ;
+  padding: 4px 8px ;
   gap: 0.5em;
   ${TextOverflowEllipsis}
   &:hover{
@@ -22,7 +22,7 @@ const OrderTab  = styled.div`
   width: fit-content;
   padding: 5px;
   gap: 0.5em;
-  border-radius: 6px;
+  border-radius: 5px;
   background-color: var(--color-white);
   color: white;
 `

@@ -1,5 +1,5 @@
 import React, {FC, useCallback} from "react";
-import {Popover} from "../Popover";
+import {Popover} from "../../widgets/Popover";
 import {Icon} from "../../widgets/Icon";
 import {ProductCategory, ProductFilterDto} from "../../api/rest-client";
 import {Styled as S} from "./ProductForm.styled"

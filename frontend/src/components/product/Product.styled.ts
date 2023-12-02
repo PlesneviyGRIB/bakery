@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import {FlexColumn} from "../widgets/default/Flex.styled";
-import {TextOverflowEllipsis} from "../widgets/default/Form.styled";
+import {FlexColumn} from "../../widgets/default/Flex.styled";
+import {TextOverflowEllipsis} from "../../widgets/default/Form.styled";
 
 const BarImage = styled.img`
   position: absolute;

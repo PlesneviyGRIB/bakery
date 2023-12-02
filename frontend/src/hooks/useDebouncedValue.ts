@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import {debounce} from "../App";
+import {debounce} from "../app/App";
 
 export const useDebouncedValue = <V>(initial: V, handler: (value: V) => void, timeout?: number): [V, (value: V) => void] => {
     const [value, setValue] = useState<V>(initial)

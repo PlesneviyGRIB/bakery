@@ -7,6 +7,7 @@ import {ProductDto} from "../api/rest-client";
 import {Btn} from "../widgets/default/Btn";
 import {useAppNavigation} from "../hooks/useAppNavigation";
 import {PagePath} from "../types";
+import {FlexColumn, FlexRow} from "../widgets/default/Flex.styled";
 
 export const ProductPage: FC = () => {
     const navigate = useAppNavigation()
@@ -16,7 +17,7 @@ export const ProductPage: FC = () => {
     const [product, setProduct] = useState<ProductDto>()
 
     useEffect(() => {
-        if(!productId || !Number.parseInt(`${productId}`)){
+        if (!productId || !Number.parseInt(`${productId}`)) {
             navigate(PagePath.NOT_FOUND)
             return
         }
@@ -25,19 +26,27 @@ export const ProductPage: FC = () => {
 
     const handleDelete = useCallback(() => product && restClient.deleteProduct("" + product.id).then(() => navigate(PagePath.PRODUCTS)), [product])
 
-    return(
+    return (
         <>
-            <Header>
-                <Btn danger onClick={handleDelete}>Удалить</Btn>
-            </Header>
+            <Header/>
             <S.Body>
                 {
                     product &&
-                    <>
+                    <FlexColumn>
+                        <FlexRow $justifyContent={"flex-end"}><Btn danger onClick={handleDelete}>Удалить</Btn></FlexRow>
                         <S.Block>
-                            <b>{product.title}</b>
+                            <FlexRow $justifyContent={"flex-end"} $gap={"0.5em"}>{product.tags.map(t =>
+                                <S.Tag key={t.id}>{t.title}</S.Tag>)}</FlexRow>
+                            <h2>{product.title}</h2>
                         </S.Block>
-                    </>
+                        <FlexRow>
+                            <S.Block $grow={3}>
+                                {product.description}
+                            </S.Block>
+                            <S.Block $grow={1}>
+                            </S.Block>
+                        </FlexRow>
+                    </FlexColumn>
                 }
             </S.Body>
         </>

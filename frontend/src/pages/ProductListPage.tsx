@@ -1,9 +1,6 @@
 import React, {ChangeEvent, FC, useCallback, useMemo} from "react";
 import {Styled as S} from "./pages.styled";
-import {Styled as S1} from "./Product.styled";
-import {NewProduct} from "../components/product/NewProduct";
-import {useDialog} from "../hooks/useDialogState";
-import {Btn} from "../widgets/default/Btn";
+import {Styled as S1} from "../components/product/Product.styled";
 import {InfiniteList} from "../components/list/InfiniteList";
 import {OrderDto, ProductDto, ProductFilterDto, ProductOrder} from "../api/rest-client";
 import {restClient} from "../api/axios.conf";
@@ -46,9 +43,7 @@ export const ProductListPage: FC = () => {
         filter: defaultFilter,
         perRow: 5,
     })
-    const [state, onOpen, onClose] = useDialog()
 
-    const handleCreate = useCallback(() => onClose(), [onClose])
     const fetchProducts = useCallback((params: any) => restClient.products(params), [])
     const handleSelectProduct = useCallback((id: number) => navigate(`${id}`, {relative: "path"}), [navigate])
     const handleChangePerRow = useCallback((perRow: number) => setPageState(prevState => ({
@@ -96,23 +91,18 @@ export const ProductListPage: FC = () => {
     return (
         <>
             <Header>
-                <S.HeaderLine>
-                    <Btn onClick={onOpen}>Новый продукт</Btn>
-                </S.HeaderLine>
-                <S.HeaderLine>
-                    <FlexRow $justifyContent={"center"} style={{gap: 0}}>
-                        <S.Search placeholder={"Поиск по товарам"} value={searchValue} onChange={handleSearch}/>
-                        <S.DropFilters $visible={filtersActive}>
-                            <Tooltip text={"Сбросить фильтры"}>
-                                <Icon img={"cross"} onClick={dropFilters}/>
-                            </Tooltip>
-                        </S.DropFilters>
-                    </FlexRow>
-                </S.HeaderLine>
+                <FlexRow $justifyContent={"center"} style={{gap: 0}}>
+                    <S.Search placeholder={"Поиск по товарам"} value={searchValue} onChange={handleSearch}/>
+                    <S.DropFilters $visible={filtersActive}>
+                        <Tooltip text={"Сбросить фильтры"}>
+                            <Icon img={"cross"} onClick={dropFilters}/>
+                        </Tooltip>
+                    </S.DropFilters>
+                </FlexRow>
             </Header>
             <S.Body>
                 <FlexColumn style={{height: "100%"}}>
-                    <FlexRow $justifyContent={"space-between"} style={{zIndex: 10}}>
+                    <FlexRow $justifyContent={"space-between"}>
                         <Order<ProductOrder>
                             orders={orders}
                             selected={pageState.filter.order}
@@ -136,7 +126,6 @@ export const ProductListPage: FC = () => {
                     </S.Block>
                 </FlexColumn>
             </S.Body>
-            {state && <NewProduct onClose={onClose} onCreate={handleCreate}/>}
         </>
     )
 }

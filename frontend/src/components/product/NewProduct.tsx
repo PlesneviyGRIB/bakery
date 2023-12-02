@@ -15,7 +15,7 @@ import {Icon} from "../../widgets/Icon";
 import {Tags} from "../tag/Tags";
 import {NewProductDto} from "../../api/rest-client";
 import {FlexColumn, Gray} from "../../widgets/default/Flex.styled";
-import {IMAGES_COUNT, TAGS_COUNT} from "../../Constants";
+import {IMAGES_COUNT, TAGS_COUNT} from "../../app/Constants";
 
 interface NewProductProps {
     onClose(): void

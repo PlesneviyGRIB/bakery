@@ -10,10 +10,12 @@ import {ReactComponent as Filter} from '../ui/pictures/filter.svg';
 import {ReactComponent as Bookmark} from '../ui/pictures/bookmark.svg';
 import {ReactComponent as Plus} from '../ui/pictures/plus.svg';
 import {ReactComponent as Checked} from '../ui/pictures/checked.svg';
+import {ReactComponent as Logout} from '../ui/pictures/logout.svg';
+import {ReactComponent as Heart} from '../ui/pictures/heart.svg';
 import {Property} from "csstype";
 import {Tooltip} from "./default/Form";
 
-type Img = 'decoration' | 'cookie' | 'pie' | 'marshmallow' | 'empty' | "dropdown_arrow" | "clip" | "cross" | "filter" | "bookmark" | "plus" | "checked"
+type Img = 'decoration' | 'cookie' | 'pie' | 'marshmallow' | 'empty' | "dropdown_arrow" | "clip" | "cross" | "filter" | "bookmark" | "plus" | "checked" | "logout" | "heart"
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
     img: Img,
@@ -63,6 +65,10 @@ export const Icon: FC<IconProps> = ({img, size = "24px", flip, tooltip, coloring
                 return <Plus style={style} />
             case "checked":
                 return <Checked style={style} />
+            case "logout":
+                return <Logout style={style} />
+            case "heart":
+                return <Heart style={style} />
             default:
                 return <span style={style}/>
         }

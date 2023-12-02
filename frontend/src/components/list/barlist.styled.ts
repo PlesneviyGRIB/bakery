@@ -31,16 +31,16 @@ const PerPowTab = styled.div`
   width: fit-content;
   padding: 5px;
   gap: 0.5em;
-  border-radius: 6px;
+  border-radius: 5px;
   background-color: var(--color-white);
   color: white;
 `
 
 const PerPowElement = styled.div<{$selected: boolean}>`
-  width: 32px;
-  height: 32px;
+  width: 29px;
+  height: 29px;
   background-color: ${({$selected}) => $selected ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.4)"};
-  border-radius: 5px;
+  border-radius: 3px;
   display: flex;
   justify-content: center;
   align-items: center;
