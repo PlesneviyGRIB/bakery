@@ -33,9 +33,10 @@ export type Photo = {
 }
 
 export enum PagePath {
+    LOGIN = '/login',
     PRODUCTS = '/products',
-    NOT_FOUND = '/',
-    ADMIN = '/admin'
+    ADMIN = '/admin',
+    NOT_FOUND = '/'
 }
 
 export enum APP_EVENT {

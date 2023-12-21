@@ -8,6 +8,7 @@ import {ProductPage} from "../pages/ProductPage";
 import {PagePath} from "../types";
 import {Interceptor} from "./Interceptor";
 import {AdminPage} from "../pages/AdminPage";
+import {LoginPage} from "../pages/LoginPage";
 
 export const debounce = require('lodash.debounce');
 
@@ -29,7 +30,10 @@ const router = createBrowserRouter([
         path: PagePath.PRODUCTS,
         element: <ProductListPage/>,
     },
-
+    {
+        path: PagePath.LOGIN,
+        element: <LoginPage/>,
+    },
     {
         path: "/products/:productId",
         element: <ProductPage/>,

@@ -24,7 +24,6 @@ const BarIcon = styled.div`
   min-width: 30px;
   height: min(20%, 45px);
   min-height: 30px;
-  z-index: 1;
 `
 
 const BarText = styled(FlexColumn)`

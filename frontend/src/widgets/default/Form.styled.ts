@@ -167,6 +167,7 @@ const Tooltip = styled.div`
 
 const FormLabel = styled.label`
   width: fit-content;
+  margin: 0;
   ${TextOverflowEllipsis}
 `
 
