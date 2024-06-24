@@ -1,4 +1,4 @@
-package com.savchenko.backend.dao.filterQ;
+package com.savchenko.backend.domain.filterQ;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;
@@ -15,12 +15,11 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import static com.savchenko.backend.model.QProduct.product;
-import static com.savchenko.backend.model.QTag.tag;
 import static com.savchenko.backend.model.business.QCookie.cookie;
 import static com.savchenko.backend.model.business.QMarshmallow.marshmallow;
 import static com.savchenko.backend.model.business.QPie.pie;
 
-public class ProductFilterQ {
+public class ProductFilterQ implements FilterQ {
     private final ProductFilterDto filter;
 
     public ProductFilterQ(ProductFilterDto filter) {
@@ -55,7 +54,7 @@ public class ProductFilterQ {
         Optional
                 .ofNullable(filter.tagIds)
                 .ifPresent(ids -> {
-                    if(ids.length > 0){
+                    if(!ids.isEmpty()){
                         predicate.and(product.tags.any().id.in(ids));
                     }
                 });

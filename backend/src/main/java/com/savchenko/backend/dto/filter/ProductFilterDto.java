@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ProductFilterDto extends FilterDto {
     public String keyword;
-    public Long[] tagIds;
+    public List<Long> tagIds;
     public ProductCategory category;
     public List<OrderDto<ProductOrder>> order;
 }

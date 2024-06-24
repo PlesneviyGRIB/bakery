@@ -1,6 +1,6 @@
 package com.savchenko.backend.interfaces;
 
-import com.savchenko.backend.model.Photo;
+import com.savchenko.backend.domain.Photo;
 
 public interface Imageable {
     void applyPhoto(Photo photo);

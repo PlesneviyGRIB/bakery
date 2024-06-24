@@ -41,6 +41,7 @@
         <jackson.version>2.16.0-rc1</jackson.version>
         <spring.aop.version>6.1.0</spring.aop.version>
         <thumbnailator.version>0.4.19</thumbnailator.version>
+        <lombok.version>1.18.30</lombok.version>
 
     </properties>
 

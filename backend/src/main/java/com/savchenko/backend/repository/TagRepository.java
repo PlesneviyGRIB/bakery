@@ -1,11 +1,9 @@
 package com.savchenko.backend.repository;
 
-import com.savchenko.backend.model.Tag;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.savchenko.backend.domain.Tag;
+import com.savchenko.backend.repository.domain.BaseRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface TagRepository extends JpaRepository<Tag, Long> {
+public interface TagRepository extends BaseRepository<Tag> {
 }

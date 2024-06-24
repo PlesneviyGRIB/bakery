@@ -3,7 +3,7 @@ package com.savchenko.backend.controller;
 import com.savchenko.backend.dto.*;
 import com.savchenko.backend.dto.filter.ProductFilterDto;
 import com.savchenko.backend.dto.product.NewProductDto;
-import com.savchenko.backend.dto.product.ProductDto;
+import com.savchenko.backend.dto.product.ProductLightDto;
 import com.savchenko.backend.service.ProductService;
 import com.savchenko.backend.utils.annotation.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +17,17 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ProductDto newProduct(@RequestBody @Validate NewProductDto newProductDto) {
+    public ProductLightDto newProduct(@RequestBody @Validate NewProductDto newProductDto) {
         return productService.createProduct(newProductDto);
     }
 
     @PostMapping("/list")
-    public PageResponseDto<ProductDto> products(@RequestBody PageRequestDto<ProductFilterDto> pageRequestDto) {
+    public PageResponseDto<ProductLightDto> products(@RequestBody PageRequestDto<ProductFilterDto> pageRequestDto) {
         return productService.products(pageRequestDto);
     }
 
     @GetMapping("/{id}")
-    public ProductDto getProduct(@PathVariable Long id) {
+    public ProductLightDto getProduct(@PathVariable Long id) {
         return productService.get(id);
     }
 
