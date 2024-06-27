@@ -1,4 +1,4 @@
-package com.savchenko.backend.dto;
+package com.savchenko.backend.dto.exception;
 
 import java.time.Instant;
 

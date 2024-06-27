@@ -1,10 +1,13 @@
 package com.savchenko.backend.service;
 
-import com.savchenko.backend.converter.base.ProductConverter;
-import com.savchenko.backend.dto.PageRequestDto;
-import com.savchenko.backend.dto.PageResponseDto;
+import com.savchenko.backend.converter.ProductConverter;
+import com.savchenko.backend.converter.utils.ConverterUtils;
+import com.savchenko.backend.domain.base.PageRequest;
+import com.savchenko.backend.domain.filterQ.ProductFilterQ;
+import com.savchenko.backend.dto.base.PageRequestDto;
+import com.savchenko.backend.dto.base.PageResponseDto;
 import com.savchenko.backend.dto.filter.ProductFilterDto;
-import com.savchenko.backend.dto.product.NewProductDto;
+import com.savchenko.backend.dto.product.ProductCreateDto;
 import com.savchenko.backend.dto.product.ProductFullDto;
 import com.savchenko.backend.dto.product.ProductLightDto;
 import com.savchenko.backend.repository.ProductRepository;
@@ -33,19 +36,12 @@ public class ProductService {
     private final ProductConverter productConverter;
 
     @Transactional(readOnly = true)
-    public PageResponseDto<ProductLightDto> products(PageRequestDto<ProductFilterDto> request) {
-//        var filter = new ProductFilterQ(request.filter);
-//        var pageData = productRepository.products(
-//                request.pageNumber.intValue(),
-//                request.pageSize,
-//                List.of(filter.buildPredicate()),
-//                filter.buildOrders());
-//
-//        return new PageResponseDto<>(
-//                pageData.data().stream().map(p -> ProductToDtoMapper.apply(p, true)).collect(Collectors.toList()),
-//                pageData.pageNumber(), pageData.pageSize(), pageData.totalPages(), pageData.totalCount()
-//        );
-        return null;
+    public PageResponseDto<ProductLightDto> products(PageRequestDto<ProductFilterDto> pageRequestDto) {
+
+        var pageRequest = PageRequest.of(pageRequestDto, ProductFilterQ::new);
+        var productPage = productRepository.getPage(pageRequest);
+
+        return ConverterUtils.convertPage(productPage, productConverter::convertLight);
     }
 
     @Transactional(readOnly = true)
@@ -55,13 +51,10 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-//        if (!productRepository.existsById(id)) {
-//            throw new NoSuchElementException(Message.format("NoSuchElement.product", id));
-//        }
-//        productRepository.delete(id);
+        productRepository.deleteById(id);
     }
 
-    public ProductLightDto createProduct(NewProductDto newProductDto) {
+    public ProductLightDto create(ProductCreateDto newProductDto) {
 //        var p = NewProductDtoToModelMapper.apply(newProductDto);
 //        p.setInstant(Instant.now());
 //        tagRepository.getAllByIds(newProductDto.tagIds).forEach(p::applyTag);

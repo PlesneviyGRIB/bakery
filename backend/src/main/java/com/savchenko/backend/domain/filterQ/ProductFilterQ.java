@@ -1,18 +1,11 @@
 package com.savchenko.backend.domain.filterQ;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Path;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.JPAExpressions;
 import com.savchenko.backend.dto.filter.ProductFilterDto;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 //
 //import static com.savchenko.backend.domain.QProduct.product;
 //import static com.savchenko.backend.domain.business.QCookie.cookie;

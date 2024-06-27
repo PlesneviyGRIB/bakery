@@ -9,15 +9,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.NoRepositoryBean;
 
+@NoRepositoryBean
 public interface BaseRepository<Entity> extends JpaRepository<Entity, Long>, QuerydslPredicateExecutor<Entity> {
 
     default Entity getById(Long id) {
         return findById(id).orElseThrow(RuntimeException::new);
     }
 
-    default Page<Entity> getPage(PageRequest<FilterQ> pageRequest) {
-        return findAll(pageRequest.filterQ.buildPredicate(), Pageable.ofSize(pageRequest.pageSize).withPage(pageRequest.pageNumber));
+    default Page<Entity> getPage(PageRequest<? extends FilterQ> pageRequest) {
+        return findAll(pageRequest.filterQ().buildPredicate(), Pageable.ofSize(pageRequest.pageSize()).withPage(pageRequest.pageNumber()));
     }
 
     default EntityManager getEntityManager() {

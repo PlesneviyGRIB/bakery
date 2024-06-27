@@ -1,4 +1,4 @@
-package com.savchenko.backend.dto;
+package com.savchenko.backend.dto.base;
 
 import com.savchenko.backend.dto.filter.FilterDto;
 

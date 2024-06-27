@@ -5,7 +5,7 @@ import com.savchenko.backend.utils.visitor.NewProductVisitor;
 
 import java.util.Map;
 
-public class NewMarshmallowDto extends NewProductDto {
+public class NewMarshmallowDto extends ProductCreateDto {
     public NewMarshmallowDto(){
         super(ProductCategory.MARSHMALLOW);
     }

@@ -1,5 +1,6 @@
-package com.savchenko.backend.converter.base;
+package com.savchenko.backend.converter;
 
+import com.savchenko.backend.converter.base.IdAndDatesConverter;
 import com.savchenko.backend.domain.Product;
 import com.savchenko.backend.dto.product.ProductFullDto;
 import com.savchenko.backend.dto.product.ProductLightDto;

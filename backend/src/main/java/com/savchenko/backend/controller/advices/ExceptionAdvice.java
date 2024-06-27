@@ -1,6 +1,6 @@
 package com.savchenko.backend.controller.advices;
 
-import com.savchenko.backend.dto.ExceptionResultDto;
+import com.savchenko.backend.dto.exception.ExceptionResultDto;
 import com.savchenko.backend.exception.BakeryException;
 import com.savchenko.backend.exception.ValidationException;
 import com.savchenko.backend.utils.Message;
