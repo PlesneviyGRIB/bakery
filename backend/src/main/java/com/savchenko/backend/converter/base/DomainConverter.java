@@ -1,5 +1,9 @@
 package com.savchenko.backend.converter.base;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.ParameterizedType;
+
 public abstract class DomainConverter<Entity, DtoLight, DtoFull extends DtoLight> {
 
     public DtoLight convertLight(Entity entity) {
@@ -23,12 +27,23 @@ public abstract class DomainConverter<Entity, DtoLight, DtoFull extends DtoLight
 
     protected abstract void convertFull(Entity entity, DtoFull dto);
 
-    private DtoLight createDtoLight(Entity entity) {
-        return null;
+    protected DtoLight createDtoLight(Entity entity) {
+        return (DtoLight) newDtoInstanceFromClassParameter(false);
     }
 
-    private DtoFull createDtoFull(Entity entity) {
-        return null;
+    protected DtoFull createDtoFull(Entity entity) {
+        return (DtoFull) newDtoInstanceFromClassParameter(true);
+    }
+
+    private Object newDtoInstanceFromClassParameter(boolean isFullDto) {
+        try {
+            var parameterIndex = isFullDto ? 2 : 1;
+            var dtoType = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[parameterIndex];
+
+            return TypeToken.get(dtoType).getRawType().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
     }
 
 }

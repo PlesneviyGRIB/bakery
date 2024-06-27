@@ -3,7 +3,7 @@ package com.savchenko.backend.controller;
 import com.savchenko.backend.dto.base.PageRequestDto;
 import com.savchenko.backend.dto.base.PageResponseDto;
 import com.savchenko.backend.dto.filter.ProductFilterDto;
-import com.savchenko.backend.dto.product.ProductCreateDto;
+import com.savchenko.backend.dto.product.ProductCreateOrUpdateDto;
 import com.savchenko.backend.dto.product.ProductLightDto;
 import com.savchenko.backend.service.ProductService;
 import com.savchenko.backend.utils.annotation.Validate;
@@ -18,7 +18,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ProductLightDto newProduct(@RequestBody @Validate ProductCreateDto newProductDto) {
+    public ProductLightDto newProduct(@RequestBody @Validate ProductCreateOrUpdateDto newProductDto) {
         return productService.create(newProductDto);
     }
 

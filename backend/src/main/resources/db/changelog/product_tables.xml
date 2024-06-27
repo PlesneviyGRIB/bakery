@@ -14,12 +14,10 @@
             <column name="updated_at" type="TIMESTAMPTZ">
                 <constraints nullable="false"/>
             </column>
-            <column name="price" type="bigint"/>
-            <column name="count" type="int"/>
-            <column name="production_time" type="int"/>
-            <column name="weight" type="real"/>
             <column name="title" type="varchar(255)"/>
             <column name="description" type="text"/>
+            <column name="price" type="bigint"/>
+            <column name="weight" type="real"/>
         </createTable>
     </changeSet>
 

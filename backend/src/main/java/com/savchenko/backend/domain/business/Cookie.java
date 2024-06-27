@@ -1,6 +1,6 @@
 package com.savchenko.backend.domain.business;
 
-import com.savchenko.backend.domain.Product;
+import com.savchenko.backend.domain.product.Product;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;

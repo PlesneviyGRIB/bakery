@@ -1,10 +1,12 @@
-package com.savchenko.backend.domain;
+package com.savchenko.backend.domain.product;
 
 import com.savchenko.backend.domain.base.IdAndDatesEntity;
 import com.savchenko.backend.domain.business.Cookie;
 import com.savchenko.backend.domain.business.Marshmallow;
 import com.savchenko.backend.domain.business.Pie;
 import com.savchenko.backend.domain.image.ProductImage;
+import com.savchenko.backend.domain.tag.Tag;
+import com.savchenko.backend.enums.ProductCategory;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,22 +19,17 @@ import java.util.List;
 @Table(name = "product")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
+@Setter
 public abstract class Product extends IdAndDatesEntity {
-
-    @Column(name = "price")
-    private Long price;
-
-    @Column(name = "count")
-    private Integer count;
-
-    @Column(name = "productionTime")
-    private Integer productionTime;
 
     @Column(name = "title")
     private String title;
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "price")
+    private Long price;
 
     @Column(name = "weight")
     private Float weight;
@@ -75,6 +72,14 @@ public abstract class Product extends IdAndDatesEntity {
 
     public void removeProductImage(Long imageId) {
         productImages = productImages.stream().filter(image -> !image.getImage().getId().equals(imageId)).toList();
+    }
+
+    public static Product of(ProductCategory productCategory) {
+        return switch (productCategory) {
+            case COOKIE -> new Cookie();
+            case PIE -> new Pie();
+            case MARSHMALLOW -> new Marshmallow();
+        };
     }
 
 }

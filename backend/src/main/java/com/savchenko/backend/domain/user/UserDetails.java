@@ -1,4 +1,4 @@
-package com.savchenko.backend.domain;
+package com.savchenko.backend.domain.user;
 
 import com.savchenko.backend.domain.base.IdAndDatesEntity;
 import jakarta.persistence.*;

@@ -1,6 +1,6 @@
 package com.savchenko.backend.domain.image;
 
-import com.savchenko.backend.domain.Product;
+import com.savchenko.backend.domain.product.Product;
 import com.savchenko.backend.domain.compositePrimaryKey.ProductImagePrimaryKey;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

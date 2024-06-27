@@ -20,7 +20,9 @@ public class IdAndDatesEntity extends BaseEntity {
 
     @PrePersist
     void prePersist() {
-        createdAt = Instant.now();
+        var instant = Instant.now();
+        createdAt = instant;
+        updatedAt = instant;
     }
 
     @PreUpdate

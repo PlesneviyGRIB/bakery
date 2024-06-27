@@ -3,13 +3,15 @@ package com.savchenko.backend.service;
 import com.savchenko.backend.converter.ProductConverter;
 import com.savchenko.backend.converter.utils.ConverterUtils;
 import com.savchenko.backend.domain.base.PageRequest;
+import com.savchenko.backend.domain.business.Cookie;
+import com.savchenko.backend.domain.business.Marshmallow;
+import com.savchenko.backend.domain.business.Pie;
 import com.savchenko.backend.domain.filterQ.ProductFilterQ;
+import com.savchenko.backend.domain.product.Product;
 import com.savchenko.backend.dto.base.PageRequestDto;
 import com.savchenko.backend.dto.base.PageResponseDto;
 import com.savchenko.backend.dto.filter.ProductFilterDto;
-import com.savchenko.backend.dto.product.ProductCreateDto;
-import com.savchenko.backend.dto.product.ProductFullDto;
-import com.savchenko.backend.dto.product.ProductLightDto;
+import com.savchenko.backend.dto.product.*;
 import com.savchenko.backend.repository.ProductRepository;
 import com.savchenko.backend.repository.TagRepository;
 import com.savchenko.backend.service.components.ImageComponent;
@@ -46,7 +48,9 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductFullDto get(Long id) {
+
         var product = productRepository.getById(id);
+
         return productConverter.convertFull(product);
     }
 
@@ -54,24 +58,59 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public ProductLightDto create(ProductCreateDto newProductDto) {
-//        var p = NewProductDtoToModelMapper.apply(newProductDto);
-//        p.setInstant(Instant.now());
-//        tagRepository.getAllByIds(newProductDto.tagIds).forEach(p::applyTag);
-//        var product = productRepository.save(p);
-        //return ProductToDtoMapper.apply(product, false);
-        return null;
+    public ProductFullDto create(ProductCreateOrUpdateDto createDto) {
+
+        var product = Product.of(createDto.productCategory);
+
+        updateProduct(createDto, product);
+
+        var savedProduct = productRepository.save(product);
+
+        return productConverter.convertFull(savedProduct);
+    }
+
+    public ProductFullDto update(ProductCreateOrUpdateDto updateDto) {
+
+        var product = productRepository.getById(updateDto.id);
+
+        updateProduct(updateDto, product);
+
+        var savedProduct = productRepository.save(product);
+
+        return productConverter.convertFull(savedProduct);
     }
 
     public void addPhoto(Long id, String title, String description, Boolean isPreview, MultipartFile file) {
-        var product = productRepository.getById(id);
-//        var photos = product.getImages();
-//
-//        if (photos.size() >= productPhotoCountLimit) {
-//            throw new BakeryException("Photos.countLimitExceeded", productPhotoCountLimit);
-//        }
-
-        var photo = imageComponent.processImage(file, title, description);
-//        product.addImage(photo);
     }
+
+    private void updateProduct(ProductCreateOrUpdateDto updateDto, Product product) {
+
+        product.setTitle(updateDto.title);
+        product.setDescription(updateDto.description);
+        product.setPrice(updateDto.price);
+        product.setWeight(updateDto.weight);
+
+        updateDto.accept(new ProductCreateOrUpdateDto.Visitor<Void>() {
+
+            @Override
+            public Void visit(CookieUpdateDto dto) {
+                var cookie = (Cookie) product;
+                return null;
+            }
+
+            @Override
+            public Void visit(PieUpdateDto dto) {
+                var pie = (Pie) product;
+                return null;
+            }
+
+            @Override
+            public Void visit(MarshmallowUpdateDto dto) {
+                var marshmallow = (Marshmallow) product;
+                return null;
+            }
+
+        });
+    }
+
 }

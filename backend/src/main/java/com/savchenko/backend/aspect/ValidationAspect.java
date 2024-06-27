@@ -1,6 +1,5 @@
 package com.savchenko.backend.aspect;
 
-import com.savchenko.backend.domain.Validatable;
 import com.savchenko.backend.utils.annotation.Validate;
 import jakarta.annotation.PostConstruct;
 import org.aspectj.lang.JoinPoint;
@@ -26,8 +25,8 @@ public class ValidationAspect {
 
     @Before("Pointcuts.restControllers() && Pointcuts.publicMethods()")
     public void validateParameters(JoinPoint joinPoint){
-        var validatableOpt = AspectUtils.<Validatable>annotatedParameterValue(joinPoint, Validate.class);
-        validatableOpt.ifPresent(validatable -> validatable.validate(context));
+//        var validatableOpt = AspectUtils.<Validatable>annotatedParameterValue(joinPoint, Validate.class);
+//        validatableOpt.ifPresent(validatable -> validatable.validate(context));
     }
 
 }

@@ -13,7 +13,7 @@ import {useMemoryState} from "../../hooks/useMemoryState";
 import {Styled as S} from "./ProductForm.styled"
 import {Icon} from "../../widgets/Icon";
 import {Tags} from "../tag/Tags";
-import {NewProductDto} from "../../api/rest-client";
+import {ProductCreateOrUpdateDto} from "../../api/rest-client";
 import {FlexColumn, Gray} from "../../widgets/default/Flex.styled";
 import {IMAGES_COUNT, TAGS_COUNT} from "../../app/Constants";
 
@@ -23,20 +23,17 @@ interface NewProductProps {
     onCreate(): void
 }
 
-const newProduct: NewProductDto = {
-    discriminator: "COOKIE",
+const newProduct: ProductCreateOrUpdateDto = {
+    id: undefined as unknown as any,
+    productCategory: "PIE",
     price: 0,
-    count: 1,
-    productionTime: 0,
     title: '',
     description: '',
     weight: 0,
-    orderAvailable: true,
-    tagIds: []
 }
 
 export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
-    const [product, setProduct] = useSessionState<NewProductDto>("NewProduct", () => newProduct)
+    const [product, setProduct] = useSessionState<ProductCreateOrUpdateDto>("NewProduct", () => newProduct)
     const [photos, setPhotos] = useMemoryState<Photo[]>("NewProduct", () => [])
 
     const handleApplyTag = useCallback((tagIds: number[]) => setProduct(prevState => ({
@@ -74,7 +71,7 @@ export const NewProduct: FC<NewProductProps> = ({onClose, onCreate}) => {
                         <Gray>* От выбранной категории зависят дополнительные параметры товара, а также поиск.</Gray>
                         <Gray>* По тегам можно удобно находить товары.</Gray>
                         <br/>
-                        <Tags selectedIds={product.tagIds} onChange={handleApplyTag} mode={'selectImmediate'} limit={TAGS_COUNT}/>
+                        <Tags selectedIds={[]} onChange={handleApplyTag} mode={'selectImmediate'} limit={TAGS_COUNT}/>
                     </FlexColumn>
                 </Tab>
                 <Tab title={"Фотографии"}>

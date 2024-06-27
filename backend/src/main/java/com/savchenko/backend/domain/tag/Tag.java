@@ -1,4 +1,4 @@
-package com.savchenko.backend.domain;
+package com.savchenko.backend.domain.tag;
 
 import com.savchenko.backend.domain.base.BaseEntity;
 import jakarta.persistence.Column;
