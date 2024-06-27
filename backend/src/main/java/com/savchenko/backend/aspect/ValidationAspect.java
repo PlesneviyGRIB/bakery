@@ -1,7 +1,6 @@
 package com.savchenko.backend.aspect;
 
-import com.savchenko.backend.dto.product.NewProductDto;
-import com.savchenko.backend.interfaces.Validatable;
+import com.savchenko.backend.domain.Validatable;
 import com.savchenko.backend.utils.annotation.Validate;
 import jakarta.annotation.PostConstruct;
 import org.aspectj.lang.JoinPoint;

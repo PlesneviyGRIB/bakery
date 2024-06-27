@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public abstract class DomainConverter<Entity, DtoLight, DtoFull extends DtoLight> {
 
     public DtoLight convertLight(Entity entity) {
-        var dtoLight = createDtoLight();
+        var dtoLight = createDtoLight(entity);
 
         convertLight(entity, dtoLight);
 
@@ -17,7 +17,7 @@ public abstract class DomainConverter<Entity, DtoLight, DtoFull extends DtoLight
     }
 
     public DtoFull convertFull(Entity entity) {
-        var dtoFull = createDtoFull();
+        var dtoFull = createDtoFull(entity);
 
         convertLight(entity, dtoFull);
         convertFull(entity, dtoFull);
@@ -29,11 +29,14 @@ public abstract class DomainConverter<Entity, DtoLight, DtoFull extends DtoLight
 
     protected abstract void convertFull(Entity entity, DtoFull dto);
 
-    private DtoLight createDtoLight() {
+    private DtoLight createDtoLight(Entity entity) {
+
+
+
         return null;
     }
 
-    private DtoFull createDtoFull() {
+    private DtoFull createDtoFull(Entity entity) {
         return null;
     }
 

@@ -7,7 +7,6 @@ import com.savchenko.backend.dto.filter.ProductFilterDto;
 import com.savchenko.backend.dto.product.NewProductDto;
 import com.savchenko.backend.dto.product.ProductFullDto;
 import com.savchenko.backend.dto.product.ProductLightDto;
-import com.savchenko.backend.exception.BakeryException;
 import com.savchenko.backend.repository.ProductRepository;
 import com.savchenko.backend.repository.TagRepository;
 import com.savchenko.backend.service.components.ImageComponent;
@@ -73,13 +72,13 @@ public class ProductService {
 
     public void addPhoto(Long id, String title, String description, Boolean isPreview, MultipartFile file) {
         var product = productRepository.getById(id);
-        var photos = product.getPhotos();
-
-        if (photos.size() >= productPhotoCountLimit) {
-            throw new BakeryException("Photos.countLimitExceeded", productPhotoCountLimit);
-        }
+//        var photos = product.getImages();
+//
+//        if (photos.size() >= productPhotoCountLimit) {
+//            throw new BakeryException("Photos.countLimitExceeded", productPhotoCountLimit);
+//        }
 
         var photo = imageComponent.processImage(file, title, description);
-        product.applyPhoto(photo);
+//        product.addImage(photo);
     }
 }

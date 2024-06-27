@@ -1,7 +1,7 @@
 package com.savchenko.backend.repository;
 
 import com.savchenko.backend.domain.Tag;
-import com.savchenko.backend.repository.domain.BaseRepository;
+import com.savchenko.backend.repository.base.BaseRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

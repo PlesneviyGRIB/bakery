@@ -1,4 +1,4 @@
-package com.savchenko.backend.interfaces;
+package com.savchenko.backend.domain.tag;
 
 import com.savchenko.backend.domain.Tag;
 

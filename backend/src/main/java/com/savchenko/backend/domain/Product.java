@@ -4,10 +4,11 @@ import com.savchenko.backend.domain.base.IdAndDatesEntity;
 import com.savchenko.backend.domain.business.Cookie;
 import com.savchenko.backend.domain.business.Marshmallow;
 import com.savchenko.backend.domain.business.Pie;
-import com.savchenko.backend.interfaces.Imageable;
-import com.savchenko.backend.interfaces.Taggable;
+import com.savchenko.backend.domain.image.ProductImage;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 @Table(name = "product")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
-public abstract class Product extends IdAndDatesEntity implements Taggable, Imageable {
+public abstract class Product extends IdAndDatesEntity {
 
     @Column(name = "price")
     private Long price;
@@ -36,9 +37,10 @@ public abstract class Product extends IdAndDatesEntity implements Taggable, Imag
     @Column(name = "weight")
     private Float weight;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private List<Photo> photos = new ArrayList<>();
+    @OneToMany(mappedBy = "primaryKey.product")
+    @Getter(value = AccessLevel.NONE)
+    @Setter(value = AccessLevel.NONE)
+    private List<ProductImage> productImages = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "tag_intermediate", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -56,23 +58,23 @@ public abstract class Product extends IdAndDatesEntity implements Taggable, Imag
 
     public abstract <R> R accept(Visitor<R> visitor);
 
-    @Override
-    public void applyTag(Tag tag) {
-        tags.add(tag);
+//    @Override
+//    public void applyTag(Tag tag) {
+//        tags.add(tag);
+//    }
+//
+//    @Override
+//    public void removeTag(Long id) {
+//        tags = tags.stream().filter(t -> !t.getId().equals(id)).toList();
+//    }
+
+    public void addProductImage(ProductImage productImage) {
+        productImage.setProduct(this);
+        productImages.add(productImage);
     }
 
-    @Override
-    public void removeTag(Long id) {
-        tags = tags.stream().filter(t -> !t.getId().equals(id)).toList();
+    public void removeProductImage(Long imageId) {
+        productImages = productImages.stream().filter(image -> !image.getImage().getId().equals(imageId)).toList();
     }
 
-    @Override
-    public void applyPhoto(Photo photo) {
-        photos.add(photo);
-    }
-
-    @Override
-    public void removePhoto(Long id) {
-        photos = photos.stream().filter(p -> !p.getId().equals(id)).toList();
-    }
 }

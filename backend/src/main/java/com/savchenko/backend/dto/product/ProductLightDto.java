@@ -4,12 +4,14 @@ import com.savchenko.backend.dto.PhotoDto;
 import com.savchenko.backend.dto.TagDto;
 import com.savchenko.backend.dto.base.IdAndDatesDto;
 import com.savchenko.backend.enums.ProductCategory;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class ProductLightDto extends IdAndDatesDto {
 
-    public ProductCategory discriminator;
+    public final ProductCategory discriminator;
 
     public Long price;
 

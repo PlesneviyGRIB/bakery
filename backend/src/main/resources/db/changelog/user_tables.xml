@@ -9,16 +9,18 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
+            <column name="created_at" type="TIMESTAMPTZ">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMPTZ">
+                <constraints nullable="false"/>
+            </column>
 
             <column name="login" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
 
             <column name="password" type="varchar(255)"/>
-
-            <column name="created_at" type="timestamp with time zone">
-                <constraints nullable="false"/>
-            </column>
 
             <column name="last_visited_at" type="timestamp with time zone">
                 <constraints nullable="false"/>
@@ -29,6 +31,12 @@
         <createTable tableName="user_details">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMPTZ">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMPTZ">
+                <constraints nullable="false"/>
             </column>
 
             <column name="email" type="varchar(255)">

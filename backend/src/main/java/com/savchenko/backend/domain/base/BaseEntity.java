@@ -1,9 +1,6 @@
 package com.savchenko.backend.domain.base;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @MappedSuperclass
@@ -12,6 +9,7 @@ public abstract class BaseEntity implements Comparable<BaseEntity> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Override

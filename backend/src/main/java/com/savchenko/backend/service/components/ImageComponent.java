@@ -1,6 +1,6 @@
 package com.savchenko.backend.service.components;
 
-import com.savchenko.backend.domain.Photo;
+import com.savchenko.backend.domain.image.Image;
 import com.savchenko.backend.exception.BakeryException;
 import com.savchenko.backend.utils.ServiceUtils;
 import com.savchenko.backend.utils.Validator;
@@ -22,7 +22,7 @@ public class ImageComponent {
     @Autowired
     private Validator validator;
 
-    public Photo processImage(MultipartFile file, String title, String description) {
+    public Image processImage(MultipartFile file, String title, String description) {
         validator.validateImage(file);
         try {
             var stream = new ByteArrayOutputStream();
@@ -33,9 +33,9 @@ public class ImageComponent {
                     .outputQuality(factor.getSecond())
                     .toOutputStream(stream);
 
-            var photo = new Photo();
+            var photo = new Image();
             photo.setSrc(file.getBytes());
-            photo.setCompressed(stream.toByteArray());
+            photo.setMediumQuality(stream.toByteArray());
             photo.setTitle(title);
             photo.setDescription(description);
 

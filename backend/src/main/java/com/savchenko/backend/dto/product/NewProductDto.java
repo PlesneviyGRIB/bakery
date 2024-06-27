@@ -4,14 +4,13 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.savchenko.backend.enums.ProductCategory;
 import com.savchenko.backend.exception.ValidationException;
-import com.savchenko.backend.interfaces.Validatable;
+import com.savchenko.backend.domain.Validatable;
 import com.savchenko.backend.utils.visitor.NewProductVisitor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "discriminator", visible = true)
 @JsonSubTypes({

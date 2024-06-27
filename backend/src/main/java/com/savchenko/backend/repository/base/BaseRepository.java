@@ -1,4 +1,4 @@
-package com.savchenko.backend.repository.domain;
+package com.savchenko.backend.repository.base;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.savchenko.backend.configuration.ApplicationContextProvider;

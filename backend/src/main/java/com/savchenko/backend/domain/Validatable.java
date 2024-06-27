@@ -1,4 +1,4 @@
-package com.savchenko.backend.interfaces;
+package com.savchenko.backend.domain;
 
 import java.util.Map;
 
