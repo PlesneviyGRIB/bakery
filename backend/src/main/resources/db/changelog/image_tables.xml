@@ -15,6 +15,7 @@
             <column name="updated_at" type="TIMESTAMPTZ">
                 <constraints nullable="false"/>
             </column>
+            <column name="owner_id" type="bigint"/>
             <column name="src" type="bytea">
                 <constraints nullable="false"/>
             </column>
@@ -30,6 +31,13 @@
             <column name="title" type="varchar(255)"/>
             <column name="description" type="varchar(5000)"/>
         </createTable>
+
+        <addForeignKeyConstraint
+                constraintName="fk__image__user"
+                baseColumnNames="owner_id"
+                baseTableName="image"
+                referencedColumnNames="id"
+                referencedTableName="user"/>
 
         <createTable tableName="product_image">
             <column name="product_id" type="bigint">

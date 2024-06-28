@@ -2,7 +2,6 @@ package com.savchenko.backend.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.savchenko.backend.dto.base.BaseDto;
 import com.savchenko.backend.enums.ProductCategory;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = PieUpdateDto.class, name = "PIE"),
         @JsonSubTypes.Type(value = MarshmallowUpdateDto.class, name = "MARSHMALLOW"),
 })
-public abstract class ProductCreateOrUpdateDto extends BaseDto {
+public abstract class ProductCreateOrUpdateDto {
 
     public ProductCategory productCategory;
 

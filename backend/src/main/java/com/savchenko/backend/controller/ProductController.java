@@ -7,8 +7,8 @@ import com.savchenko.backend.dto.product.ProductCreateOrUpdateDto;
 import com.savchenko.backend.dto.product.ProductFullDto;
 import com.savchenko.backend.dto.product.ProductLightDto;
 import com.savchenko.backend.service.ProductService;
-import com.savchenko.backend.utils.annotation.Validate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +19,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/list")
-    public PageResponseDto<ProductLightDto> products(@RequestBody PageRequestDto<ProductFilterDto> pageRequestDto) {
+    public PageResponseDto<ProductLightDto> products(@RequestBody @Validated PageRequestDto<ProductFilterDto> pageRequestDto) {
         return productService.products(pageRequestDto);
     }
 
@@ -29,13 +29,14 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductLightDto create(@RequestBody @Validate ProductCreateOrUpdateDto newProductDto) {
+    public ProductFullDto create(@RequestBody @Validated ProductCreateOrUpdateDto newProductDto) {
         return productService.create(newProductDto);
     }
 
-    @PutMapping
-    public ProductLightDto update(@RequestBody @Validate ProductCreateOrUpdateDto newProductDto) {
-        return productService.update(newProductDto);
+    @PutMapping("/{id}")
+    public ProductFullDto update(@PathVariable("id") Long id,
+                                 @RequestBody @Validated ProductCreateOrUpdateDto newProductDto) {
+        return productService.update(id, newProductDto);
     }
 
     @DeleteMapping("/{id}")

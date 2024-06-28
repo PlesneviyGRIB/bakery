@@ -1,6 +1,7 @@
 package com.savchenko.backend.domain.image;
 
-import com.savchenko.backend.domain.base.IdAndDatesEntity;
+import com.savchenko.backend.domain.base.IdAndDatesAndOwnerEntity;
+import com.savchenko.backend.enums.ImageQuality;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Table(name = "image")
 @Getter
 @Setter
-public class Image extends IdAndDatesEntity {
+public class Image extends IdAndDatesAndOwnerEntity {
 
     @Column(name = "src")
     private byte[] src;
@@ -30,5 +31,14 @@ public class Image extends IdAndDatesEntity {
 
     @Column(name = "description")
     private String description;
+
+    public byte[] ofQuality(ImageQuality quality) {
+        return switch (quality) {
+            case MAX -> src;
+            case HIGH -> highQuality;
+            case MEDIUM -> mediumQuality;
+            case MIN -> minQuality;
+        };
+    }
 
 }

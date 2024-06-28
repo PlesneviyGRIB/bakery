@@ -13,10 +13,7 @@ import com.savchenko.backend.dto.base.PageResponseDto;
 import com.savchenko.backend.dto.filter.ProductFilterDto;
 import com.savchenko.backend.dto.product.*;
 import com.savchenko.backend.repository.ProductRepository;
-import com.savchenko.backend.repository.TagRepository;
-import com.savchenko.backend.service.components.ImageComponent;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,14 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProductService {
 
-    @Value("${image.product.max.count}")
-    private Long productPhotoCountLimit;
-
     private final ProductRepository productRepository;
-
-    private final TagRepository tagRepository;
-
-    private final ImageComponent imageComponent;
 
     private final ProductConverter productConverter;
 
@@ -68,9 +58,9 @@ public class ProductService {
         return productConverter.convertFull(savedProduct);
     }
 
-    public ProductFullDto update(ProductCreateOrUpdateDto updateDto) {
+    public ProductFullDto update(Long id, ProductCreateOrUpdateDto updateDto) {
 
-        var product = productRepository.getById(updateDto.id);
+        var product = productRepository.getById(id);
 
         updateProduct(updateDto, product);
 
