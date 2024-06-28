@@ -4,45 +4,43 @@ import com.savchenko.backend.dto.base.PageRequestDto;
 import com.savchenko.backend.dto.base.PageResponseDto;
 import com.savchenko.backend.dto.filter.ProductFilterDto;
 import com.savchenko.backend.dto.product.ProductCreateOrUpdateDto;
+import com.savchenko.backend.dto.product.ProductFullDto;
 import com.savchenko.backend.dto.product.ProductLightDto;
 import com.savchenko.backend.service.ProductService;
 import com.savchenko.backend.utils.annotation.Validate;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductController {
-    @Autowired
-    private ProductService productService;
 
-    @PostMapping
-    public ProductLightDto newProduct(@RequestBody @Validate ProductCreateOrUpdateDto newProductDto) {
-        return productService.create(newProductDto);
-    }
+    private final ProductService productService;
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     public PageResponseDto<ProductLightDto> products(@RequestBody PageRequestDto<ProductFilterDto> pageRequestDto) {
         return productService.products(pageRequestDto);
     }
 
     @GetMapping("/{id}")
-    public ProductLightDto getProduct(@PathVariable Long id) {
+    public ProductFullDto get(@PathVariable Long id) {
         return productService.get(id);
     }
 
-    @PostMapping("/{id}/photo")
-    public void addProductPhoto(@PathVariable("id") Long id,
-                         @RequestParam(value = "title") String title,
-                         @RequestParam(value = "description") String description,
-                         @RequestParam(value = "isPreview") Boolean isPreview,
-                         @RequestBody MultipartFile file) {
-        productService.addPhoto(id, title, description, isPreview, file);
+    @PostMapping
+    public ProductLightDto create(@RequestBody @Validate ProductCreateOrUpdateDto newProductDto) {
+        return productService.create(newProductDto);
+    }
+
+    @PutMapping
+    public ProductLightDto update(@RequestBody @Validate ProductCreateOrUpdateDto newProductDto) {
+        return productService.update(newProductDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         productService.delete(id);
     }
+
 }

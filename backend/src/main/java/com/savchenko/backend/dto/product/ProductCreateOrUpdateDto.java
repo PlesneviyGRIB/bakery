@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.savchenko.backend.dto.base.BaseDto;
 import com.savchenko.backend.enums.ProductCategory;
 
+import java.util.List;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "productCategory", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = CookieUpdateDto.class, name = "COOKIE"),
@@ -22,6 +24,10 @@ public abstract class ProductCreateOrUpdateDto extends BaseDto {
     public String description;
 
     public Float weight;
+
+    public List<Long> productImageIds;
+
+    public List<Long> tagIds;
 
     public interface Visitor<T> {
 

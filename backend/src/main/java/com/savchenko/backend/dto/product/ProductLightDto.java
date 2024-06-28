@@ -2,6 +2,7 @@ package com.savchenko.backend.dto.product;
 
 import com.savchenko.backend.dto.TagDto;
 import com.savchenko.backend.dto.base.IdAndDatesDto;
+import com.savchenko.backend.dto.image.ProductImageDto;
 import com.savchenko.backend.enums.ProductCategory;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class ProductLightDto extends IdAndDatesDto {
     public Long price;
 
     public Float weight;
+
+    public List<ProductImageDto> productImages;
 
     public List<TagDto> tags;
 

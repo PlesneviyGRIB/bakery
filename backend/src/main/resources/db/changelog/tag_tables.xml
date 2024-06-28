@@ -9,40 +9,36 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-
-            <column name="title" type="varchar(64)"/>
-
-        </createTable>
-
-        <createTable tableName="tag_intermediate">
-            <column name="tag_id" type="bigint">
+            <column name="created_at" type="TIMESTAMPTZ">
                 <constraints nullable="false"/>
             </column>
-
-            <column name="product_id" type="bigint"/>
-
+            <column name="updated_at" type="TIMESTAMPTZ">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="varchar(255)"/>
+            <column name="title" type="varchar(255)"/>
         </createTable>
 
-        <addUniqueConstraint
-                columnNames="tag_id, product_id"
-                constraintName="unique_tag_id_product_id"
-                tableName="tag_intermediate"/>
+        <createTable tableName="product_tag">
+            <column name="product_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tag_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
 
         <addForeignKeyConstraint
-                constraintName="fk_tag_intermediate_product"
+                constraintName="fk__product_tag__product"
                 baseColumnNames="product_id"
-                baseTableName="tag_intermediate"
-                onDelete="CASCADE"
-                onUpdate="RESTRICT"
+                baseTableName="product_tag"
                 referencedColumnNames="id"
                 referencedTableName="product"/>
 
         <addForeignKeyConstraint
-                constraintName="fk_tag_intermediate_tag"
+                constraintName="fk__product_tag__tag"
                 baseColumnNames="tag_id"
-                baseTableName="tag_intermediate"
-                onDelete="CASCADE"
-                onUpdate="RESTRICT"
+                baseTableName="product_tag"
                 referencedColumnNames="id"
                 referencedTableName="tag"/>
     </changeSet>

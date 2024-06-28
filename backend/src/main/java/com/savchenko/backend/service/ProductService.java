@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
@@ -78,9 +77,6 @@ public class ProductService {
         var savedProduct = productRepository.save(product);
 
         return productConverter.convertFull(savedProduct);
-    }
-
-    public void addPhoto(Long id, String title, String description, Boolean isPreview, MultipartFile file) {
     }
 
     private void updateProduct(ProductCreateOrUpdateDto updateDto, Product product) {

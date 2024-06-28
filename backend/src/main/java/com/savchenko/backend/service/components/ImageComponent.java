@@ -16,6 +16,7 @@ import java.io.IOException;
 
 @Component
 public class ImageComponent {
+
     @Value("${image.compress.quality}")
     private Long compressQuality;
 

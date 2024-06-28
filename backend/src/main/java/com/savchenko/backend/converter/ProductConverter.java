@@ -7,10 +7,16 @@ import com.savchenko.backend.domain.business.Pie;
 import com.savchenko.backend.domain.product.Product;
 import com.savchenko.backend.dto.product.*;
 import com.savchenko.backend.enums.ProductCategory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ProductConverter extends IdAndDatesConverter<Product, ProductLightDto, ProductFullDto> {
+
+    private final ProductImageConverter productImageConverter;
+
+    private final TagConverter tagConverter;
 
     @Override
     protected void convertLight(Product entity, ProductLightDto dto) {
@@ -21,6 +27,8 @@ public class ProductConverter extends IdAndDatesConverter<Product, ProductLightD
         dto.description = entity.getDescription();
         dto.price = entity.getPrice();
         dto.weight = entity.getWeight();
+        dto.productImages = productImageConverter.convertLights(entity.getProductImages());
+        dto.tags = tagConverter.convertLights(entity.getTags());
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.savchenko.backend.converter.base;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 public abstract class DomainConverter<Entity, DtoLight, DtoFull extends DtoLight> {
 
@@ -21,6 +22,14 @@ public abstract class DomainConverter<Entity, DtoLight, DtoFull extends DtoLight
         convertFull(entity, dtoFull);
 
         return dtoFull;
+    }
+
+    public List<DtoLight> convertLights(List<Entity> entities) {
+        return entities.stream().map(this::convertLight).toList();
+    }
+
+    public List<DtoFull> convertFulls(List<Entity> entities) {
+        return entities.stream().map(this::convertFull).toList();
     }
 
     protected abstract void convertLight(Entity entity, DtoLight dto);
